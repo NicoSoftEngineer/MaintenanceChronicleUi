@@ -1,0 +1,11 @@
+<h1>Funguje</h1>
+<div *ngIf="tenants$ | async; as tenats">
+    <div *ngFor="let tenant of tenants$ | async track tenant">
+        <section class="border p-5 shadow mb-5 mx-5">
+            <h2>{{tenant.id}} | {{tenant.name}}</h2>
+        </section>
+    </div>
+    <div *ngIf="(tenants$| async)?.length === 0">
+        Žádná data :-(
+    </div>
+</div>
