@@ -1,8 +1,10 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TenantService } from '../../services/tenant/tenant-service';
-
+import { NewTenantDto } from '../models/new-tenant-dto';
+import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-tenant-list',
@@ -11,19 +13,46 @@ import { TenantService } from '../../services/tenant/tenant-service';
     CommonModule,
     AsyncPipe,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    MatInputModule, 
+    MatButtonModule
   ],
   templateUrl: './tenant-list.component.html',
   styleUrl: './tenant-list.component.scss'
 })
-export class TenantListComponent {
-  protected formular;
-  protected tenants$;
+export class TenantListComponent {protected readonly fb = inject(FormBuilder);
+  protected readonly tenantService = inject(TenantService);
 
-  constructor(formBuilder: FormBuilder, protected ts: TenantService) {
-    this.formular = formBuilder.group({
-      content: new FormControl('',{nonNullable: true, validators: [Validators.required]})
+  protected formular = this.fb.group({
+    name: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+  });
+
+  protected tenants$ = this.tenantService.getTenants();
+
+  showForm: boolean = false;
+
+  onSubmit(): void {
+    const dataRaw = this.formular.getRawValue();
+
+    const data = JSON.parse(JSON.stringify(dataRaw));
+
+    this.tenantService.createTenant(data).subscribe({
+      next: () => {
+        this.refreshData();
+        this.closeForm();
+      },
     });
-    this.tenants$ = this.ts.getTenants();
+  }
+
+  closeForm() {
+    this.showForm = false;
+    this.formular.reset();
+  }
+
+  refreshData() {
+    this.tenants$ = this.tenantService.getTenants();
   }
 }
