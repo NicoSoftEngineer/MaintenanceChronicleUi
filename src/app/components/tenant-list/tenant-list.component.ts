@@ -1,8 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TenantService } from '../../services/tenant/tenant-service';
-import { NewTenantDto } from '../models/new-tenant-dto';
+import { TenantService } from '../../../services/tenant/tenant-service';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 

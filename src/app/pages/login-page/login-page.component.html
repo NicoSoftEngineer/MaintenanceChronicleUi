@@ -1,0 +1,18 @@
+<section>
+    <form [formGroup]="formular" (ngSubmit)="onSubmit()">
+        <div>
+            <mat-form-field appearance="fill">
+                <input placeholder="email" formControlName="email" id="email"/>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <input placeholder="password" formControlName="password" id="password"/>
+            </mat-form-field>
+        </div>
+        <div class="flex justify-end space-x-2">
+            <button mat-raised-button color="primary" type="submit" [disabled]="formular.invalid">
+              Přihlásit se
+            </button>
+          </div>
+    </form>
+</section>
