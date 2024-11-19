@@ -1,9 +1,8 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
 import { AuthService } from '../../../services/auth/auth-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -13,8 +12,6 @@ import { AuthService } from '../../../services/auth/auth-service.service';
     AsyncPipe,
     FormsModule,
     ReactiveFormsModule, 
-    MatInputModule, 
-    MatButtonModule
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
@@ -22,6 +19,7 @@ import { AuthService } from '../../../services/auth/auth-service.service';
 export class LoginPageComponent {
   protected readonly fb = inject(FormBuilder);
   protected readonly authService = inject(AuthService);
+  protected readonly router = inject(Router);
 
   protected formular = this.fb.group({
     email: new FormControl('', {
@@ -39,6 +37,13 @@ export class LoginPageComponent {
 
     const data = JSON.parse(JSON.stringify(dataRaw));
 
-    this.authService.login(data).subscribe();
+    this.authService.login(data).subscribe({
+      next: async () => {
+          await this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 }

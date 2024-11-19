@@ -1,0 +1,21 @@
+<nav class="bg-red-600 border-gray-200 dark:bg-gray-900">
+    <div class="flex flex-wrap items-center justify-between p-4">
+        @let user = user$ | async;
+        <a routerLink="/" class="flex items-center">
+            <span class="font-semibold ">Service Track</span>
+        </a>
+        <ul class="flex flex-col md:flex-row md:border-0">
+            @if (user) {
+            <li>
+                <a href="#" class="" aria-current="page">Home</a>
+            </li>
+            }
+            @else {
+            <li>
+                <a routerLink="/login" class="m-5">Přihlásit se</a>
+            </li>
+            }
+        </ul>
+    </div>
+</nav>
+<router-outlet />

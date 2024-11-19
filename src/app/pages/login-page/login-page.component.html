@@ -1,18 +1,38 @@
-<section>
-    <form [formGroup]="formular" (ngSubmit)="onSubmit()">
-        <div>
-            <mat-form-field appearance="fill">
-                <input placeholder="email" formControlName="email" id="email"/>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-                <input placeholder="password" formControlName="password" id="password"/>
-            </mat-form-field>
-        </div>
-        <div class="flex justify-end space-x-2">
-            <button mat-raised-button color="primary" type="submit" [disabled]="formular.invalid">
-              Přihlásit se
-            </button>
-          </div>
-    </form>
+<section class="grid items-center text-black">
+    <div class="my-4 items-center">
+        <h2 class="text-2xl font-bold text-center text-black">Login</h2>
+    </div>
+    <div>
+        <form class="max-w-sm mx-auto" [formGroup]="formular" (ngSubmit)="onSubmit()">
+            <!-- <div class="relative">
+                <label for="email"
+                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-black dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Your
+                    email</label>
+                <input type="email" id="email" formControlName="email"
+                    class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder="name@flowbite.com" required [cla />
+            </div> -->
+            <div class="input-field">
+                <input type="text" id="floating_outlined"
+                    class="peer"
+                    placeholder=" " />
+                <label for="floating_outlined" class="">Email</label>
+            </div>
+            <!-- <div class="relative">
+                <label for="password"
+                    class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Your
+                    password</label>
+                <input type="password" id="password" formControlName="password"
+                    class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    required />
+            </div> -->
+            <div class="">
+                <div class="">
+                    <input id="remember" type="checkbox" value="" class="rounded" required />
+                </div>
+                <label for="remember" class="">Remember me</label>
+            </div>
+            <button type="submit" class="text-black border border-black p-1 rounded">Přihlásit se</button>
+        </form>
+    </div>
 </section>
