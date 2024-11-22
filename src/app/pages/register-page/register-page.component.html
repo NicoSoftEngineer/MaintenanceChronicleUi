@@ -1,22 +1,46 @@
 <section class="flex justify-center items-center h-80p">
-    <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p h-40p">
-        <h2 class="text-2xl font-bold text-center text-black">Register</h2>
-        <form class="p-2" [formGroup]="formular" (ngSubmit)="onSubmit()">
+    <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p pt-1">
+        <!-- Organisation create form -->
+        <h3 class="text-lg font-bold text-center text-black">Informace o tvé organizaci</h3>
+        <form class="p-2" [formGroup]="tenantFormular" (ngSubmit)="onSubmit()">
+            <div class="input-field">
+                <input type="text" id="name" formControlName="name" class="input-field-input peer"
+                    placeholder="" />
+                <label for="floating_outlined" class="input-field-label">Název</label>
+            </div>
+        </form>
+        <!-- User create form -->
+        <h3 class="text-lg font-bold text-center text-black">Informace o Vás</h3>
+        <form class="p-2" [formGroup]="userFormular" (ngSubmit)="onSubmit()">
+            <div class="flex align-baseline justify-between">
+                <div class="input-field">
+                    <input type="text" id="firstName" formControlName="firstName" class="input-field-input peer"
+                        placeholder="" />
+                    <label for="floating_outlined" class="input-field-label">Jméno</label>
+                </div>
+                <div class="input-field">
+                    <input type="text" id="lastName" formControlName="lastName" class="input-field-input peer"
+                        placeholder="" />
+                    <label for="floating_outlined" class="input-field-label">Příjmení</label>
+                </div>
+            </div>
             <div class="input-field">
                 <input type="email" id="email" formControlName="email" class="input-field-input peer" placeholder="" />
                 <label for="floating_outlined" class="input-field-label">Email</label>
             </div>
             <div class="input-field">
-                <input type="password" id="password" formControlName="password" class="input-field-input peer" placeholder="" />
-                <label for="password" class="input-field-label">Password</label>
+                <input type="password" id="password" formControlName="password" class="input-field-input peer"
+                    placeholder="" />
+                <label for="password" class="input-field-label">Heslo</label>
             </div>
             <div class="input-field">
-                <input type="password" id="passwordConfirm" formControlName="passwordConfirm" class="input-field-input peer" placeholder="" />
-                <label for="passwordConfirm" class="input-field-label">Password Confirm</label>
+                <input type="password" id="passwordConfirm" formControlName="passwordConfirm"
+                    class="input-field-input peer" placeholder="" />
+                <label for="passwordConfirm" class="input-field-label">Potvrdit heslo</label>
             </div>
             <div class="flex justify-between items-center">
-                <a routerLink="/login" class=" ">Already have an account? Log in!</a>
-                <button type="submit" class="primary-button">Register</button>
+                <a routerLink="/login" class=" ">Už máte účet? Příhlašte se!</a>
+                <button type="submit" class="primary-button">Registrovat</button>
             </div>
         </form>
     </div>

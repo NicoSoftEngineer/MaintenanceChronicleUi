@@ -23,7 +23,7 @@ export class RegisterPageComponent {
   protected readonly authService = inject(AuthService);
   protected readonly router = inject(Router);
   
-  protected formular = this.fb.group({
+  protected userFormular = this.fb.group({
     email: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email],
@@ -45,9 +45,16 @@ export class RegisterPageComponent {
       validators: [Validators.required],
     }),
   });
+  
+  protected tenantFormular = this.fb.group({
+    name: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+  });
 
   onSubmit(): void {
-    const dataRaw = this.formular.getRawValue();
+    const dataRaw = this.userFormular.getRawValue();
 
     const data = JSON.parse(JSON.stringify(dataRaw));
 
