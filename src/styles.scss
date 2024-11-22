@@ -3,5 +3,107 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.input-field {
+    @apply relative;
+    @apply m-2;
+}
+
+.input-field-input {
+    @apply block;
+    @apply px-2.5;
+    @apply pb-2.5;
+    @apply pt-4;
+    @apply w-full;
+    @apply text-sm;
+    @apply text-gray-900;
+    @apply bg-transparent;
+    @apply rounded-lg;
+    @apply border;
+    @apply border-gray-300;
+    @apply appearance-none;
+    @apply dark:text-white;
+    @apply dark:border-gray-600;
+    @apply dark:focus:border-blue-500;
+    @apply focus:outline-none;
+    @apply focus:ring-0;
+    @apply focus:border-blue-600;
+}
+
+.input-field-label {
+    @apply absolute;
+    @apply text-sm;
+    @apply text-gray-500;
+    @apply dark:text-gray-400;
+    @apply duration-300;
+    @apply transform;
+    @apply -translate-y-4;
+    @apply scale-75;
+    @apply top-2;
+    @apply z-10;
+    @apply origin-[0];
+    @apply bg-white;
+    @apply dark:bg-gray-900;
+    @apply px-2;
+    @apply peer-focus:px-2;
+    @apply peer-focus:text-blue-600;
+    @apply peer-focus:dark:text-blue-500;
+    @apply peer-placeholder-shown:scale-100;
+    @apply peer-placeholder-shown:-translate-y-1/2;
+    @apply peer-placeholder-shown:top-1/2;
+    @apply peer-focus:top-2;
+    @apply peer-focus:scale-75;
+    @apply peer-focus:-translate-y-4;
+    @apply rtl:peer-focus:translate-x-1/4;
+    @apply rtl:peer-focus:left-auto;
+    @apply start-1;
+}
+
+.primary-button {
+    @apply text-gray-100;
+    @apply bg-gradient-to-r;
+    @apply from-blue-700;
+    @apply to-blue-600;
+    @apply hover:bg-gradient-to-l;
+    @apply focus:ring-4;
+    @apply focus:outline-none;
+    @apply focus:ring-purple-200;
+    @apply dark:focus:ring-purple-800;
+    @apply font-medium;
+    @apply rounded-lg;
+    @apply text-sm;
+    @apply px-5;
+    @apply py-2.5;
+    @apply text-center;
+    @apply me-2;
+    @apply mb-2;
+}
+
+.h-80p{
+    height: 80%;
+}
+.h-40p{
+    height: 40%;
+}
+
+.w-25p{
+    width: 25%;
+}
+
+a{
+    @apply font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline ms-2;
+}
+
+.router-button{
+    @apply text-gray-900 no-underline bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none;
+}

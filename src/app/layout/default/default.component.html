@@ -1,18 +1,18 @@
 <nav class="bg-red-600 border-gray-200 dark:bg-gray-900">
     <div class="flex flex-wrap items-center justify-between p-4">
         @let user = user$ | async;
-        <a routerLink="/" class="flex items-center">
-            <span class="font-semibold ">Service Track</span>
+        <a routerLink="/" class="router-button flex items-center">
+            <span class="font-mono text-base">Some App</span>
         </a>
         <ul class="flex flex-col md:flex-row md:border-0">
             @if (user) {
             <li>
-                <a href="#" class="" aria-current="page">Home</a>
+                <a href="#" class="" aria-current="router-button page">Home</a>
             </li>
             }
             @else {
             <li>
-                <a routerLink="/login" class="m-5">Přihlásit se</a>
+                <a routerLink="/login" class="router-button m-5">Přihlásit se</a>
             </li>
             }
         </ul>

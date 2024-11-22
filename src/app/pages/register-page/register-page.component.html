@@ -1,6 +1,6 @@
 <section class="flex justify-center items-center h-80p">
     <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p h-40p">
-        <h2 class="text-2xl font-bold text-center text-black">Login</h2>
+        <h2 class="text-2xl font-bold text-center text-black">Register</h2>
         <form class="p-2" [formGroup]="formular" (ngSubmit)="onSubmit()">
             <div class="input-field">
                 <input type="email" id="email" formControlName="email" class="input-field-input peer" placeholder="" />
@@ -10,9 +10,13 @@
                 <input type="password" id="password" formControlName="password" class="input-field-input peer" placeholder="" />
                 <label for="password" class="input-field-label">Password</label>
             </div>
+            <div class="input-field">
+                <input type="password" id="passwordConfirm" formControlName="passwordConfirm" class="input-field-input peer" placeholder="" />
+                <label for="passwordConfirm" class="input-field-label">Password Confirm</label>
+            </div>
             <div class="flex justify-between items-center">
-                <a routerLink="/register" class=" ">Nemáte účet? Zaregistrujte se!</a>
-                <button type="submit" class="primary-button">Přihlásit se</button>
+                <a routerLink="/login" class=" ">Already have an account? Log in!</a>
+                <button type="submit" class="primary-button">Register</button>
             </div>
         </form>
     </div>
