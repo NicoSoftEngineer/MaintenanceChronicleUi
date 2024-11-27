@@ -22,7 +22,7 @@ export class RegisterPageComponent {
   protected readonly fb = inject(FormBuilder);
   protected readonly authService = inject(AuthService);
   protected readonly router = inject(Router);
-  
+
   protected userFormular = this.fb.group({
     email: new FormControl('', {
       nonNullable: true,
@@ -44,9 +44,6 @@ export class RegisterPageComponent {
       nonNullable: true,
       validators: [Validators.required],
     }),
-  });
-  
-  protected tenantFormular = this.fb.group({
     name: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
