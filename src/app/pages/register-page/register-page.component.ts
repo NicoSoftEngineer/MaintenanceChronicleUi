@@ -7,17 +7,17 @@ import { RegisterUserDto } from '../../models/register-user-dto';
 import { confirmPasswordValidator } from '../../../validators/confirm-password-validator';
 
 @Component({
-  selector: 'app-register-page',
-  standalone: true,
-  imports: [
-    CommonModule,
-    AsyncPipe,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterLink,
-  ],
-  templateUrl: './register-page.component.html',
-  styleUrl: './register-page.component.scss'
+    selector: 'app-register-page',
+    standalone: true,
+    imports: [
+        CommonModule,
+        AsyncPipe,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterLink,
+    ],
+    templateUrl: './register-page.component.html',
+    styleUrl: './register-page.component.scss'
 })
 export class RegisterPageComponent {
   protected readonly fb = inject(FormBuilder);

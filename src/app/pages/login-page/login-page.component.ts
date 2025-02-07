@@ -5,17 +5,17 @@ import { AuthService } from '../../../services/auth/auth-service.service';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-login-page',
-  standalone: true,
-  imports: [
-    CommonModule,
-    AsyncPipe,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterLink,
-  ],
-  templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss'
+    selector: 'app-login-page',
+    standalone: true,
+    imports: [
+        CommonModule,
+        AsyncPipe,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterLink,
+    ],
+    templateUrl: './login-page.component.html',
+    styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent {
   protected readonly fb = inject(FormBuilder);

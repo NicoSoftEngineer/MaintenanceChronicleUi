@@ -6,17 +6,17 @@ import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet, 
-    TenantListComponent, 
-    LoginPageComponent,
-    MatToolbar,
-    MatButton
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    standalone: true,
+    imports: [
+        RouterOutlet,
+        TenantListComponent,
+        LoginPageComponent,
+        MatToolbar,
+        MatButton
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'ServiceTrackUi';

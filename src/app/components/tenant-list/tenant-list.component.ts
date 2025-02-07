@@ -6,18 +6,18 @@ import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 
 @Component({
-  selector: 'app-tenant-list',
-  standalone: true,
-  imports: [
-    CommonModule,
-    AsyncPipe,
-    FormsModule,
-    ReactiveFormsModule, 
-    MatInputModule, 
-    MatButtonModule
-  ],
-  templateUrl: './tenant-list.component.html',
-  styleUrl: './tenant-list.component.scss'
+    selector: 'app-tenant-list',
+    standalone: true,
+    imports: [
+        CommonModule,
+        AsyncPipe,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatButtonModule
+    ],
+    templateUrl: './tenant-list.component.html',
+    styleUrl: './tenant-list.component.scss'
 })
 export class TenantListComponent {protected readonly fb = inject(FormBuilder);
   protected readonly tenantService = inject(TenantService);
