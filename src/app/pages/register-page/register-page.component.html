@@ -1,8 +1,5 @@
 <section class="flex justify-center items-center h-80p">
   <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p pt-1">
-    <button type="button" onclick="tryd()" class="primary-button">Něco</button>
-
-
     <form class="p-2" [formGroup]="userFormular" (ngSubmit)="onSubmit()">
       <!-- Organisation create form -->
       <h3 class="text-lg font-bold text-center text-black">Informace o tvé organizaci</h3>
@@ -30,19 +27,26 @@
         <input type="password" id="password" formControlName="password" class="input-field-input peer" placeholder="" />
         <label for="password" class="input-field-label">Heslo</label>
       </div>
-      <div class="input-field">
-        <input type="password"
-        id="passwordConfirm"
-        formControlName="passwordConfirm"
-        [ngClass]="userFormular.hasError('PasswordNoMatch') &&
-            (userFormular.controls.passwordConfirm.touched) ?
-            'input-field-input-invalid' :
-            'input-field-input'"
-          class="peer"
-          placeholder="" />
-
-        <!-- This does not work properly, it shows without styles at first, and after you click and click out of the form the styles begin to work -->
-        <label for="passwordConfirm" [ngClass]="userFormular.hasError('PasswordNoMatch') && (userFormular.controls.passwordConfirm.touched) ? 'input-field-label-invalid' : 'input-field-label'">Potvrdit heslo</label>
+      <div>
+        <div class="input-field">
+          <input type="password" id="passwordConfirm" formControlName="passwordConfirm"
+          [ngClass]="userFormular.hasError('PasswordNoMatch')  &&
+              (userFormular.controls['passwordConfirm'].touched) ?
+              'input-field-input-invalid' :
+              'input-field-input'" class="peer" placeholder="" />
+  
+          <!-- This does not work properly, it shows without styles at first, and after you click and click out of the form the styles begin to work -->
+          <label for="passwordConfirm" [ngClass]="userFormular.hasError('PasswordNoMatch') &&
+              (userFormular.controls['passwordConfirm'].touched) ?
+              'input-field-label-invalid' :
+              'input-field-label'">
+            Potvrdit heslo
+          </label>
+          
+        </div>
+        @if (userFormular.hasError('PasswordNoMatch') && (userFormular.controls['passwordConfirm'].touched)){
+          <p class="input-field-error-text">Hesla se neshodují!</p>    
+        }
       </div>
       <div class="flex justify-between items-center">
         <a routerLink="/login" class=" ">Už máte účet? Příhlašte se!</a>

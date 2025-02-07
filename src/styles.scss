@@ -17,6 +17,7 @@ body {
 .input-field {
     @apply relative;
     @apply m-2;
+    @apply mb-1;
 }
 
 .input-field-input {
@@ -118,6 +119,10 @@ body {
   @apply rtl:peer-focus:translate-x-1/4;
   @apply rtl:peer-focus:left-auto;
   @apply start-1;
+}
+
+.input-field-error-text{
+    @apply px-3 text-xs text-red-600 dark:text-red-400;
 }
 
 .primary-button {

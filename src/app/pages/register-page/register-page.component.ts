@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth-service.service';
 import { Router, RouterLink } from '@angular/router';
-import { RegisterUserDto } from '../../models/register-user-dto';
 import { confirmPasswordValidator } from '../../../validators/confirm-password-validator';
 
 @Component({
