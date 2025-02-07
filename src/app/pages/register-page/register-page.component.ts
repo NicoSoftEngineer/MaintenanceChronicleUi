@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators 
 import { AuthService } from '../../../services/auth/auth-service.service';
 import { Router, RouterLink } from '@angular/router';
 import { RegisterUserDto } from '../../models/register-user-dto';
+import { confirmPasswordValidator } from '../../../validators/confirm-password-validator';
 
 @Component({
   selector: 'app-register-page',
@@ -32,7 +33,7 @@ export class RegisterPageComponent {
       nonNullable: true,
       validators: [Validators.required, Validators.email],
     }),
-    lastname: new FormControl('', {
+    lastName: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email],
     }),
@@ -46,22 +47,20 @@ export class RegisterPageComponent {
     }),
     name: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required],
-    }),
-  });
+      validators: [Validators.required]
+    })
+  },
+{
+validators: confirmPasswordValidator
+});
 
   onSubmit(): void {
-    const dataRaw = this.userFormular.getRawValue();
-
-    const data = JSON.parse(JSON.stringify(dataRaw));
-
-    this.authService.login(data).subscribe({
-      next: async () => {
-          await this.router.navigate(['/']);
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
+    console.log(this.userFormular.errors?.['PasswordNoMatch']);
+    console.log(this.userFormular.hasError('PasswordNoMatch'));
   }
 }
+function tryd(form: any){
+  console.log(form.errors?.['PasswordNoMatch']);
+  console.log(form.hasError('PasswordNoMatch'));
+}
+
