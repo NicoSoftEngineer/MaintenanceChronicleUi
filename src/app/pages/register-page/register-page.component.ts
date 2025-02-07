@@ -11,7 +11,6 @@ import { confirmPasswordValidator } from '../../../validators/confirm-password-v
     standalone: true,
     imports: [
         CommonModule,
-        AsyncPipe,
         FormsModule,
         ReactiveFormsModule,
         RouterLink,

@@ -10,10 +10,6 @@ import { MatButton } from '@angular/material/button';
     standalone: true,
     imports: [
         RouterOutlet,
-        TenantListComponent,
-        LoginPageComponent,
-        MatToolbar,
-        MatButton
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'

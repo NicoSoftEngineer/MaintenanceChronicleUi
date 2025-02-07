@@ -9,7 +9,6 @@ import { Router, RouterLink } from '@angular/router';
     standalone: true,
     imports: [
         CommonModule,
-        AsyncPipe,
         FormsModule,
         ReactiveFormsModule,
         RouterLink,
