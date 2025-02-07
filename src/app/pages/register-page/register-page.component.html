@@ -3,10 +3,20 @@
     <form class="p-2" [formGroup]="userFormular" (ngSubmit)="onSubmit()">
       <!-- Organisation create form -->
       <h3 class="text-lg font-bold text-center text-black">Informace o tvé organizaci</h3>
-      <div class="input-field">
-        <input type="text" id="name" formControlName="name" class="input-field-input peer" placeholder="" />
-        <label for="floating_outlined" class="input-field-label">Název</label>
+      <div>
+        <div class="input-field">
+          <input type="tenantName" id="tenantName" formControlName="tenantName" [ngClass]="userFormular.controls.tenantName.hasError('backend') ?
+          'input-field-input-invalid' :
+          'input-field-input'" class="peer" placeholder="" />
+          <label for="floating_outlined" [ngClass]="userFormular.controls.tenantName.hasError('backend') ?
+          'input-field-label-invalid' :
+          'input-field-label'">Název</label>
+        </div>
+        @if (userFormular.controls.tenantName.hasError('backend')) {
+        <p class="input-field-error-text">{{ userFormular.controls.tenantName.errors!['backend'] }}</p>
+        }
       </div>
+
       <!-- User create form -->
       <h3 class="text-lg font-bold text-center text-black">Informace o Vás</h3>
       <div class="flex align-baseline justify-between">
@@ -14,40 +24,50 @@
           <input type="text" id="firstName" formControlName="firstName" class="input-field-input peer" placeholder="" />
           <label for="floating_outlined" class="input-field-label">Jméno</label>
         </div>
+
         <div class="input-field">
           <input type="text" id="lastName" formControlName="lastName" class="input-field-input peer" placeholder="" />
           <label for="floating_outlined" class="input-field-label">Příjmení</label>
         </div>
       </div>
-      <div class="input-field">
-        <input type="email" id="email" formControlName="email" class="input-field-input peer" placeholder="" />
-        <label for="floating_outlined" class="input-field-label">Email</label>
+
+      <div>
+        <div class="input-field">
+          <input type="email" id="email" formControlName="email" [ngClass]="userFormular.controls.email.hasError('backend') ?
+          'input-field-input-invalid' :
+          'input-field-input'" class="peer" placeholder="" />
+          <label for="floating_outlined" [ngClass]="userFormular.controls.email.hasError('backend') ?
+          'input-field-label-invalid' :
+          'input-field-label'">Email</label>
+        </div>
+        @if (userFormular.controls.email.hasError('backend')) {
+        <p class="input-field-error-text">{{ userFormular.controls.email.errors!['backend'] }}</p>
+        }
       </div>
+
       <div class="input-field">
         <input type="password" id="password" formControlName="password" class="input-field-input peer" placeholder="" />
         <label for="password" class="input-field-label">Heslo</label>
       </div>
+
       <div>
         <div class="input-field">
-          <input type="password" id="passwordConfirm" formControlName="passwordConfirm"
-          [ngClass]="userFormular.hasError('PasswordNoMatch')  &&
+          <input type="password" id="passwordConfirm" formControlName="passwordConfirm" [ngClass]="userFormular.hasError('PasswordNoMatch')  &&
               (userFormular.controls['passwordConfirm'].touched) ?
               'input-field-input-invalid' :
               'input-field-input'" class="peer" placeholder="" />
-  
-          <!-- This does not work properly, it shows without styles at first, and after you click and click out of the form the styles begin to work -->
           <label for="passwordConfirm" [ngClass]="userFormular.hasError('PasswordNoMatch') &&
               (userFormular.controls['passwordConfirm'].touched) ?
               'input-field-label-invalid' :
               'input-field-label'">
             Potvrdit heslo
           </label>
-          
         </div>
         @if (userFormular.hasError('PasswordNoMatch') && (userFormular.controls['passwordConfirm'].touched)){
-          <p class="input-field-error-text">Hesla se neshodují!</p>    
+        <p class="input-field-error-text">Hesla se neshodují!</p>
         }
       </div>
+
       <div class="flex justify-between items-center">
         <a routerLink="/login" class=" ">Už máte účet? Příhlašte se!</a>
         <button type="submit" class="primary-button">Registrovat</button>

@@ -4,5 +4,5 @@ export interface RegisterUserTenantDto {
   lastname: string;
   password: string;
   passwordConfirm: string;
-  name: string;
+  tenantName: string;
 }
