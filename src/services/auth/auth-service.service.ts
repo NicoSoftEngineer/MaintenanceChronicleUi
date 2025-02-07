@@ -1,3 +1,4 @@
+import { EmailConfirmTokenForUserDto } from './../../app/models/email-confirm-token-for-user-dto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, ReplaySubject } from 'rxjs';
@@ -34,6 +35,12 @@ export class AuthService {
   emailConfirmation(email: string): Observable<undefined> {
     const url = this.baseUrl + '/send-email-confirm-email';
     return this.httpClient.post<undefined>(url, null,{params: {email : email}} ).pipe(
+    );
+  }
+
+  validateEmailConfirmation(emailConfirmTokenForUserDto: EmailConfirmTokenForUserDto): Observable<undefined> {
+    const url = this.baseUrl + '/validate-token';
+    return this.httpClient.post<undefined>(url, null, {params: {email: emailConfirmTokenForUserDto.email, token: emailConfirmTokenForUserDto.token}}).pipe(
     );
   }
 
