@@ -1,24 +1,48 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../../../services/auth/auth-service.service';
 import { Router, RouterLink } from '@angular/router';
 import { confirmPasswordValidator } from '../../../../validators/confirm-password-validator';
+import { FormInputComponent } from '../../../components/form-input/form-input.component';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterLink,
+    FormInputComponent,
+  ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
 })
-export class RegisterPageComponent {
+export class RegisterPageComponent implements OnInit {
+  ngOnInit(): void {
+    Object.keys(this.userFormular.controls).forEach((key) => {
+      const controlErrors: ValidationErrors =
+        this.userFormular.get(key)!.errors!;
+      if (controlErrors != null) {
+        Object.keys(controlErrors).forEach((keyError) => {
+          console.log(
+            'Key control: ' + key + ', keyError: ' + keyError + ', err value: ',
+            controlErrors[keyError]
+          );
+        });
+      }
+    });
+    this.userFormular.reset();
+  }
+
   protected readonly fb = inject(FormBuilder);
   protected readonly authService = inject(AuthService);
   protected readonly router = inject(Router);
@@ -31,11 +55,11 @@ export class RegisterPageComponent {
       }),
       firstName: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required, Validators.email],
+        validators: [Validators.required],
       }),
       lastName: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required, Validators.email],
+        validators: [Validators.required],
       }),
       password: new FormControl('', {
         nonNullable: true,
@@ -56,6 +80,11 @@ export class RegisterPageComponent {
   );
 
   onSubmit(): void {
+    if (this.userFormular.invalid) {
+      console.log(this.userFormular.controls.email.errors)
+      return;
+    }
+
     const dataRaw = this.userFormular.getRawValue();
 
     const data = JSON.parse(JSON.stringify(dataRaw));
@@ -79,6 +108,7 @@ export class RegisterPageComponent {
       }
     }
   }
+
   private sendEmailVerification(email: string) {
     this.authService.emailConfirmation(email).subscribe({
       next: () => {

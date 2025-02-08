@@ -9,5 +9,5 @@ export const confirmPasswordValidator: ValidatorFn = (
 ): ValidationErrors | null => {
   return control.value.password === control.value.passwordConfirm
     ? null
-    : { PasswordNoMatch: true };
+    : { PasswordNoMatch: 'Hesla se neshodují!' };
 };

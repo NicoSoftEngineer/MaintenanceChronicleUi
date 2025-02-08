@@ -38,10 +38,9 @@ export class AuthService {
     );
   }
 
-  validateEmailConfirmation(emailConfirmTokenForUserDto: EmailConfirmTokenForUserDto): Observable<undefined> {
+  validateEmailConfirmation(email: string, confirmToken: string): Observable<undefined> {
     const url = this.baseUrl + '/validate-token';
-    return this.httpClient.post<undefined>(url, null, {params: {email: emailConfirmTokenForUserDto.email, token: emailConfirmTokenForUserDto.token}}).pipe(
+    return this.httpClient.post<undefined>(url, null, {params: {email: email, token: confirmToken}}).pipe(
     );
   }
-
 }

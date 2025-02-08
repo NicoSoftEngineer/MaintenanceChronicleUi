@@ -1,73 +1,29 @@
 <section class="flex justify-center items-center h-80p">
   <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p pt-1">
-    <form class="p-2" [formGroup]="userFormular" (ngSubmit)="onSubmit()">
+    <form class="p-2 border-0" (ngSubmit)="userFormular.valid && userFormular.markAllAsTouched()"
+      [formGroup]="userFormular" (ngSubmit)="onSubmit()" novalidate>
       <!-- Organisation create form -->
       <h3 class="text-lg font-bold text-center text-black">Informace o tvé organizaci</h3>
-      <div>
-        <div class="input-field">
-          <input type="tenantName" id="tenantName" formControlName="tenantName" [ngClass]="userFormular.controls.tenantName.hasError('backend') ?
-          'input-field-input-invalid' :
-          'input-field-input'" class="peer" placeholder="" />
-          <label for="floating_outlined" [ngClass]="userFormular.controls.tenantName.hasError('backend') ?
-          'input-field-label-invalid' :
-          'input-field-label'">Název</label>
-        </div>
-        @if (userFormular.controls.tenantName.hasError('backend')) {
-        <p class="input-field-error-text">{{ userFormular.controls.tenantName.errors!['backend'] }}</p>
-        }
-      </div>
-
-      <!-- User create form -->
+      <form-imput formControlName="tenantName" type="text" name="Název" [required]="true" label="Název"
+        [error]="userFormular.controls.tenantName.hasError('backend') ? userFormular.controls.tenantName.errors!['backend'] : ''" />
+        <!-- info about the user -->
       <h3 class="text-lg font-bold text-center text-black">Informace o Vás</h3>
       <div class="flex align-baseline justify-between">
-        <div class="input-field">
-          <input type="text" id="firstName" formControlName="firstName" class="input-field-input peer" placeholder="" />
-          <label for="floating_outlined" class="input-field-label">Jméno</label>
-        </div>
-
-        <div class="input-field">
-          <input type="text" id="lastName" formControlName="lastName" class="input-field-input peer" placeholder="" />
-          <label for="floating_outlined" class="input-field-label">Příjmení</label>
-        </div>
+        <form-imput formControlName="firstName" type="text" name="firstName" [required]="true" label="Jméno"
+          [error]="userFormular.controls.firstName.hasError('backend') ? userFormular.controls.firstName.errors!['backend'] : ''" />
+        <form-imput formControlName="lastName" type="text" name="lastName" [required]="true" label="Příjmení"
+          [error]="userFormular.controls.lastName.hasError('backend') ? userFormular.controls.lastName.errors!['backend'] : ''" />
       </div>
-
-      <div>
-        <div class="input-field">
-          <input type="email" id="email" formControlName="email" [ngClass]="userFormular.controls.email.hasError('backend') ?
-          'input-field-input-invalid' :
-          'input-field-input'" class="peer" placeholder="" />
-          <label for="floating_outlined" [ngClass]="userFormular.controls.email.hasError('backend') ?
-          'input-field-label-invalid' :
-          'input-field-label'">Email</label>
-        </div>
-        @if (userFormular.controls.email.hasError('backend')) {
-        <p class="input-field-error-text">{{ userFormular.controls.email.errors!['backend'] }}</p>
-        }
-      </div>
-
-      <div class="input-field">
-        <input type="password" id="password" formControlName="password" class="input-field-input peer" placeholder="" />
-        <label for="password" class="input-field-label">Heslo</label>
-      </div>
-
-      <div>
-        <div class="input-field">
-          <input type="password" id="passwordConfirm" formControlName="passwordConfirm" [ngClass]="userFormular.hasError('PasswordNoMatch')  &&
-              (userFormular.controls['passwordConfirm'].touched) ?
-              'input-field-input-invalid' :
-              'input-field-input'" class="peer" placeholder="" />
-          <label for="passwordConfirm" [ngClass]="userFormular.hasError('PasswordNoMatch') &&
-              (userFormular.controls['passwordConfirm'].touched) ?
-              'input-field-label-invalid' :
-              'input-field-label'">
-            Potvrdit heslo
-          </label>
-        </div>
-        @if (userFormular.hasError('PasswordNoMatch') && (userFormular.controls['passwordConfirm'].touched)){
-        <p class="input-field-error-text">Hesla se neshodují!</p>
-        }
-      </div>
-
+      <form-imput formControlName="email" type="text" name="email" [required]="true" label="Email"
+        [error]="userFormular.controls.email.hasError('backend') ? userFormular.controls.email.errors!['backend'] : ''" />
+      <form-imput formControlName="password" type="password" name="password" [required]="true" label="Heslo"
+        [error]="userFormular.controls.password.hasError('backend') ? userFormular.controls.password.errors!['backend'] : ''" />
+      <form-imput formControlName="passwordConfirm" type="password" name="passwordConfirm" [required]="true" label="Potvrdit heslo"
+        [error]="userFormular.controls.passwordConfirm.hasError('backend') ?
+          userFormular.controls.passwordConfirm.errors!['backend'] :
+          userFormular.hasError('PasswordNoMatch') ?
+            userFormular.errors!['PasswordNoMatch'] :
+            ''" />
       <div class="flex justify-between items-center">
         <a routerLink="/login" class=" ">Už máte účet? Příhlašte se!</a>
         <button type="submit" class="primary-button">Registrovat</button>

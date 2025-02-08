@@ -5,6 +5,7 @@ import { TenantListComponent } from './components/tenant-list/tenant-list.compon
 import { DefaultComponent } from './layout/default/default.component';
 import { RegisterPageComponent } from './pages/auth/register-page/register-page.component';
 import { UnauthorizedHomePageComponent } from './pages/unauthorized-home-page/unauthorized-home-page.component';
+import { EmailConfirmPageComponent } from './pages/auth/email-confirm-page/email-confirm-page.component';
 
 export const routes: Routes = [
     {
@@ -15,6 +16,7 @@ export const routes: Routes = [
         { path: 'tenants', component: TenantListComponent, title: 'Tenants' },
         { path: 'login', component: LoginPageComponent, title: 'Login' },
         { path: 'register', component: RegisterPageComponent, title: 'Register' },
+        { path: 'auth/email-confirm/:email/:confirmToken', component: EmailConfirmPageComponent, title: 'Email confirmation' },
       ],
     }
   ];
