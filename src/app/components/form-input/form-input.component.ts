@@ -120,6 +120,9 @@ export class FormInputComponent
   // Track if we have a required validator
   hasRequiredValidator = false;
 
+  //Track if user wants to show password
+  showPassword = false;
+
   // Computed properties
   floatingLabel = computed(() => {
     return this.focused() || this.value() !== '';

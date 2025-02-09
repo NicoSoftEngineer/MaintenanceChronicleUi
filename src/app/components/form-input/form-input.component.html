@@ -2,7 +2,7 @@
   <div class="input-field ">
     <input
       [id]="inputId"
-      [type]="type()"
+      [type]="showPassword ? 'text' : type()"
       [value]="value()"
       [placeholder]="label() ? '' : placeholder()"
       [required]="required()"
@@ -16,6 +16,19 @@
       'input-field-input-invalid' :
       'input-field-input'"
         >
+    @if(type() === 'password') {
+      <button
+        type="button"
+        class="show-password-icon"
+        (click)="showPassword = !showPassword">
+        @if(showPassword) {
+          <i class="material-icons">visibility</i>
+        } @else {
+          <i class="material-icons">visibility_off</i>
+        }
+      </button>
+
+    }
     @if (label()) {
       <label
         [for]="inputId"
