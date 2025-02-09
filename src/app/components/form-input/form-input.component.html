@@ -12,7 +12,7 @@
       (focus)="onFocus()"
       (blur)="onBlur()"
       class="peer"
-      [class]="(error() || (validationError() && touched())) ?
+      [class]="(getErrors() || (validationError() && touched())) ?
       'input-field-input-invalid' :
       'input-field-input'"
         >
@@ -20,7 +20,7 @@
       <label
         [for]="inputId"
         [class.floating]="floatingLabel()"
-        [class]="(error() || (validationError() && touched()))  ?
+        [class]="(getErrors() || (validationError() && touched()))  ?
           'input-field-label-invalid' :
           'input-field-label'">
         {{ label() }}
@@ -30,11 +30,11 @@
       </label>
     }
   </div>
-  @if (description() && !error() && !validationError()) {
+  @if (description() && !error && !validationError()) {
     <p class="description">{{ description() }}</p>
   }
 
-  @if (error() || (validationError() && touched())) {
-    <p class="input-field-error-text">{{ error() || 'Toto pole je povinné' }}</p>
+  @if (getErrors() || (validationError() && touched())) {
+    <p class="input-field-error-text">{{ getErrors() || 'Toto pole je povinné' }}</p>
   }
 </div>

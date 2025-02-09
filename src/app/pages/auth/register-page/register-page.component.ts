@@ -13,6 +13,7 @@ import { AuthService } from '../../../../services/auth/auth-service.service';
 import { Router, RouterLink } from '@angular/router';
 import { confirmPasswordValidator } from '../../../../validators/confirm-password-validator';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
+import { addFormControlError, getErrorMessage } from '../../../utils/form-control-error-helper.service';
 
 @Component({
   selector: 'app-register-page',
@@ -32,6 +33,7 @@ export class RegisterPageComponent{
   protected readonly fb = inject(FormBuilder);
   protected readonly authService = inject(AuthService);
   protected readonly router = inject(Router);
+  protected readonly getErrorMessage = getErrorMessage;
 
   protected userFormular = this.fb.group(
     {
@@ -59,15 +61,17 @@ export class RegisterPageComponent{
         nonNullable: true,
         validators: [Validators.required],
       }),
-    },
-    {
-      validators: confirmPasswordValidator,
     }
   );
 
   onSubmit(): void {
     this.userFormular.markAllAsTouched();
     if (this.userFormular.invalid) {
+      console.log(this.userFormular.controls.email.errors);
+      return;
+    }
+    if(this.userFormular.value.password !== this.userFormular.value.passwordConfirm){
+      addFormControlError(this.userFormular.get('passwordConfirm')!, 'passwordsDontMatch', 'Hesla se neshodují!');
       return;
     }
 
@@ -88,9 +92,7 @@ export class RegisterPageComponent{
   private applyBackendErrors(errors: { [key: string]: string[] }) {
     for (const key in errors) {
       if (this.userFormular.controls.hasOwnProperty(key)) {
-        this.userFormular
-          .get(key)!
-          .setErrors({ backend: errors[key].join(' ') });
+        addFormControlError(this.userFormular.get(key)!, 'backend', errors[key].join(' '));
       }
     }
   }

@@ -25,6 +25,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { getErrorMessage } from '../../utils/form-control-error-helper.service';
 
 @Component({
   selector: 'form-imput',
@@ -45,7 +46,9 @@ import {
     },
   ],
 })
-export class FormInputComponent implements ControlValueAccessor, Validator, DoCheck {
+export class FormInputComponent
+  implements ControlValueAccessor, Validator, DoCheck
+{
   private elementRef = inject(ElementRef);
 
   // Generate unique ID for input
@@ -56,25 +59,39 @@ export class FormInputComponent implements ControlValueAccessor, Validator, DoCh
   @ContentChild('suffix') suffixTemplate?: TemplateRef<any>;
 
   // Host bindings for form states
-  @HostBinding('class.ng-touched') get isTouched() { return this.touched(); }
-  @HostBinding('class.ng-untouched') get isUntouched() { return !this.touched(); }
-  @HostBinding('class.ng-dirty') get isDirty() { return this.dirty(); }
-  @HostBinding('class.ng-pristine') get isPristine() { return !this.dirty(); }
-  @HostBinding('class.ng-valid') get isValid() { return !this.validationError(); }
-  @HostBinding('class.ng-invalid') get isInvalid() { return !!this.validationError(); }
+  @HostBinding('class.ng-touched') get isTouched() {
+    return this.touched();
+  }
+  @HostBinding('class.ng-untouched') get isUntouched() {
+    return !this.touched();
+  }
+  @HostBinding('class.ng-dirty') get isDirty() {
+    return this.dirty();
+  }
+  @HostBinding('class.ng-pristine') get isPristine() {
+    return !this.dirty();
+  }
+  @HostBinding('class.ng-valid') get isValid() {
+    return !this.validationError();
+  }
+  @HostBinding('class.ng-invalid') get isInvalid() {
+    return !!this.validationError();
+  }
 
   // Inputs
   label = input<string>('');
   placeholder = input<string>('');
-  type = input<'text' | 'password' | 'email' | 'number' | 'tel' | 'url'>('text');
+  type = input<'text' | 'password' | 'email' | 'number' | 'tel' | 'url'>(
+    'text'
+  );
   size = input<'small' | 'normal' | 'large'>('normal');
   required = input<boolean>(false);
   readonly = input<boolean>(false);
   description = input<string>('');
-  error = input<string>('');
   prefixIcon = input<string>('');
   suffixIcon = input<string>('');
-
+  name = input<string>('');
+  error = input<string>('');
   // Model signals
   value = model<string>('');
   disabled = model<boolean>(false);
@@ -84,6 +101,10 @@ export class FormInputComponent implements ControlValueAccessor, Validator, DoCh
   touched = signal<boolean>(false);
   dirty = signal<boolean>(false);
   private control: AbstractControl | null = null;
+
+  getErrors(){
+    return getErrorMessage(this.control, this.name());
+  }
 
   // Validation state
   validationError = computed(() => {
@@ -127,7 +148,6 @@ export class FormInputComponent implements ControlValueAccessor, Validator, DoCh
   }
 
   private updateInputVariables() {
-
     // Update CSS variables on the host element
     const el = this.elementRef.nativeElement;
     el.style.setProperty('--input-focus-ring', `40040`);
@@ -181,7 +201,6 @@ export class FormInputComponent implements ControlValueAccessor, Validator, DoCh
     if (!this.touched()) {
       this.touched.set(true);
       this.onTouched();
-      console.log('should show error:' + (this.error() || (this.validationError() && this.touched())))
       // Trigger validation when marked as touched
       if (this.control) {
         this.control.updateValueAndValidity();

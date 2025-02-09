@@ -3,34 +3,24 @@
     <form class="p-2 border-0" [formGroup]="userFormular" (ngSubmit)="userFormular.valid && userFormular.markAllAsTouched(); onSubmit()" novalidate>
       <!-- Organisation create form -->
       <h3 class="text-lg font-bold text-center text-black">Informace o Vaší organizaci</h3>
-      <form-imput formControlName="tenantName" type="text" name="Název" [required]="true" label="Název"
-        [error]="userFormular.controls.tenantName.hasError('backend') ? userFormular.controls.tenantName.errors!['backend'] : ''" />
+      <form-imput formControlName="tenantName" type="text" name="tenantName" [required]="true" label="Název"/>
 
         <!-- info about the user -->
       <h3 class="text-lg font-bold text-center text-black">Informace o Vás</h3>
       <div class="flex align-baseline">
         <div class="w-50p">
-          <form-imput formControlName="firstName" type="text" name="firstName" [required]="true" label="Jméno"
-          [error]="userFormular.controls.firstName.hasError('backend') ? userFormular.controls.firstName.errors!['backend'] : ''" />
+          <form-imput formControlName="firstName" type="text" name="firstName" [required]="true" label="Jméno"/>
         </div>
         <div class="w-50p">
-          <form-imput formControlName="lastName" type="text" name="lastName" [required]="true" label="Příjmení"
-          [error]="userFormular.controls.lastName.hasError('backend') ? userFormular.controls.lastName.errors!['backend'] : ''" />
+          <form-imput formControlName="lastName" type="text" name="lastName" [required]="true" label="Příjmení"/>
         </div>
       </div>
 
-      <form-imput formControlName="email" type="text" name="email" [required]="true" label="Email"
-        [error]="userFormular.controls.email.hasError('backend') ? userFormular.controls.email.errors!['backend'] : ''" />
+      <form-imput formControlName="email" type="text" name="email" [required]="true" label="Email"/>
 
-      <form-imput formControlName="password" type="password" name="password" [required]="true" label="Heslo"
-        [error]="userFormular.controls.password.hasError('backend') ? userFormular.controls.password.errors!['backend'] : ''" />
+      <form-imput formControlName="password" type="password" name="password" [required]="true" label="Heslo"/>
 
-      <form-imput formControlName="passwordConfirm" type="password" name="passwordConfirm" [required]="true" label="Potvrdit heslo"
-        [error]="userFormular.controls.passwordConfirm.hasError('backend') ?
-          userFormular.controls.passwordConfirm.errors!['backend'] :
-          userFormular.hasError('PasswordNoMatch') ?
-            userFormular.errors!['PasswordNoMatch'] :
-            ''" />
+      <form-imput formControlName="passwordConfirm" type="password" name="passwordConfirm" [required]="true" label="Potvrdit heslo"/>
 
       <div class="flex justify-between items-center m-3">
         <a routerLink="/login" class=" ">Už máte účet? Příhlašte se!</a>
