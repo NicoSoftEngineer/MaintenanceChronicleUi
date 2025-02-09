@@ -1,6 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormsModule,
@@ -26,23 +27,8 @@ import { FormInputComponent } from '../../../components/form-input/form-input.co
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
 })
-export class RegisterPageComponent implements OnInit {
-  ngOnInit(): void {
-    Object.keys(this.userFormular.controls).forEach((key) => {
-      const controlErrors: ValidationErrors =
-        this.userFormular.get(key)!.errors!;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach((keyError) => {
-          console.log(
-            'Key control: ' + key + ', keyError: ' + keyError + ', err value: ',
-            controlErrors[keyError]
-          );
-        });
-      }
-    });
-    this.userFormular.reset();
-  }
-
+export class RegisterPageComponent{
+  @ViewChild(FormInputComponent) formInputComponent!: FormInputComponent;
   protected readonly fb = inject(FormBuilder);
   protected readonly authService = inject(AuthService);
   protected readonly router = inject(Router);
@@ -80,8 +66,8 @@ export class RegisterPageComponent implements OnInit {
   );
 
   onSubmit(): void {
+    this.userFormular.markAllAsTouched();
     if (this.userFormular.invalid) {
-      console.log(this.userFormular.controls.email.errors)
       return;
     }
 

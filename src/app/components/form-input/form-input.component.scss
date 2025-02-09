@@ -1,91 +1,17 @@
 :host {
   display: block;
 }
-.input-wrapper {
-  @apply relative;
-}
-.input-field.error:focus {
-  box-shadow: 0 0 0 2px theme('colors.red.500/20');
-}
-
-/* Size variants */
-.input-small {
-  @apply px-3 py-1.5 text-sm;
-}
-
-.input-normal {
-  @apply px-4 py-2.5 text-base;
-}
-
-.input-large {
-  @apply px-5 py-3 text-lg;
-}
-
-/* Label Sizes */
-.field-label-small {
-  @apply text-sm;
-  left: 0.75rem;
-}
-
-.field-label-normal {
-  @apply text-base;
-  left: 1rem;
-}
-
-.field-label-large {
-  @apply text-lg;
-  left: 1.25rem;
-}
-
-/* Floating Label Sizes */
-.field-label-small.floating {
-  @apply text-xs;
-  transform: translateY(-195%) scale(0.85);
-  left: 0.45rem;
-}
-
-.field-label-normal.floating {
-  @apply text-xs;
-  transform: translateY(-130%) scale(0.85);
-  left: 0.75rem;
-}
-
-.field-label-large.floating {
-  @apply text-xs;
-  transform: translateY(-170%) scale(0.85);
-  left: 1rem;
-}
-
-/* Focused state label colors */
-.form-field.focused .field-label {
-  color: var(--input-label);
-}
-
-/* Description */
-.description {
-  @apply mt-1 ms-2 text-sm text-gray-500 dark:text-gray-400;
-}
-
-/* Error */
-.error-message {
-  @apply mt-1 ms-2 text-sm text-red-500 dark:text-red-400;
-}
-
-.required-marker {
-  @apply text-red-500 dark:text-red-400 ml-0.5;
-}
-
-
 
 .input-field {
   @apply relative;
-  @apply m-2;
+  @apply mt-2;
   @apply mb-1;
+  @apply w-full;
+
 }
 
 .input-field-input {
   @apply block;
-  @apply px-2.5;
   @apply pb-2.5;
   @apply pt-4;
   @apply w-full;
@@ -182,4 +108,12 @@
 @apply rtl:peer-focus:translate-x-1/4;
 @apply rtl:peer-focus:left-auto;
 @apply start-1;
+}
+
+.input-field-error-text{
+  @apply px-1 text-xs text-red-600 dark:text-red-400;
+}
+
+.required-marker {
+  @apply text-red-500;
 }

@@ -8,8 +8,12 @@ import {
   effect,
   inject,
   ElementRef,
+  TemplateRef,
   signal,
   OnInit,
+  ContentChild,
+  HostBinding,
+  DoCheck,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -17,12 +21,10 @@ import {
   ControlValueAccessor,
   NG_VALIDATORS,
   Validator,
+  Validators,
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-// import { ButtonVariant } from '../../../pages/theme-builder/types/colors';
-// import { ThemeSettingsService } from '../../../services/theme-settings.service';
-// import { ColorSettingsService } from '../../../services/color-settings.service';
 
 @Component({
   selector: 'form-imput',
@@ -43,23 +45,35 @@ import {
     },
   ],
 })
-export class FormInputComponent implements ControlValueAccessor, Validator {
-  // private themeSettingsService = inject(ThemeSettingsService);
-  // private colorSettingsService = inject(ColorSettingsService);
+export class FormInputComponent implements ControlValueAccessor, Validator, DoCheck {
   private elementRef = inject(ElementRef);
 
-  // Inputs
+  // Generate unique ID for input
+  readonly inputId = `input-${Math.random().toString(36).slice(2, 11)}`;
 
+  // Content Children
+  @ContentChild('prefix') prefixTemplate?: TemplateRef<any>;
+  @ContentChild('suffix') suffixTemplate?: TemplateRef<any>;
+
+  // Host bindings for form states
+  @HostBinding('class.ng-touched') get isTouched() { return this.touched(); }
+  @HostBinding('class.ng-untouched') get isUntouched() { return !this.touched(); }
+  @HostBinding('class.ng-dirty') get isDirty() { return this.dirty(); }
+  @HostBinding('class.ng-pristine') get isPristine() { return !this.dirty(); }
+  @HostBinding('class.ng-valid') get isValid() { return !this.validationError(); }
+  @HostBinding('class.ng-invalid') get isInvalid() { return !!this.validationError(); }
+
+  // Inputs
+  label = input<string>('');
   placeholder = input<string>('');
-  type = input<'text' | 'password' | 'email' | 'number' | 'tel' | 'url'>(
-    'text'
-  );
-  // variant = input<ButtonVariant>('primary');
+  type = input<'text' | 'password' | 'email' | 'number' | 'tel' | 'url'>('text');
   size = input<'small' | 'normal' | 'large'>('normal');
   required = input<boolean>(false);
   readonly = input<boolean>(false);
   description = input<string>('');
   error = input<string>('');
+  prefixIcon = input<string>('');
+  suffixIcon = input<string>('');
 
   // Model signals
   value = model<string>('');
@@ -68,15 +82,56 @@ export class FormInputComponent implements ControlValueAccessor, Validator {
   // Internal state signals
   focused = signal<boolean>(false);
   touched = signal<boolean>(false);
+  dirty = signal<boolean>(false);
+  private control: AbstractControl | null = null;
 
   // Validation state
+  validationError = computed(() => {
+    // Check both required property and validator
+    if (this.required() || this.hasRequiredValidator) {
+      if (!this.value()) {
+        return { required: true };
+      }
+    }
+    return null;
+  });
+
+  // Track if we have a required validator
+  hasRequiredValidator = false;
+
+  // Computed properties
+  floatingLabel = computed(() => {
+    return this.focused() || this.value() !== '';
+  });
 
   constructor() {
-    console.log('FormInputComponent Constructor Initialized');
     effect(() => {
-      console.log('Effect triggered: Value =', this.value());
-      this.floatingLabel();
+      this.updateInputVariables();
     });
+  }
+
+  ngDoCheck() {
+    if (this.control) {
+      // Sync control states
+      if (this.control.touched !== this.touched()) {
+        this.touched.set(this.control.touched);
+      }
+
+      if (this.control.dirty !== this.dirty()) {
+        this.dirty.set(this.control.dirty);
+      }
+
+      // Re-run validation
+      this.control.updateValueAndValidity();
+    }
+  }
+
+  private updateInputVariables() {
+
+    // Update CSS variables on the host element
+    const el = this.elementRef.nativeElement;
+    el.style.setProperty('--input-focus-ring', `40040`);
+    el.style.setProperty('--input-label', '500');
   }
 
   // ControlValueAccessor Implementation
@@ -85,8 +140,7 @@ export class FormInputComponent implements ControlValueAccessor, Validator {
 
   writeValue(value: string): void {
     this.value.set(value || '');
-    console.log('Write Value:', value); // Debugging log
-    this.floatingLabel(); // Ensure floating label updates
+    this.dirty.set(false); // Reset dirty state when value is written externally
   }
 
   registerOnChange(fn: any): void {
@@ -105,6 +159,13 @@ export class FormInputComponent implements ControlValueAccessor, Validator {
     const input = event.target as HTMLInputElement;
     this.value.set(input.value);
     this.onChange(input.value);
+    this.dirty.set(true);
+    this.markAsTouched();
+
+    // Trigger validation on change
+    if (this.control) {
+      this.control.updateValueAndValidity();
+    }
   }
 
   onFocus() {
@@ -113,12 +174,40 @@ export class FormInputComponent implements ControlValueAccessor, Validator {
 
   onBlur() {
     this.focused.set(false);
-    this.touched.set(true);
-    this.onTouched();
+    this.markAsTouched();
+  }
+
+  markAsTouched() {
+    if (!this.touched()) {
+      this.touched.set(true);
+      this.onTouched();
+      console.log('should show error:' + (this.error() || (this.validationError() && this.touched())))
+      // Trigger validation when marked as touched
+      if (this.control) {
+        this.control.updateValueAndValidity();
+      }
+    }
   }
 
   // Validator Implementation
   validate(control: AbstractControl): ValidationErrors | null {
+    // Store reference to control for later use
+    this.control = control;
+
+    // Check if the control has a required validator
+    this.hasRequiredValidator = control.hasValidator(Validators.required);
+
+    // Sync touched state with control
+    if (control.touched !== this.touched()) {
+      this.touched.set(control.touched);
+    }
+
+    // Sync dirty state with control
+    if (control.dirty !== this.dirty()) {
+      this.dirty.set(control.dirty);
+    }
+
+    // Return validation result
     return this.validationError();
   }
 
@@ -126,27 +215,13 @@ export class FormInputComponent implements ControlValueAccessor, Validator {
   isInputDisabled(): boolean {
     return this.disabled();
   }
-  validationError = computed(() => {
-    if (this.required() && !this.value()) {
-      return { required: true }; //from he it adds the label
-    }
-    return null;
-  }); // Computed properties
-  floatingLabel = computed(() => {
-    console.log('Floating Label Check:', this.focused(), this.value());
-    return this.focused() || this.value() !== '';
-  });
-  label = input<string>('');
-  private updateInputVariables() {
-    // const settings = this.themeSettingsService.settings();
-    // const colors = this.colorSettingsService.colors();
-    // const currentVariant = this.variant();
-    // const variantSettings = settings.input.variants[currentVariant];
-    // const variantColors = colors[currentVariant];
 
-    // Update CSS variables on the host element
-    const el = this.elementRef.nativeElement;
-    el.style.setProperty('--input-focus-ring', `50040`);
-    el.style.setProperty('--input-label', '700');
+  // Helper methods for prefix/suffix
+  hasPrefix(): boolean {
+    return !!this.prefixTemplate || !!this.prefixIcon();
+  }
+
+  hasSuffix(): boolean {
+    return !!this.suffixTemplate || !!this.suffixIcon();
   }
 }

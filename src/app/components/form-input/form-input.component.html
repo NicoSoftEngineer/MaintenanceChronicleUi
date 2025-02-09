@@ -1,27 +1,40 @@
 <div class="form-field border-0" [class.focused]="focused()" [class.disabled]="isInputDisabled()">
   <div class="input-field ">
-    <input [type]="type()" [value]="value()" [placeholder]="label() ? '' : placeholder()" [required]="required()"
-      [disabled]="isInputDisabled()" [readonly]="readonly()" (input)="onInputChange($event)" (focus)="onFocus()"
-      (blur)="onBlur()" class="peer" [ngClass]="(error() || (validationError() && touched())) ?
-     'input-field-input-invalid' :
-     'input-field-input'" />
-
-     <!-- @if (label()) { -->
-    <label [ngClass]="(error() || (validationError() && touched()))  ?
-    'input-field-label-invalid' :
-    'input-field-label'" >
-      {{ label() }}
-      @if (required()) {
-      <span class="required-marker">*</span>
-      }
-    </label>
-    <!-- } -->
+    <input
+      [id]="inputId"
+      [type]="type()"
+      [value]="value()"
+      [placeholder]="label() ? '' : placeholder()"
+      [required]="required()"
+      [disabled]="isInputDisabled()"
+      [readonly]="readonly()"
+      (input)="onInputChange($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      class="peer"
+      [class]="(error() || (validationError() && touched())) ?
+      'input-field-input-invalid' :
+      'input-field-input'"
+        >
+    @if (label()) {
+      <label
+        [for]="inputId"
+        [class.floating]="floatingLabel()"
+        [class]="(error() || (validationError() && touched()))  ?
+          'input-field-label-invalid' :
+          'input-field-label'">
+        {{ label() }}
+        @if (required()) {
+          <span class="required-marker">*</span>
+        }
+      </label>
+    }
   </div>
   @if (description() && !error() && !validationError()) {
-  <p class="description">{{ description() }}</p>
+    <p class="description">{{ description() }}</p>
   }
 
   @if (error() || (validationError() && touched())) {
-  <p class="error-message">{{ error() || 'Tohle pole je povinné!' }}</p>
+    <p class="input-field-error-text">{{ error() || 'Toto pole je povinné' }}</p>
   }
 </div>
