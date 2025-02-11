@@ -1,16 +1,14 @@
-import { AbstractControl } from "@angular/forms";
+import { AbstractControl, FormGroup } from "@angular/forms";
 
 export function addFormControlError(
-  formControl: AbstractControl,
+  form: FormGroup,
+  fieldName: string,
   errorKey: string,
-  errorMessage: string
+  message:string,
 ): void {
-  if (formControl) {
-    formControl.setErrors({
-      ...formControl.errors, // Keep existing errors
-      [errorKey]: errorMessage // Add new error
-    });
-  }
+  const control = form.get(fieldName)!;
+  const errors = { [errorKey]: message || true };
+  control.setErrors(errors);
 }
 
 export function getErrorMessage(control: AbstractControl | null, controlName: string): string | null{
@@ -19,6 +17,7 @@ export function getErrorMessage(control: AbstractControl | null, controlName: st
   //If the input is focused, don't show the error message
   const firstNameElement = document.querySelector(`[formControlName="${controlName}"]`);
   let inputChild = firstNameElement?.querySelector('input');
+
   if (inputChild === document.activeElement) {
     return '';
   }
@@ -28,7 +27,8 @@ export function getErrorMessage(control: AbstractControl | null, controlName: st
   if(control.hasError('backend')){
     return control.errors!['backend'];
   }
+  if(control.hasError('passwordsDontMatch')){
+    return control.errors!['passwordsDontMatch'];
+  }
   return  null;
 }
-
-

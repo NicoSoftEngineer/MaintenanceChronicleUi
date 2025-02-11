@@ -1,30 +1,6 @@
-import {
-  Component,
-  input,
-  output,
-  model,
-  forwardRef,
-  computed,
-  effect,
-  inject,
-  ElementRef,
-  TemplateRef,
-  signal,
-  OnInit,
-  ContentChild,
-  HostBinding,
-  DoCheck,
-} from '@angular/core';
+import {Component,input,model,forwardRef,computed,effect,inject,ElementRef,TemplateRef,signal,ContentChild,HostBinding,DoCheck,} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  NG_VALIDATORS,
-  Validator,
-  Validators,
-  AbstractControl,
-  ValidationErrors,
-} from '@angular/forms';
+import {NG_VALUE_ACCESSOR,ControlValueAccessor,NG_VALIDATORS,Validator,Validators,AbstractControl,ValidationErrors,} from '@angular/forms';
 import { getErrorMessage } from '../../utils/form-control-error-helper.service';
 
 @Component({
@@ -46,10 +22,12 @@ import { getErrorMessage } from '../../utils/form-control-error-helper.service';
     },
   ],
 })
+
 export class FormInputComponent
   implements ControlValueAccessor, Validator, DoCheck
 {
   private elementRef = inject(ElementRef);
+  private control: AbstractControl | null = null;
 
   // Generate unique ID for input
   readonly inputId = `input-${Math.random().toString(36).slice(2, 11)}`;
@@ -84,14 +62,11 @@ export class FormInputComponent
   type = input<'text' | 'password' | 'email' | 'number' | 'tel' | 'url'>(
     'text'
   );
-  size = input<'small' | 'normal' | 'large'>('normal');
   required = input<boolean>(false);
   readonly = input<boolean>(false);
-  description = input<string>('');
-  prefixIcon = input<string>('');
-  suffixIcon = input<string>('');
   name = input<string>('');
   error = input<string>('');
+
   // Model signals
   value = model<string>('');
   disabled = model<boolean>(false);
@@ -100,11 +75,6 @@ export class FormInputComponent
   focused = signal<boolean>(false);
   touched = signal<boolean>(false);
   dirty = signal<boolean>(false);
-  private control: AbstractControl | null = null;
-
-  getErrors(){
-    return getErrorMessage(this.control, this.name());
-  }
 
   // Validation state
   validationError = computed(() => {
@@ -236,14 +206,5 @@ export class FormInputComponent
   // Helper method to check if input is disabled
   isInputDisabled(): boolean {
     return this.disabled();
-  }
-
-  // Helper methods for prefix/suffix
-  hasPrefix(): boolean {
-    return !!this.prefixTemplate || !!this.prefixIcon();
-  }
-
-  hasSuffix(): boolean {
-    return !!this.suffixTemplate || !!this.suffixIcon();
   }
 }
