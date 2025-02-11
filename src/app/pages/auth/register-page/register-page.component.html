@@ -3,21 +3,21 @@
     <form class="p-2 border-0" [formGroup]="userFormular" (ngSubmit)="userFormular.valid && userFormular.markAllAsTouched(); onSubmit()" novalidate>
       <!-- Organisation create form -->
       <h3 class="text-lg font-bold text-center text-black">Informace o Vaší organizaci</h3>
-      <form-imput formControlName="tenantName" type="text"  name="tenantName" [required]="true" label="Název" [error]="getErrorMessage(userFormular.get('tenantName'), 'tenantName')!"/>
+      <form-input formControlName="tenantName" type="text"  name="tenantName" [required]="true" label="Název" [error]="getErrorMessage(userFormular.get('tenantName'), 'tenantName')!"/>
 
         <!-- info about the user -->
       <h3 class="text-lg font-bold text-center text-black">Informace o Vás</h3>
       <div class="flex align-baseline">
         <div class="w-50p">
-          <form-imput formControlName="firstName" type="text" name="firstName" [required]="true" label="Jméno"/>
+          <form-input formControlName="firstName" type="text" name="firstName" [required]="true" label="Jméno"/>
         </div>
         <div class="w-50p">
-          <form-imput formControlName="lastName" type="text" name="lastName" [required]="true" label="Příjmení"/>
+          <form-input formControlName="lastName" type="text" name="lastName" [required]="true" label="Příjmení"/>
         </div>
       </div>
-      <form-imput formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(userFormular.get('email'), 'email')!"/>
-      <form-imput formControlName="password" type="password" name="password" [required]="true" label="Heslo"/>
-      <form-imput formControlName="passwordConfirm" type="password"  name="passwordConfirm" [required]="true" label="Potvrdit heslo"/>
+      <form-input formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(userFormular.get('email'), 'email')!"/>
+      <form-input formControlName="password" type="password" name="password" [required]="true" label="Heslo"/>
+      <form-input formControlName="passwordConfirm" type="password"  name="passwordConfirm" [required]="true" label="Potvrdit heslo"/>
 
       <div class="flex justify-between items-center m-3">
         <a routerLink="/login" class=" ">Už máte účet? Příhlašte se!</a>

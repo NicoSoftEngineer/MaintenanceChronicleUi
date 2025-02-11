@@ -4,6 +4,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormControl,
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
@@ -14,7 +15,7 @@ import { Router, RouterLink } from '@angular/router';
 import { confirmPasswordValidator } from '../../../../validators/confirm-password-validator';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import {
-  addFormControlError,
+  applyBackendErrors,
   getErrorMessage,
 } from '../../../utils/form-control-error-helper.service';
 
@@ -38,6 +39,7 @@ export class RegisterPageComponent {
   protected readonly router = inject(Router);
   protected readonly getErrorMessage = getErrorMessage;
   protected readonly confirmPasswordValidator = confirmPasswordValidator;
+  protected readonly applyBackendErrors = applyBackendErrors;
 
   protected userFormular = this.fb.group({
     email: new FormControl('', {
@@ -73,7 +75,6 @@ export class RegisterPageComponent {
     }
 
     const dataRaw = this.userFormular.getRawValue();
-
     const data = JSON.parse(JSON.stringify(dataRaw));
 
     this.authService.register(data).subscribe({
@@ -81,22 +82,9 @@ export class RegisterPageComponent {
         this.sendEmailVerification(data.email);
       },
       error: (errors) => {
-        this.applyBackendErrors(errors.error.errors);
+        this.applyBackendErrors(this.userFormular, errors.error.errors);
       },
     });
-  }
-
-  private applyBackendErrors(errors: { [key: string]: string[] }) {
-    for (const key in errors) {
-      if (this.userFormular.controls.hasOwnProperty(key)) {
-        addFormControlError(
-          this.userFormular!,
-          key,
-          'backend',
-          errors[key].join(' ')
-        );
-      }
-    }
   }
 
   private sendEmailVerification(email: string) {

@@ -4,7 +4,7 @@ import {NG_VALUE_ACCESSOR,ControlValueAccessor,NG_VALIDATORS,Validator,Validator
 import { getErrorMessage } from '../../utils/form-control-error-helper.service';
 
 @Component({
-  selector: 'form-imput',
+  selector: 'form-input',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './form-input.component.html',

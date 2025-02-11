@@ -3,6 +3,8 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth/auth-service.service';
 import { Router, RouterLink } from '@angular/router';
+import { FormInputComponent } from '../../../components/form-input/form-input.component';
+import { applyBackendErrors, getErrorMessage } from '../../../utils/form-control-error-helper.service';
 
 @Component({
     selector: 'app-login-page',
@@ -12,6 +14,7 @@ import { Router, RouterLink } from '@angular/router';
         FormsModule,
         ReactiveFormsModule,
         RouterLink,
+        FormInputComponent
     ],
     templateUrl: './login-page.component.html',
     styleUrl: './login-page.component.scss'
@@ -20,6 +23,8 @@ export class LoginPageComponent {
   protected readonly fb = inject(FormBuilder);
   protected readonly authService = inject(AuthService);
   protected readonly router = inject(Router);
+  protected readonly getErrorMessage = getErrorMessage;
+  protected readonly applyBackendErrors = applyBackendErrors;
 
   protected formular = this.fb.group({
     email: new FormControl('', {
@@ -41,8 +46,8 @@ export class LoginPageComponent {
       next: async () => {
           await this.router.navigate(['/']);
       },
-      error: (error) => {
-        console.log(error);
+      error: (errors) => {
+        applyBackendErrors(this.formular,  errors.error.errors);
       }
     });
   }

@@ -32,3 +32,16 @@ export function getErrorMessage(control: AbstractControl | null, controlName: st
   }
   return  null;
 }
+
+export function applyBackendErrors(form: FormGroup ,errors: { [key: string]: string[] }) {
+  for (const key in errors) {
+    if (form.controls.hasOwnProperty(key)) {
+      addFormControlError(
+        form!,
+        key,
+        'backend',
+        errors[key].join(' ')
+      );
+    }
+  }
+}
