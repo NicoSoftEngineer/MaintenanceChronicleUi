@@ -18,6 +18,7 @@ import {
   applyBackendErrors,
   getErrorMessage,
 } from '../../../utils/form-control-error-helper.service';
+import { AlertComponent } from '../../../components/alert/alert.component';
 
 @Component({
   selector: 'app-register-page',
@@ -28,6 +29,7 @@ import {
     ReactiveFormsModule,
     RouterLink,
     FormInputComponent,
+    AlertComponent
   ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
@@ -40,6 +42,7 @@ export class RegisterPageComponent {
   protected readonly getErrorMessage = getErrorMessage;
   protected readonly confirmPasswordValidator = confirmPasswordValidator;
   protected readonly applyBackendErrors = applyBackendErrors;
+  protected showEmailAlert = false;
 
   protected userFormular = this.fb.group({
     email: new FormControl('', {
@@ -90,7 +93,7 @@ export class RegisterPageComponent {
   private sendEmailVerification(email: string) {
     this.authService.emailConfirmation(email).subscribe({
       next: () => {
-        this.router.navigate(['/login']);
+        this.showEmailAlert = true;
       },
       error: (errors) => {
         console.log(errors);

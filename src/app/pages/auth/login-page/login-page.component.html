@@ -1,9 +1,10 @@
 <section class="flex justify-center items-center h-80p">
+  <mach:alert class="w-25p m-2" [visible]="showInvalidInfoAlert" type="error" message="Špatné přihlašovací ůdaje"/>
   <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p pt-1">
     <form class="p-2 border-0" [formGroup]="formular" (ngSubmit)="formular.valid && formular.markAllAsTouched(); onSubmit()" novalidate>
       <h2 class="text-lg font-bold text-center text-black">Přihlášení</h2>
-      <form-input formControlName="email" type="text" name="email" [required]="true" label="Email"/>
-      <form-input formControlName="password" type="password" name="password" [required]="true" label="Heslo"/>
+      <mach:forminput formControlName="email" type="text" name="email" [required]="true" label="Email"/>
+      <mach:forminput formControlName="password" type="password" name="password" [required]="true" label="Heslo"/>
 
       <div class="flex justify-between items-center m-3">
         <a routerLink="/register" class=" ">Nemáte účet? Registrujte se!</a>

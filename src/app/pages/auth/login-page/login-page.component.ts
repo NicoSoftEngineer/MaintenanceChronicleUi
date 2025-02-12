@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/auth/auth-service.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import { applyBackendErrors, getErrorMessage } from '../../../utils/form-control-error-helper.service';
+import { AlertComponent } from '../../../components/alert/alert.component';
 
 @Component({
     selector: 'app-login-page',
@@ -14,7 +15,8 @@ import { applyBackendErrors, getErrorMessage } from '../../../utils/form-control
         FormsModule,
         ReactiveFormsModule,
         RouterLink,
-        FormInputComponent
+        FormInputComponent,
+        AlertComponent
     ],
     templateUrl: './login-page.component.html',
     styleUrl: './login-page.component.scss'
@@ -25,6 +27,7 @@ export class LoginPageComponent {
   protected readonly router = inject(Router);
   protected readonly getErrorMessage = getErrorMessage;
   protected readonly applyBackendErrors = applyBackendErrors;
+  protected showInvalidInfoAlert = false;
 
   protected formular = this.fb.group({
     email: new FormControl('', {
@@ -47,7 +50,8 @@ export class LoginPageComponent {
           await this.router.navigate(['/']);
       },
       error: (errors) => {
-        applyBackendErrors(this.formular,  errors.error.errors);
+        console.log(errors);
+        // this.showInvalidInfoAlert = true;
       }
     });
   }

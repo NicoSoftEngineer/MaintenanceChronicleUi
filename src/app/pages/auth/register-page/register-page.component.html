@@ -1,23 +1,27 @@
-<section class="flex justify-center items-center h-80p">
+
+<section class="flex justify-center items-center h-80p flex-col  w-full">
+  <mach:alert class="w-25p m-2" [visible]="showEmailAlert" type="success" message="Email confirmation email was sent!"/>
   <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p pt-1">
+
     <form class="p-2 border-0" [formGroup]="userFormular" (ngSubmit)="userFormular.valid && userFormular.markAllAsTouched(); onSubmit()" novalidate>
+
       <!-- Organisation create form -->
       <h3 class="text-lg font-bold text-center text-black">Informace o Vaší organizaci</h3>
-      <form-input formControlName="tenantName" type="text"  name="tenantName" [required]="true" label="Název" [error]="getErrorMessage(userFormular.get('tenantName'), 'tenantName')!"/>
+      <mach:forminput formControlName="tenantName" type="text"  name="tenantName" [required]="true" label="Název" [error]="getErrorMessage(userFormular.get('tenantName'), 'tenantName')!"/>
 
-        <!-- info about the user -->
+      <!-- info about the user -->
       <h3 class="text-lg font-bold text-center text-black">Informace o Vás</h3>
       <div class="flex align-baseline">
         <div class="w-50p">
-          <form-input formControlName="firstName" type="text" name="firstName" [required]="true" label="Jméno"/>
+          <mach:forminput formControlName="firstName" type="text" name="firstName" [required]="true" label="Jméno"/>
         </div>
         <div class="w-50p">
-          <form-input formControlName="lastName" type="text" name="lastName" [required]="true" label="Příjmení"/>
+          <mach:forminput formControlName="lastName" type="text" name="lastName" [required]="true" label="Příjmení"/>
         </div>
       </div>
-      <form-input formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(userFormular.get('email'), 'email')!"/>
-      <form-input formControlName="password" type="password" name="password" [required]="true" label="Heslo"/>
-      <form-input formControlName="passwordConfirm" type="password"  name="passwordConfirm" [required]="true" label="Potvrdit heslo"/>
+      <mach:forminput formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(userFormular.get('email'), 'email')!"/>
+      <mach:forminput formControlName="password" type="password" name="password" [required]="true" label="Heslo"/>
+      <mach:forminput formControlName="passwordConfirm" type="password"  name="passwordConfirm" [required]="true" label="Potvrdit heslo"/>
 
       <div class="flex justify-between items-center m-3">
         <a routerLink="/login" class=" ">Už máte účet? Příhlašte se!</a>
