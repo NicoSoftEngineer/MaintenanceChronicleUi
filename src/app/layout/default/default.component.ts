@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth-service.service';
 import { AsyncPipe } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
     selector: 'app-default',
@@ -12,5 +12,22 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 export class DefaultComponent {
   protected readonly authService = inject(AuthService);
-  protected user$ = this.authService.isLoggedIn$;
+  protected readonly router = inject(Router);
+  protected user$ = this.authService.userinfo();
+  isLoggedIn = false;
+
+  ngOnInit() {
+    // Subscribe to the isLoggedIn$ observable to update UI reactively
+    this.authService.isLoggedIn$.subscribe((status) => {
+      this.isLoggedIn = status;
+    });
+  }
+
+  logout() {
+    this.authService.logout().subscribe({
+      next: async () => {
+        await this.router.navigate(['/login']);
+      }
+    })
+  }
 }

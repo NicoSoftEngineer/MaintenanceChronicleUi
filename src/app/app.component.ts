@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 
 @Component({
     selector: 'app-root',
@@ -12,4 +13,8 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'ServiceTrackUi';
+
+  ngOnInit(): void {
+    initFlowbite();
+  }
 }
