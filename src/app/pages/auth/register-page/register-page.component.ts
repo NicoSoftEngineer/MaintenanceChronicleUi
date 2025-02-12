@@ -1,3 +1,4 @@
+import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
@@ -39,6 +40,7 @@ export class RegisterPageComponent {
   protected readonly fb = inject(FormBuilder);
   protected readonly authService = inject(AuthService);
   protected readonly router = inject(Router);
+  protected readonly alertStateService = inject(AlertStateService);
   protected readonly getErrorMessage = getErrorMessage;
   protected readonly confirmPasswordValidator = confirmPasswordValidator;
   protected readonly applyBackendErrors = applyBackendErrors;
@@ -93,7 +95,7 @@ export class RegisterPageComponent {
   private sendEmailVerification(email: string) {
     this.authService.emailConfirmation(email).subscribe({
       next: () => {
-        this.showEmailAlert = true;
+        this.alertStateService.openAlert('Ověřovací email byl odeslán!');
       },
       error: (errors) => {
         console.log(errors);

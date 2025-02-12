@@ -1,5 +1,6 @@
+import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../services/auth/auth-service.service';
 import { Router, RouterLink } from '@angular/router';
@@ -25,9 +26,15 @@ export class LoginPageComponent {
   protected readonly fb = inject(FormBuilder);
   protected readonly authService = inject(AuthService);
   protected readonly router = inject(Router);
+  protected readonly alertStateService = inject(AlertStateService);
   protected readonly getErrorMessage = getErrorMessage;
   protected readonly applyBackendErrors = applyBackendErrors;
   protected showInvalidInfoAlert = false;
+
+  shouldShowError = computed(() => {
+    console.log("the value of visible should be "+this.showInvalidInfoAlert)
+    return this.showInvalidInfoAlert;
+  });
 
   protected formular = this.fb.group({
     email: new FormControl('', {
@@ -50,8 +57,7 @@ export class LoginPageComponent {
           await this.router.navigate(['/']);
       },
       error: (errors) => {
-        console.log(errors);
-        // this.showInvalidInfoAlert = true;
+        this.alertStateService.openAlert('Špatné přihlašovací údaje');
       }
     });
   }

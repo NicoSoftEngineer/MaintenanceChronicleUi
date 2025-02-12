@@ -1,30 +1,25 @@
-import { Component, Input, input, signal } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { AlertStateService } from './alert-state.service';
 
 @Component({
   selector: 'mach:alert',
-  imports: [],
   templateUrl: './alert.component.html',
-  styleUrl: './alert.component.scss'
+  styleUrls: ['./alert.component.scss']
 })
 export class AlertComponent {
+  type = input<'error' | 'success' | 'warning' | 'info'>('info');
+  icon = input<'none' | 'success' | 'warning' | 'error'>('none');
+  message: string = '';
+  show: boolean = false;
 
-type = input<'error' | 'success' | 'warning' | 'info'>('info');
-icon = input<'none' | 'success' | 'warning' | 'error'>('none');
-message = input<string>('');
-
-private visiblePriv = signal<boolean>((false)); // Internal state
-
-  @Input()
-  set visible(val: boolean) {
-    this.visiblePriv.set(val); // Transform value
+  constructor(private alertService: AlertStateService) {
+    this.alertService.alertState$.subscribe(alert => {
+      this.message = alert.message;
+      this.show = alert.show;
+    });
   }
 
-  get visible() {
-    return this.visiblePriv();
+  close() {
+    this.alertService.closeAlert();
   }
-
-closeButton() {
-  this.visiblePriv.set(false);
-}
-
 }

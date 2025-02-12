@@ -1,6 +1,6 @@
 
 <section class="flex justify-center items-center h-80p flex-col  w-full">
-  <mach:alert class="w-25p m-2" [visible]="showEmailAlert" type="success" message="Email confirmation email was sent!"/>
+  <mach:alert class="w-25p m-2" type="success"/>
   <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p pt-1">
 
     <form class="p-2 border-0" [formGroup]="userFormular" (ngSubmit)="userFormular.valid && userFormular.markAllAsTouched(); onSubmit()" novalidate>

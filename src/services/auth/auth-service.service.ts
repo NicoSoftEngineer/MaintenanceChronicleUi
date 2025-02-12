@@ -19,10 +19,7 @@ export class AuthService {
   login(data: LoginDto): Observable<undefined> {
     const url = this.baseUrl + '/login';
     return this.httpClient.post<undefined>(url, data).pipe(
-      catchError((error) => {
-        console.error('Error from myself:', error);
-        return [];
-      })
+
     );
   }
 

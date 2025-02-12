@@ -1,4 +1,4 @@
-@if(visible){
+@if(show){
 <div class="alert"
 [class]="'alert-'+type()">
   <div class="alert-icon">
@@ -24,10 +24,10 @@
     }
   </div>
   <div class="alert-message">
-    <p>{{message()}}</p>
+    <p>{{message}}</p>
   </div>
   <div>
-    <button class="alert-close" (click)="closeButton()">✖</button>
+    <button class="alert-close" (click)="close()">✖</button>
   </div>
 </div>
 }
