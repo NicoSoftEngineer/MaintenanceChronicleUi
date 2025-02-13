@@ -1,0 +1,22 @@
+<div class="flex">
+  <!-- Customer detail section -->
+  <section class="w-1/2 flex flex-col items-start justify-stretch p-4">
+    <mach:alert class="w-full m-2"/>
+    <h2 class="p-2 text-lg font-bold text-center text-black">Zákazník</h2>
+    <form [formGroup]="customerFormular" (ngSubmit)="onSubmit()" class="space-y-4 w-full">
+      <mach:forminput formControlName="name" type="text" name="name" [required]="true" label="Název" />
+      <mach:forminput formControlName="conpanyRegistrationId" type="text" name="conpanyRegistrationId" [required]="true"
+        label="IČO" />
+      <mach:forminput formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(customerFormular.get('email'), 'email')!"/>
+      <mach:forminput formControlName="phoneNumber" type="text" name="phoneNumber" [required]="true"
+        label="Telefonní číslo" />
+      <div class="flex justify-end">
+        <button type="submit" class="primary-button">Uložit</button>
+      </div>
+    </form>
+  </section>
+  <!-- Locations list section -->
+  <section class="p-4">
+    <h2 class="p-2 text-lg font-bold text-center text-black">Lokace</h2>
+  </section>
+</div>

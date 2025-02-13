@@ -1,0 +1,24 @@
+<section class="flex flex-col items-center justify-stretch p-4">
+  <div class="w-2/3 ">
+    <mach:alert class="w-full m-2" />
+    <h2 class="p-2 text-lg font-bold text-center text-black">Zákazníci</h2>
+    <div class="flex justify-end">
+      <a [routerLink]="['/customer-detail', '']" class="btn primary-button">Nový zákazník</a>
+    </div>
+  </div>
+  @for(customer of customers;track customer.name){
+    <div class="w-2/3 border p-2 m-2 border-[#1F0F53] rounded dark:border-gray-700">
+      <div class="flex justify-between p-2 border-gray-200 dark:border-gray-700">
+        <div class="flex flex-col">
+          <span class="text-lg font-bold">{{customer.name}}</span>
+          <span>{{customer.email}}</span>
+        </div>
+        <div class="flex">
+          <button [routerLink]="['/customer-detail', customer.id]" class="btn primary-button">Detail</button>
+          <button  class="btn danger-button">Smazat</button>
+        </div>
+      </div>
+    </div>
+  }
+
+</section>

@@ -20,16 +20,15 @@
   @apply bg-transparent;
   @apply rounded-lg;
   @apply border;
-  @apply border-gray-300;
+  @apply border-gray-400;
   @apply appearance-none;
   @apply dark:text-white;
   @apply dark:border-gray-600;
   @apply dark:focus:border-blue-500;
   @apply focus:outline-none;
   @apply focus:ring-0;
-  @apply focus:border-blue-600;
+  @apply focus:border-[#1F0F53]
 }
-
 .input-field-label {
   @apply absolute;
   @apply text-sm;
@@ -46,8 +45,8 @@
   @apply dark:bg-gray-900;
   @apply px-2;
   @apply peer-focus:px-2;
-  @apply peer-focus:text-blue-600;
-  @apply peer-focus:dark:text-blue-500;
+  @apply peer-focus:text-[#1F0F53];
+  @apply peer-focus:dark:text-[#1F0F53];
   @apply peer-placeholder-shown:scale-100;
   @apply peer-placeholder-shown:-translate-y-1/2;
   @apply peer-placeholder-shown:top-1/2;

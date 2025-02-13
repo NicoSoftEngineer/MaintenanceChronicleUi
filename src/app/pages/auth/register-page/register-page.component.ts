@@ -95,7 +95,7 @@ export class RegisterPageComponent {
   private sendEmailVerification(email: string) {
     this.authService.emailConfirmation(email).subscribe({
       next: () => {
-        this.alertStateService.openAlert('Ověřovací email byl odeslán!');
+        this.alertStateService.openAlert('Ověřovací email byl odeslán!', 'success');
       },
       error: (errors) => {
         console.log(errors);

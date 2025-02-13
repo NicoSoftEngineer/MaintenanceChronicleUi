@@ -7,7 +7,7 @@ import { AlertStateService } from './alert-state.service';
   styleUrls: ['./alert.component.scss']
 })
 export class AlertComponent {
-  type = input<'error' | 'success' | 'warning' | 'info'>('info');
+  type = '';
   icon = input<'none' | 'success' | 'warning' | 'error'>('none');
   message: string = '';
   show: boolean = false;
@@ -15,6 +15,7 @@ export class AlertComponent {
   constructor(private alertService: AlertStateService) {
     this.alertService.alertState$.subscribe(alert => {
       this.message = alert.message;
+      this.type = alert.type;
       this.show = alert.show;
     });
   }

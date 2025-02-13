@@ -35,10 +35,10 @@ body {
 }
 
 .primary-button {
-    @apply text-gray-100;
     @apply bg-gradient-to-r;
-    @apply from-blue-700;
-    @apply to-blue-600;
+    @apply from-[#1F0F53];
+    @apply to-[#9D4E94];
+    @apply text-[#FFDB99];
     @apply hover:bg-gradient-to-l;
     @apply focus:ring-4;
     @apply focus:outline-none;

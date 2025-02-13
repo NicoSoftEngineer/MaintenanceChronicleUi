@@ -10,7 +10,6 @@ import { LoggedInUserInfoDto } from '../../app/models/logged-in-user-info-dto';
   providedIn: 'root'
 })
 export class AuthService {
-
   constructor(private httpClient: HttpClient) {
     this.checkLoginStatus();
   }

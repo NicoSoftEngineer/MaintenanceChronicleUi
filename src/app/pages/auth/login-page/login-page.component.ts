@@ -57,7 +57,7 @@ export class LoginPageComponent {
           await this.router.navigate(['/']);
       },
       error: (errors) => {
-        this.alertStateService.openAlert('Špatné přihlašovací údaje');
+        this.alertStateService.openAlert('Špatné přihlašovací údaje', 'error');
       }
     });
   }
