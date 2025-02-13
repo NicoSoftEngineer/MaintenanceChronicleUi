@@ -11,14 +11,27 @@ form forminput{
   border: 0;
 }
 
-html,
-body {
-    height: 100%;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+app-default{
+  height: 100%;
 }
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: "Montserrat", serif;
+    font-weight: 585;
+    font-style: normal;
 }
 
 .primary-button {
@@ -61,6 +74,18 @@ a{
 }
 
 .router-button{
-    @apply text-gray-900 no-underline bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none;
+    @apply text-[#1F0F53] no-underline bg-[#FFDB99]  font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none;
 }
 
+.footer {
+  background: #615873;
+  color: #FFDB99;
+  text-align: center;
+  padding: 20px;
+  opacity: 50%;
+}
+
+.footer a {
+  color: #1F0F53;
+  text-decoration: none;
+}
