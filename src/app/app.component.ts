@@ -12,7 +12,7 @@ import { initFlowbite } from 'flowbite';
     styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'ServiceTrackUi';
+  title = 'MaintenanceChronicle';
 
   ngOnInit(): void {
     initFlowbite();

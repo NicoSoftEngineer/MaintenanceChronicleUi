@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth-service.service';
 import { AsyncPipe } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 
 @Component({
     selector: 'app-default',
@@ -20,6 +21,7 @@ export class DefaultComponent {
     // Subscribe to the isLoggedIn$ observable to update UI reactively
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
+      this.reinitializeDropdown();
     });
   }
 
@@ -29,5 +31,11 @@ export class DefaultComponent {
         await this.router.navigate(['/login']);
       }
     })
+  }
+
+  reinitializeDropdown() {
+    setTimeout(() => {
+      initFlowbite();
+    }, 100); // Delay to ensure the DOM updates
   }
 }
