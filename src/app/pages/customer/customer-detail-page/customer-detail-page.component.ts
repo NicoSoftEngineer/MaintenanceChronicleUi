@@ -14,6 +14,7 @@ import { AlertComponent } from '../../../components/alert/alert.component';
 import { CustomerService } from '../../../../services/customer-service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { getErrorMessage } from '../../../utils/form-control-error-helper.service';
+import { getJsonPatch } from '../../../utils/patch-form-helper.service';
 @Component({
   selector: 'app-customer-detail-page',
   imports: [
@@ -31,6 +32,7 @@ export class CustomerDetailPageComponent implements OnInit {
   protected readonly fb = inject(FormBuilder);
   protected readonly customerService = inject(CustomerService);
   protected readonly alertStateService = inject(AlertStateService);
+  protected readonly getJsonPatch = inject(getJsonPatch);
   protected readonly getErrorMessage = getErrorMessage;
   private customerDeatil: { [key: string]: any } = {};
 
@@ -123,20 +125,5 @@ export class CustomerDetailPageComponent implements OnInit {
       },
     });
   }
-  // Generate a JSON Patch array with changed fields
-  getJsonPatch(updatedFrom: FormGroup, originalModel: any): any[] {
-    let patchArray: any[] = [];
 
-    Object.keys(updatedFrom.value).forEach((key) => {
-      if (updatedFrom.get(key)?.value !== originalModel[key] && originalModel[key]) {
-        patchArray.push({
-          path: key,
-          op: 'replace',
-          value: updatedFrom.get(key)?.value,
-        });
-      }
-    });
-
-    return patchArray;
-  }
 }
