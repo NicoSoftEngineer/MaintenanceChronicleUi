@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NewCustomerDetail } from '../app/models/bussiness/customer/new-customer-detail';
 import { CustomerListDto } from '../app/models/bussiness/customer/customer-list-dto';
+import { CustomerDetail } from '../app/models/bussiness/customer/customer-detail';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +17,9 @@ export class CustomerService {
     return this.httpClient.post<undefined>(url, data).pipe();
   }
 
-  getCustomerById(id: string): Observable<NewCustomerDetail> {
+  getCustomerById(id: string): Observable<CustomerDetail> {
     const url = this.baseUrl + '/customers/' + id;
-    return this.httpClient.get<NewCustomerDetail>(url).pipe();
+    return this.httpClient.get<CustomerDetail>(url).pipe();
   }
 
   getCustomers(): Observable<CustomerListDto[]> {

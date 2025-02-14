@@ -14,6 +14,7 @@ import { AlertComponent } from '../../../components/alert/alert.component';
 import { CustomerService } from '../../../../services/customer-service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { getErrorMessage } from '../../../utils/form-control-error-helper.service';
+import { CustomerDetail } from '../../../models/bussiness/customer/customer-detail';
 
 @Component({
   selector: 'app-customer-detail-page',
@@ -33,6 +34,7 @@ export class CustomerDetailPageComponent implements OnInit {
   protected readonly customerService = inject(CustomerService);
   protected readonly alertStateService = inject(AlertStateService);
   protected readonly getErrorMessage = getErrorMessage;
+  private customerDeatil: CustomerDetail = {} as CustomerDetail;
 
   protected customerFormular = this.fb.group({
     name: new FormControl('', {
@@ -58,6 +60,7 @@ export class CustomerDetailPageComponent implements OnInit {
     if (id) {
       this.customerService.getCustomerById(id).subscribe({
         next: (customer) => {
+          this.customerDeatil = customer;
           this.customerFormular.patchValue(customer);
         },
         error: (error) => {
