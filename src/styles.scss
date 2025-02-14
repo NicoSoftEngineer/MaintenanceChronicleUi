@@ -4,14 +4,14 @@
 @tailwind base;
 
 forminput {
-    border-width: 0 !important;
-
+  border-width: 0 !important;
 }
-form forminput{
+form forminput {
   border: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -23,69 +23,89 @@ app-root {
   height: 100%;
 }
 
-app-default{
+app-default {
   height: 100%;
 }
 
 body {
-    margin: 0;
-    font-family: "Montserrat", serif;
-    font-weight: 585;
-    font-style: normal;
+  margin: 0;
+  font-family: "Montserrat", serif;
+  font-weight: 585;
+  font-style: normal;
 }
 
-.primary-button {
-    @apply bg-gradient-to-r;
-    @apply from-[#1F0F53];
-    @apply to-[#9D4E94];
-    @apply text-[#FFDB99];
-    @apply hover:bg-gradient-to-l;
-    @apply focus:ring-4;
-    @apply focus:outline-none;
-    @apply focus:ring-purple-200;
-    @apply dark:focus:ring-purple-800;
-    @apply font-medium;
-    @apply rounded-lg;
-    @apply text-sm;
-    @apply px-5;
-    @apply py-2.5;
-    @apply text-center;
-    @apply me-2;
-    @apply mb-2;
+.btn {
+  @apply bg-gradient-to-bl;
+  @apply no-underline;
+  @apply hover:bg-gradient-to-l;
+  @apply focus:ring-4;
+  @apply focus:outline-none;
+  @apply font-medium;
+  @apply rounded-lg;
+  @apply text-sm;
+  @apply px-5;
+  @apply py-2.5;
+  @apply text-center;
+  @apply me-2;
+  @apply mb-2;
 }
 
-.h-80p{
-    height: 80%;
-}
-.h-40p{
-    height: 40%;
-}
-
-.w-25p{
-    width: 25%;
+.btn-primary {
+  @apply from-[#1F0F53];
+  @apply to-[#093d82];
+  @apply text-white;
+  @apply focus:ring-purple-200;
+  @apply dark:focus:ring-purple-800;
 }
 
-.w-50p{
+.btn-danger{
+  @apply from-[#ff2424];
+  @apply to-[#9a0101];
+  @apply text-white;
+  @apply focus:ring-purple-200;
+  @apply dark:focus:ring-purple-800;
+}
+
+.btn-secondary {
+  @apply from-[#c0c0c0];
+  @apply to-[#a0a0a0];
+  @apply text-[#1F0F53];
+  @apply focus:ring-purple-200;
+  @apply dark:focus:ring-purple-800;
+}
+
+.h-80p {
+  height: 80%;
+}
+.h-40p {
+  height: 40%;
+}
+
+.w-25p {
+  width: 25%;
+}
+
+.w-50p {
   width: 50%;
 }
 
-a{
-    @apply font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline ms-2;
+a {
+  @apply font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline ms-2;
 }
 
-.router-button{
-    @apply text-[#1F0F53] no-underline bg-[#FFDB99]  font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none;
+.router-button {
+  @apply text-[#1F0F53] no-underline bg-[#FFDB99]  font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none;
 }
 
 .footer {
   background: #615873;
-  color: #FFDB99;
+  color: #ffdb99;
   text-align: center;
   padding: 20px;
   opacity: 50%;
 }
 
 .footer a {
-  color: #1F0F53;
+  color: #1f0f53;
   text-decoration: none;
 }
