@@ -6,6 +6,7 @@ import { AlertComponent } from '../../../components/alert/alert.component';
 import { CustomerService } from '../../../../services/customer-service';
 import { PopUpModalComponent } from '../../../components/pop-up-modal/pop-up-modal.component';
 import { initFlowbite } from 'flowbite';
+import { AlertStateService } from '../../../components/alert/alert-state.service';
 
 @Component({
   selector: 'app-customer-list-page',
@@ -16,19 +17,26 @@ import { initFlowbite } from 'flowbite';
 export class CustomerListPageComponent implements OnInit {
   protected readonly customerService = inject(CustomerService);
   protected readonly popUpStateService = inject(PopUpStateService);
+  protected readonly alertStateService = inject(AlertStateService);
   protected customers: CustomerListDto[] = [];
 
   constructor() {
-    this.customerService.getCustomers().subscribe((customers) => {this.customers = customers});
+    this.loadCustomers();
   }
   ngOnInit(): void {
     initFlowbite();
   }
   deleteCustomer = (id: string) => {
-    console.log('Deleting customer with id: ', id);
+    this.customerService.deleteCustomer(id).subscribe(() => {
+      this.customers = this.customers.filter((customer) => customer.id !== id);
+    });
+    this.loadCustomers();
+    this.alertStateService.openAlert('Zákazník byl úspěšně vymazán', 'success');
   };
   openPopUp = (customer: CustomerListDto) => {
     this.popUpStateService.openPopUp(`Jste si jistí, že chcete vymazat zákazníka "${customer.name}"`, this.deleteCustomer, customer.id);
-
+  };
+  private loadCustomers = () => {
+    this.customerService.getCustomers().subscribe((customers) => {this.customers = customers});
   };
 }

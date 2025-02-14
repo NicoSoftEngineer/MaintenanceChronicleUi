@@ -25,4 +25,9 @@ export class CustomerService {
     const url = this.baseUrl + '/customers';
     return this.httpClient.get<CustomerListDto[]>(url).pipe();
   }
+
+  deleteCustomer(id: string): Observable<undefined> {
+    const url = this.baseUrl + '/customers/' + id;
+    return this.httpClient.delete<undefined>(url).pipe();
+  }
 }
