@@ -14,8 +14,6 @@ import { AlertComponent } from '../../../components/alert/alert.component';
 import { CustomerService } from '../../../../services/customer-service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { getErrorMessage } from '../../../utils/form-control-error-helper.service';
-import { CustomerDetail } from '../../../models/bussiness/customer/customer-detail';
-
 @Component({
   selector: 'app-customer-detail-page',
   imports: [
@@ -34,7 +32,7 @@ export class CustomerDetailPageComponent implements OnInit {
   protected readonly customerService = inject(CustomerService);
   protected readonly alertStateService = inject(AlertStateService);
   protected readonly getErrorMessage = getErrorMessage;
-  private customerDeatil: CustomerDetail = {} as CustomerDetail;
+  private customerDeatil: { [key: string]: any } = {};
 
   protected customerFormular = this.fb.group({
     name: new FormControl('', {
@@ -47,7 +45,7 @@ export class CustomerDetailPageComponent implements OnInit {
     }),
     phoneNumber: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required],
+      validators: [Validators.required]
     }),
     conpanyRegistrationId: new FormControl('', {
       nonNullable: true,
@@ -74,11 +72,39 @@ export class CustomerDetailPageComponent implements OnInit {
   }
 
   onSubmit() {
-    this.customerFormular.markAllAsTouched();
-    if (this.customerFormular.invalid) {
+    // this.customerFormular.markAllAsTouched();
+    // if (this.customerFormular.invalid) {
+    //   return;
+    // }
+
+    if (this.customerDeatil['id']) {
+      this.updateCustomer();
       return;
     }
+    this.addCustomer();
+  }
 
+  updateCustomer(){
+    const patchValue = this.getJsonPatch(this.customerFormular, this.customerDeatil);
+    this.customerService.updateCustomer(this.customerDeatil['id'], patchValue).subscribe({
+      next: (cust) => {
+        this.customerDeatil = cust;
+        this.customerFormular.patchValue(cust);
+        this.alertStateService.openAlert(
+          'Zákazník byl úspěšně upraven',
+          'success'
+        );
+      },
+      error: (error) => {
+        this.alertStateService.openAlert(
+          'Něco se pokazilo, zkuste to prosím znovu',
+          'error'
+        );
+      },
+    });
+  }
+
+  addCustomer(){
     const dataRaw = this.customerFormular.getRawValue();
     const data = JSON.parse(JSON.stringify(dataRaw));
 
@@ -96,5 +122,21 @@ export class CustomerDetailPageComponent implements OnInit {
         );
       },
     });
+  }
+  // Generate a JSON Patch array with changed fields
+  getJsonPatch(updatedFrom: FormGroup, originalModel: any): any[] {
+    let patchArray: any[] = [];
+
+    Object.keys(updatedFrom.value).forEach((key) => {
+      if (updatedFrom.get(key)?.value !== originalModel[key] && originalModel[key]) {
+        patchArray.push({
+          path: key,
+          op: 'replace',
+          value: updatedFrom.get(key)?.value,
+        });
+      }
+    });
+
+    return patchArray;
   }
 }
