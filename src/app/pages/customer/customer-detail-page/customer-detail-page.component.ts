@@ -32,7 +32,7 @@ export class CustomerDetailPageComponent implements OnInit {
   protected readonly fb = inject(FormBuilder);
   protected readonly customerService = inject(CustomerService);
   protected readonly alertStateService = inject(AlertStateService);
-  protected readonly getJsonPatch = inject(getJsonPatch);
+  protected readonly getJsonPatch = getJsonPatch;
   protected readonly getErrorMessage = getErrorMessage;
   private customerDeatil: { [key: string]: any } = {};
 
@@ -49,7 +49,7 @@ export class CustomerDetailPageComponent implements OnInit {
       nonNullable: true,
       validators: [Validators.required]
     }),
-    conpanyRegistrationId: new FormControl('', {
+    companyIdNumber: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -74,10 +74,10 @@ export class CustomerDetailPageComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.customerFormular.markAllAsTouched();
-    // if (this.customerFormular.invalid) {
-    //   return;
-    // }
+    this.customerFormular.markAllAsTouched();
+    if (this.customerFormular.invalid) {
+      return;
+    }
 
     if (this.customerDeatil['id']) {
       this.updateCustomer();

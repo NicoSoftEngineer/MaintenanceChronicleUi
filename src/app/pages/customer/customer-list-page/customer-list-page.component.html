@@ -24,13 +24,13 @@
           <span class="font-bold ">Tel. číslo:</span>
         </div>
         <div class="flex flex-col">
-          <span>564851298</span>
-          <span>backend-add&#64;email.com</span>
-          <span>+420 654 987 269</span>
+          <span>{{customer.companyIdNumber}}</span>
+          <span>{{customer.email}}</span>
+          <span>{{customer.phoneNumber}}</span>
         </div>
       </div>
       <div class="flex justify-end items-center h-1/4">
-        <button [routerLink]="['/customer-detail', customer.id]" class="btn btn-primary">Detail</button>
+        <a [routerLink]="['/customer-detail', customer.id]" class="btn btn-primary">Detail</a>
         <button (click)="openPopUp(customer)" class="btn btn-danger">Smazat</button>
       </div>
     </div>

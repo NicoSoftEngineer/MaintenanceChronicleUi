@@ -3,5 +3,5 @@ export interface CustomerListDto {
   name: string;
   email: string;
   phoneNumber: string;
-  conpanyRegistrationId: string;
+  companyIdNumber: string;
 }

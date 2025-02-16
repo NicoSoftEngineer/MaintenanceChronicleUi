@@ -5,7 +5,7 @@
     <h2 class="p-2 text-lg font-bold text-center text-black">Zákazník</h2>
     <form [formGroup]="customerFormular" (ngSubmit)="onSubmit()" class="space-y-4 w-full">
       <mach:forminput formControlName="name" type="text" name="name" [required]="true" label="Název" />
-      <mach:forminput formControlName="conpanyRegistrationId" type="text" name="conpanyRegistrationId" [required]="true"
+      <mach:forminput formControlName="companyIdNumber" type="text" name="companyIdNumber" [required]="true"
         label="IČO" />
       <mach:forminput formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(customerFormular.get('email'), 'email')!"/>
       <mach:forminput formControlName="phoneNumber" type="text" name="phoneNumber" [required]="true"

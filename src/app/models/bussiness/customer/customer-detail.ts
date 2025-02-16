@@ -5,6 +5,6 @@ export interface CustomerDetail {
   name: string;
   email: string;
   phoneNumber: string;
-  conpanyRegistrationId: string;
+  companyIdNumber: string;
   locations: LocationListDto[];
 }
