@@ -1,0 +1,34 @@
+<section class="flex flex-col items-center justify-stretch p-4 h-full">
+  <div class="w-2/3 ">
+    <mach:alert class="w-full m-2" />
+    <mach:pop-up />
+    <div class="flex justify-between items-baseline">
+      <h1 class="p-2 text-2xl font-bold text-center text-black">Lokace</h1>
+      <div class="">
+        <a [routerLink]="['/customer-detail', '']" class="btn btn-primary">Nová lokace</a>
+      </div>
+    </div>
+  </div>
+  @for(location of locations;track location.name){
+  <div
+    class="list-item ">
+    <div class="flex  justify-between items-center p-2 ">
+      <div class="flex flex-col w-1/4  self-start">
+        <span class="text-lg font-bold">{{location.name}}</span>
+      </div>
+      <div class="flex jus pt-2 w-1/3">
+        <div class="flex flex-col justify-start w-1/6">
+          <span class="font-bold  ">Adresa:</span>
+        </div>
+        <div class="flex justify-start">
+          <p>{{location.street}}, {{location.city}}, {{location.country}}</p>
+        </div>
+      </div>
+      <div class="flex justify-end items-center h-1/4">
+        <a [routerLink]="['/locations', location.id]" class="btn btn-primary">Detail</a>
+        <button (click)="undefined" class="btn btn-danger">Smazat</button>
+      </div>
+    </div>
+  </div>
+  }
+</section>
