@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LocationListDto } from '../app/models/bussiness/location/location-list-dto';
+import { LocationDetailDto } from '../app/models/bussiness/location/location-detail-dto';
+import { NewLocationDetailDto } from '../app/models/bussiness/location/new-location-detail-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
-
   constructor(private httpClient: HttpClient) {}
   protected readonly baseUrl = '/api/v1/locations';
 
@@ -15,4 +16,24 @@ export class LocationService {
     const url = this.baseUrl;
     return this.httpClient.get<LocationListDto[]>(url).pipe();
   }
+
+  getLocationById(id: string): Observable<LocationDetailDto> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.httpClient.get<LocationDetailDto>(url).pipe();
+  }
+
+  createLocation(location: NewLocationDetailDto): Observable<NewLocationDetailDto> {
+    const url = this.baseUrl;
+    return this.httpClient.post<NewLocationDetailDto>(url, location).pipe();
+  }
+
+  updateLocation(id: string, patchValue: any[]): Observable<LocationDetailDto> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.httpClient.patch<LocationDetailDto>(url, patchValue).pipe();
+  }
+
+  deleteLocation(id: string): Observable<undefined> {
+    const url = `${this.baseUrl}/${id}`;
+    return this.httpClient.delete<undefined>(url).pipe();
+  };
 }

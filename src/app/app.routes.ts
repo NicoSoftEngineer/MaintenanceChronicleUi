@@ -9,6 +9,7 @@ import { EmailConfirmPageComponent } from './pages/auth/email-confirm-page/email
 import { CustomerListPageComponent } from './pages/customer/customer-list-page/customer-list-page.component';
 import { CustomerDetailPageComponent } from './pages/customer/customer-detail-page/customer-detail-page.component';
 import { LocationListPageComponent } from './pages/location/location-list-page/location-list-page.component';
+import { LocationDetailComponent } from './pages/location/location-detail/location-detail.component';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,7 @@ export const routes: Routes = [
         { path: 'customer-list', component: CustomerListPageComponent, title: 'Customer list' },
         { path: 'customer-detail/:id', component: CustomerDetailPageComponent, title: 'Customer detail' },
         { path: 'locations', component: LocationListPageComponent, title: 'Location list' },
+        { path: 'locations/:id', component: LocationDetailComponent, title: 'Location detail' },
       ]
     }
   ];

@@ -1,0 +1,22 @@
+<div class="flex">
+  <!-- Customer detail section -->
+  <section class="w-1/2 flex flex-col items-start justify-stretch p-4">
+    <mach:alert class="w-full m-2"/>
+    <h2 class="p-2 text-lg font-bold text-center text-black">Pobočka</h2>
+    <form [formGroup]="locationFormular" (ngSubmit)="onSubmit()" class="space-y-4 w-full">
+      <mach:forminput formControlName="name" type="text" name="name" [required]="true" label="Název" />
+      <mach:forminput formControlName="street" type="text" name="street" [required]="true"
+        label="Ulice" />
+      <mach:forminput formControlName="city" type="text" name="city" [required]="true" label="Město" />
+      <mach:forminput formControlName="country" type="text" name="country" [required]="true"
+        label="Země" />
+      <div class="flex justify-end">
+        <button type="submit" class="btn btn-primary">Uložit</button>
+      </div>
+    </form>
+  </section>
+  <!-- Locations list section -->
+  <section class="p-4">
+    <h2 class="p-2 text-lg font-bold text-center text-black">Stroje</h2>
+  </section>
+</div>
