@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { LocationListDto } from '../app/models/bussiness/location/location-list-dto';
 import { LocationDetailDto } from '../app/models/bussiness/location/location-detail-dto';
 import { NewLocationDetailDto } from '../app/models/bussiness/location/new-location-detail-dto';
+import { CustomerDetailForLocation } from '../app/models/bussiness/customer/customer-detail-for-location';
 
 @Injectable({
   providedIn: 'root'
@@ -36,4 +37,9 @@ export class LocationService {
     const url = `${this.baseUrl}/${id}`;
     return this.httpClient.delete<undefined>(url).pipe();
   };
+
+  getCustomerForLocation(id: string): Observable<CustomerDetailForLocation> {
+    const url = `${this.baseUrl}/${id}/customer`;
+    return this.httpClient.get<CustomerDetailForLocation>(url).pipe();
+  }
 }

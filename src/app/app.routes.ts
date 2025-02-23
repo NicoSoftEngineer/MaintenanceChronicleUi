@@ -21,8 +21,8 @@ export const routes: Routes = [
         { path: 'login', component: LoginPageComponent, title: 'Login' },
         { path: 'register', component: RegisterPageComponent, title: 'Register' },
         { path: 'auth/email-confirm/:email/:confirmToken', component: EmailConfirmPageComponent, title: 'Email confirmation' },
-        { path: 'customer-list', component: CustomerListPageComponent, title: 'Customer list' },
-        { path: 'customer-detail/:id', component: CustomerDetailPageComponent, title: 'Customer detail' },
+        { path: 'customers', component: CustomerListPageComponent, title: 'Customer list' },
+        { path: 'customers/:id', component: CustomerDetailPageComponent, title: 'Customer detail' },
         { path: 'locations', component: LocationListPageComponent, title: 'Location list' },
         { path: 'locations/:id', component: LocationDetailComponent, title: 'Location detail' },
       ]

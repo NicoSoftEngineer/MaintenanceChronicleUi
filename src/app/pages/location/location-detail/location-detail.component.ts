@@ -1,15 +1,16 @@
+import { LocationService } from './../../../../services/location-service';
 import { Component, inject } from '@angular/core';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LocationService } from '../../../../services/location-service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { getJsonPatch } from '../../../utils/patch-form-helper.service';
+import { CustomerDetailForLocation } from '../../../models/bussiness/customer/customer-detail-for-location';
 
 @Component({
   selector: 'app-location-detail',
-  imports: [AlertComponent, FormInputComponent, ReactiveFormsModule],
+  imports: [AlertComponent, FormInputComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './location-detail.component.html',
   styleUrl: './location-detail.component.scss',
 })
@@ -19,6 +20,7 @@ export class LocationDetailComponent {
   protected readonly locationService = inject(LocationService);
   protected readonly alertStateService = inject(AlertStateService);
   protected readonly getJsonPatch = getJsonPatch;
+  protected customerDetail!: CustomerDetailForLocation;
   private locationDetail: { [key: string]: any } = {};
 
   protected locationFormular = this.fb.group({
@@ -55,7 +57,18 @@ export class LocationDetailComponent {
           );
         },
       });
+      this.getCustomerDetail();
     }
+  }
+
+  getCustomerDetail(): void {
+    const id = this.route.snapshot.paramMap.get('id')!;
+
+    this.locationService.getCustomerForLocation(id).subscribe({
+      next: (customer) => {
+        this.customerDetail = customer;
+      }
+    });
   }
 
   onSubmit(): void {

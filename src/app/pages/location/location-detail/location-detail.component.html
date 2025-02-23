@@ -1,22 +1,28 @@
-<div class="flex">
-  <!-- Customer detail section -->
-  <section class="w-1/2 flex flex-col items-start justify-stretch p-4">
-    <mach:alert class="w-full m-2"/>
-    <h2 class="p-2 text-lg font-bold text-center text-black">Pobočka</h2>
-    <form [formGroup]="locationFormular" (ngSubmit)="onSubmit()" class="space-y-4 w-full">
-      <mach:forminput formControlName="name" type="text" name="name" [required]="true" label="Název" />
-      <mach:forminput formControlName="street" type="text" name="street" [required]="true"
-        label="Ulice" />
-      <mach:forminput formControlName="city" type="text" name="city" [required]="true" label="Město" />
-      <mach:forminput formControlName="country" type="text" name="country" [required]="true"
-        label="Země" />
-      <div class="flex justify-end">
-        <button type="submit" class="btn btn-primary">Uložit</button>
+<div class="flex w-full justify-stretch p-2 h-full">
+    <!-- Customer detail section -->
+    <section class="w-1/2 flex flex-col items-start pb-4">
+      <mach:alert class="w-full m-2" />
+      <div class="mt-6 p-4 bg-gray-100 border-l-4 border-[#093d82] rounded-lg w-full flex justify-between items-center">
+        <p class="text-xl font-extrabold text-black">{{customerDetail.name}}</p>
+        <a [routerLink]="['/customers', customerDetail.id]" class="no-underline">
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"/>
+          </svg>
+        </a>
       </div>
-    </form>
-  </section>
-  <!-- Locations list section -->
-  <section class="p-4">
-    <h2 class="p-2 text-lg font-bold text-center text-black">Stroje</h2>
-  </section>
+      <h2 class="p-2 text-lg font-bold text-center text-black">Pobočka</h2>
+      <form [formGroup]="locationFormular" (ngSubmit)="onSubmit()" class="w-full">
+        <mach:forminput formControlName="name" type="text" name="name" [required]="true" label="Název" />
+        <mach:forminput formControlName="street" type="text" name="street" [required]="true" label="Ulice" />
+        <mach:forminput formControlName="city" type="text" name="city" [required]="true" label="Město" />
+        <mach:forminput formControlName="country" type="text" name="country" [required]="true" label="Země" />
+        <div class="flex justify-end">
+          <button type="submit" class="btn btn-primary">Uložit</button>
+        </div>
+      </form>
+    </section>
+    <!-- Locations list section -->
+    <section class="flex justify-start">
+      <h2 class="p-2 text-lg font-bold text-center text-black">Stroje</h2>
+    </section>
 </div>
