@@ -64,6 +64,11 @@
           <li>
             <a href="#" class="text-[#FFDB99] no-underline">Záznamy</a>
           </li>
+          @if (authService.hasRole('Admin')) {
+            <li>
+              <a href="#" class="text-[#FFDB99] no-underline">Uživatelé</a>
+            </li>
+          }
         </ul>
       </div>
     </div>

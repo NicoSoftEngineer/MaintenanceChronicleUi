@@ -36,6 +36,7 @@ export class AuthService {
   }
 
   checkLoginStatus() {
+    this.loadUserRoles();
     this.userinfo().subscribe({
       next: () => {
         this.isLoggedInSubject.next(true);
