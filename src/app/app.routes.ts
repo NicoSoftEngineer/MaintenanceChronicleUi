@@ -8,6 +8,8 @@ import { UnauthorizedHomePageComponent } from './pages/unauthorized-home-page/un
 import { EmailConfirmPageComponent } from './pages/auth/email-confirm-page/email-confirm-page.component';
 import { CustomerListPageComponent } from './pages/customer/customer-list-page/customer-list-page.component';
 import { CustomerDetailPageComponent } from './pages/customer/customer-detail-page/customer-detail-page.component';
+import { LocationListPageComponent } from './pages/location/location-list-page/location-list-page.component';
+import { LocationDetailComponent } from './pages/location/location-detail/location-detail.component';
 
 export const routes: Routes = [
     {
@@ -19,8 +21,10 @@ export const routes: Routes = [
         { path: 'login', component: LoginPageComponent, title: 'Login' },
         { path: 'register', component: RegisterPageComponent, title: 'Register' },
         { path: 'auth/email-confirm/:email/:confirmToken', component: EmailConfirmPageComponent, title: 'Email confirmation' },
-        { path: 'customer-list', component: CustomerListPageComponent, title: 'Customer list' },
-        { path: 'customer-detail/:id', component: CustomerDetailPageComponent, title: 'Customer detail' }
+        { path: 'customers', component: CustomerListPageComponent, title: 'Customer list' },
+        { path: 'customers/:id', component: CustomerDetailPageComponent, title: 'Customer detail' },
+        { path: 'locations', component: LocationListPageComponent, title: 'Location list' },
+        { path: 'locations/:id', component: LocationDetailComponent, title: 'Location detail' },
       ]
     }
   ];

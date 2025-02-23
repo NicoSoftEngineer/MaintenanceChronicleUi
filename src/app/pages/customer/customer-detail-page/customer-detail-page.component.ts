@@ -15,6 +15,7 @@ import { CustomerService } from '../../../../services/customer-service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { getErrorMessage } from '../../../utils/form-control-error-helper.service';
 import { getJsonPatch } from '../../../utils/patch-form-helper.service';
+import { LocationListDto } from '../../../models/bussiness/location/location-list-dto';
 @Component({
   selector: 'app-customer-detail-page',
   imports: [
@@ -23,6 +24,7 @@ import { getJsonPatch } from '../../../utils/patch-form-helper.service';
     ReactiveFormsModule,
     FormInputComponent,
     AlertComponent,
+    RouterLink,
   ],
   templateUrl: './customer-detail-page.component.html',
   styleUrl: './customer-detail-page.component.scss',
@@ -34,6 +36,7 @@ export class CustomerDetailPageComponent implements OnInit {
   protected readonly alertStateService = inject(AlertStateService);
   protected readonly getJsonPatch = getJsonPatch;
   protected readonly getErrorMessage = getErrorMessage;
+  protected locations: LocationListDto[] = [];
   private customerDeatil: { [key: string]: any } = {};
 
   protected customerFormular = this.fb.group({
@@ -70,7 +73,22 @@ export class CustomerDetailPageComponent implements OnInit {
           );
         },
       });
+      this.getLocationsForCustomer();
     }
+  }
+
+  getLocationsForCustomer():void{
+    this.customerService.getLocationsForCustomer(this.route.snapshot.paramMap.get('id')!).subscribe({
+      next: (locations) => {
+        this.locations = locations;
+      },
+      error: (error) => {
+        this.alertStateService.openAlert(
+          'Něco se pokazilo, zkuste to prosím znovu',
+          'error'
+        );
+      },
+    });
   }
 
   onSubmit() {

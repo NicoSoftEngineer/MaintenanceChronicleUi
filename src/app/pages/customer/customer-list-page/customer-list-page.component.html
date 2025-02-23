@@ -1,14 +1,13 @@
-<section class="flex flex-col items-center justify-stretch p-4 h-full">
+<section class="flex flex-col items-center p-4 h-full">
   <div class="w-2/3 ">
     <mach:alert class="w-full m-2" />
     <mach:pop-up />
     <div class="flex justify-between items-baseline">
       <h1 class="p-2 text-2xl font-bold text-center text-black">Zákazníci</h1>
       <div class="">
-        <a [routerLink]="['/customer-detail', '']" class="btn btn-primary">Nový zákazník</a>
+        <a [routerLink]="['/customers', '']" class="btn btn-primary">Nový zákazník</a>
       </div>
     </div>
-
   </div>
   @for(customer of customers;track customer.name){
   <div
@@ -30,7 +29,7 @@
         </div>
       </div>
       <div class="flex justify-end items-center h-1/4">
-        <a [routerLink]="['/customer-detail', customer.id]" class="btn btn-primary">Detail</a>
+        <a [routerLink]="['/customers', customer.id]" class="btn btn-primary">Detail</a>
         <button (click)="openPopUp(customer)" class="btn btn-danger">Smazat</button>
       </div>
     </div>
