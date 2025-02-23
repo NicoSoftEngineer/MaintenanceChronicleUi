@@ -1,9 +1,9 @@
-<nav class="bg-[#1F0F53] border-gray-200 dark:bg-gray-900 h-14  w-full" >
+<nav class="bg-[#1F0F53] border-gray-200 dark:bg-gray-900 h-14  w-full">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
     <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="mach-logo-transparent.png" class="max-h-8" alt="Mach logo" />
     </a>
-    <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse h-14 text-[#FFDB99]" >
+    <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse h-14 text-[#FFDB99]">
       @let user = user$ | async;
       <!-- Dropdown menu -->
       @if (isLoggedIn) {
@@ -12,9 +12,10 @@
         id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
         data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
-        <svg class="w-6 h-6 text-[#FFDB99] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-          height="24" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        <svg class="w-6 h-6 text-[#FFDB99] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
         </svg>
       </button>
       <div
@@ -47,26 +48,29 @@
         </svg>
       </button>
     </div>
-    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 text-[#FFDB99]" id="navbar-user">
-      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-        <li>
-          <a [routerLink]="['/customers']" class="text-[#FFDB99] no-underline">Zákazníci</a>
-        </li>
-        <li>
-          <a [routerLink]="['/locations']" class="text-[#FFDB99] no-underline">Lokace</a>
-        </li>
-        <li>
-          <a href="#" class="text-[#FFDB99] no-underline">Stroje</a>
-        </li>
-        <li>
-          <a href="#" class="text-[#FFDB99] no-underline">Záznamy</a>
-        </li>
-      </ul>
+    <div class="items-center justify-between hidden w-full md:flex md:w-1/4 md:order-1" id="navbar-user">
+      <div class="flex items-end justify-end w-full">
+        <ul
+          class="flex flex-col items-baseline font-medium p-4 border border-[#1F0F53] rounded-lg bg-[#1F0F53] rtl:space-x-reverse md:p-0 md:space-x-8 w-max md:flex-row md:border-0 md:bg-[#1F0F53] dark:bg-[#1F0F53] md:dark:bg-[#1F0F53] dark:border-[#1F0F53]">
+          <li>
+            <a [routerLink]="['/customers']" class="text-[#FFDB99] no-underline">Zákazníci</a>
+          </li>
+          <li>
+            <a [routerLink]="['/locations']" class="text-[#FFDB99] no-underline">Lokace</a>
+          </li>
+          <li>
+            <a href="#" class="text-[#FFDB99] no-underline">Stroje</a>
+          </li>
+          <li>
+            <a href="#" class="text-[#FFDB99] no-underline">Záznamy</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
 <div class=" h-full">
-<router-outlet />
+  <router-outlet />
 
 </div>
 <footer class="footer w-full">
