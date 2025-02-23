@@ -9,6 +9,7 @@ import { CustomerListPageComponent } from './pages/customer/customer-list-page/c
 import { CustomerDetailPageComponent } from './pages/customer/customer-detail-page/customer-detail-page.component';
 import { LocationListPageComponent } from './pages/location/location-list-page/location-list-page.component';
 import { LocationDetailComponent } from './pages/location/location-detail/location-detail.component';
+import { UserListPageComponent } from './pages/user/user-list-page/user-list-page.component';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,8 @@ export const routes: Routes = [
         { path: 'customers/:id', component: CustomerDetailPageComponent, title: 'Customer detail' },
         { path: 'locations', component: LocationListPageComponent, title: 'Location list' },
         { path: 'locations/:id', component: LocationDetailComponent, title: 'Location detail' },
+        { path: 'users', component: UserListPageComponent, title: 'User list' },
+
       ]
     }
   ];
