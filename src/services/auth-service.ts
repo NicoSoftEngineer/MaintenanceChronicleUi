@@ -16,6 +16,24 @@ export class AuthService {
   protected readonly baseUrl = '/api/v1/auth';
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private rolesSubject = new BehaviorSubject<string[]>([]);
+  roles$ = this.rolesSubject.asObservable();
+
+  loadUserRoles() {
+    const url = this.baseUrl + '/current-user-roles';
+    this.httpClient.get<string[]>(url).subscribe({
+      next: (roles) => {
+        this.rolesSubject.next(roles);
+      },
+      error: () => {
+        this.rolesSubject.next([]);
+      }
+    });
+  }
+
+  hasRole(role: string): boolean {
+    return this.rolesSubject.getValue().includes(role);
+  }
 
   checkLoginStatus() {
     this.userinfo().subscribe({
