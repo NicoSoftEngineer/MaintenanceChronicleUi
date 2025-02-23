@@ -36,4 +36,9 @@ export class CustomerService {
     const url = this.baseUrl + '/' + id;
     return this.httpClient.patch<CustomerDetail>(url, patchValue).pipe();
   }
+
+  getLocationsForCustomer(id: string): Observable<any> {
+    const url = this.baseUrl + '/' + id + '/locations';
+    return this.httpClient.get<any>(url).pipe();
+  }
 }

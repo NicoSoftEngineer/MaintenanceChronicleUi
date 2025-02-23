@@ -6,5 +6,4 @@ export interface CustomerDetail {
   email: string;
   phoneNumber: string;
   companyIdNumber: string;
-  locations: LocationListDto[];
 }
