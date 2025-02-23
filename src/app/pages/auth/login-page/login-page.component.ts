@@ -2,7 +2,7 @@ import { AlertStateService } from '../../../components/alert/alert-state.service
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../../services/auth/auth-service.service';
+import { AuthService } from '../../../../services/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import { applyBackendErrors, getErrorMessage } from '../../../utils/form-control-error-helper.service';

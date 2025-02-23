@@ -1,10 +1,10 @@
-import { EmailConfirmTokenForUserDto } from './../../app/models/email-confirm-token-for-user-dto';
+import { EmailConfirmTokenForUserDto } from '../app/models/email-confirm-token-for-user-dto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, ReplaySubject, tap } from 'rxjs';
-import { LoginDto } from '../../app/models/login-dto';
-import { RegisterUserTenantDto } from '../../app/models/register-user-tenant-dto';
-import { LoggedInUserInfoDto } from '../../app/models/logged-in-user-info-dto';
+import { LoginDto } from '../app/models/login-dto';
+import { RegisterUserTenantDto } from '../app/models/register-user-tenant-dto';
+import { LoggedInUserInfoDto } from '../app/models/logged-in-user-info-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,11 @@ export class AuthService {
 
   userinfo(): Observable<LoggedInUserInfoDto> {
     const url = this.baseUrl + '/current-user-info';
-    return this.httpClient.get<LoggedInUserInfoDto>(url);
+    return this.httpClient.get<LoggedInUserInfoDto>(url).pipe(tap((user) => {
+      if(user) {
+        this.isLoggedInSubject.next(true);
+      }
+    }));
   }
 
   login(data: LoginDto): Observable<undefined> {
