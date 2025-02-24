@@ -26,16 +26,21 @@ protected readonly popUpStateService = inject(PopUpStateService);
     initFlowbite();
   }
 
-  // deleteLocation = (id: string) => {
-  //   this.locationService.deleteLocation(id).subscribe(() => {
-  //     this.locations = this.locations.filter((location) => location.id !== id);
-  //   });
-  //   this.loadLocations();
-  //   this.alertStateService.openAlert('Lokace byla úspěšně vymazána', 'success');
-  // };
+  delete = (id: string) => {
+    this.userService.deleteUser(id).subscribe(() => {
+      this.users = this.users.filter((user) => user.id !== id);
+    });
+    this.loadUsers();
+    this.alertStateService.openAlert('Lokace byla úspěšně vymazána', 'success');
+  };
+
   loadUsers = () =>{
     this.userService.getUsers().subscribe((users) => {
       this.users = users
     });
   }
+
+  openPopUp = (user: UserListDto) => {
+      this.popUpStateService.openPopUp(`Jste si jistí, že chcete vymazat uživatele "${user.firstName} ${user.lastName}"`, this.delete, user.id);
+    };
 }

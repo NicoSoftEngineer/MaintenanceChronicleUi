@@ -15,4 +15,8 @@ export class UserService {
       console.log(users);
     }));
   }
+
+  public deleteUser(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
+  }
 }

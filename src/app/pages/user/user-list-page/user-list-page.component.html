@@ -36,7 +36,7 @@
       </div>
       <div class="flex justify-end items-center w-1/4">
         <a [routerLink]="['/users', user.id]" class="btn btn-primary">Detail</a>
-        <button (click)="undefined" class="btn btn-danger">Smazat</button>
+        <button (click)="openPopUp(user)" class="btn btn-danger">Smazat</button>
       </div>
     </div>
   </div>
