@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { UserListDto } from '../models/bussiness/user/user-list-dto';
+import { UserDetail } from '../models/bussiness/user/user-detail';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +19,9 @@ export class UserService {
 
   public deleteUser(id: string): Observable<void> {
     return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  public createUser(user: UserDetail): Observable<UserDetail> {
+    return this.httpClient.post<UserDetail>(this.baseUrl, user);
   }
 }
