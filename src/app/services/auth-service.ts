@@ -1,10 +1,9 @@
-import { EmailConfirmTokenForUserDto } from '../app/models/email-confirm-token-for-user-dto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, ReplaySubject, tap } from 'rxjs';
-import { LoginDto } from '../app/models/login-dto';
-import { RegisterUserTenantDto } from '../app/models/register-user-tenant-dto';
-import { LoggedInUserInfoDto } from '../app/models/logged-in-user-info-dto';
+import { LoggedInUserInfoDto } from '../models/account/logged-in-user-info-dto';
+import { LoginDto } from '../models/account/login-dto';
+import { RegisterUserTenantDto } from '../models/account/register-user-tenant-dto';
 
 @Injectable({
   providedIn: 'root'

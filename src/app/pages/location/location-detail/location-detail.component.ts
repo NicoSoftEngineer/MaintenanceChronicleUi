@@ -1,4 +1,3 @@
-import { LocationService } from './../../../../services/location-service';
 import { Component, inject } from '@angular/core';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
@@ -7,6 +6,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { getJsonPatch } from '../../../utils/patch-form-helper.service';
 import { CustomerDetailForLocation } from '../../../models/bussiness/customer/customer-detail-for-location';
+import { LocationService } from '../../../services/location-service';
 
 @Component({
   selector: 'app-location-detail',

@@ -1,8 +1,8 @@
-import { AuthService } from '../../../services/auth-service';
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
     selector: 'app-default',

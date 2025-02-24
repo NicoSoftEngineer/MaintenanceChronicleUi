@@ -1,4 +1,3 @@
-import { AuthService } from './../../../../services/auth-service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
@@ -13,13 +12,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { confirmPasswordValidator } from '../../../../validators/confirm-password-validator';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import {
   applyBackendErrors,
   getErrorMessage,
 } from '../../../utils/form-control-error-helper.service';
 import { AlertComponent } from '../../../components/alert/alert.component';
+import { confirmPasswordValidator } from '../../../validators/confirm-password-validator';
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-register-page',
