@@ -4,7 +4,7 @@
     <label [for]="label()" class="field-label" [class.floating]="hasValue() || isOpen()" [class]="[
           'field-label',
           'field-label-normal',
-          (error() || (validationError() && touched())) ? 'error' : ''
+          (error() || (validationError() && (touched() || touchSign()))) ? 'error' : ''
         ].join(' ')">
       {{ label() }}
       @if (required()) {
@@ -17,7 +17,7 @@
       <div #trigger (click)="toggleDropdown()" class="multi-select-field" [class]="[
           'multi-select-field',
           'input-normal',
-          (error() || (validationError() && touched())) ? 'error' : '',
+          (error() || (validationError() && (touched() || touchSign()))) ? 'error' : '',
           required() ? 'required' : ''
         ].join(' ')">
         @if (selectedOptions().length === 0) {
@@ -64,8 +64,8 @@
       </div>
     </div>
 
-    @if (error() || (validationError() && touched())) {
-    <p class="error-message">{{ error() || validationMessage() }}</p>
+    @if (error() || (validationError() && (touched() || touchSign()))) {
+    <p class="error-message text-xs">{{ error() || validationMessage() }}</p>
     }
   </div>
 

@@ -66,6 +66,7 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
   selectedOptionsInput = input<any[]>();
   placeholder = input<string>('Select options...');
   label = input<string>('');
+  touchSign = input<Boolean>(false);
   readonly = input<boolean>(false);
   maxSelections = input<number | undefined>(undefined);
   minSelections = input<number | undefined>(undefined);

@@ -114,7 +114,7 @@
 
 /* Error */
 .error-message {
-  @apply mt-1 text-sm text-red-500 dark:text-red-400;
+  @apply ps-1 mt-1 text-xs text-red-500 dark:text-red-400;
 }
 
 .required-marker {

@@ -46,6 +46,7 @@ export class UserDetailPageComponent implements OnInit {
   protected locations: LocationListDto[] = [];
   protected roleOptions: RoleDetail[] = [];
   protected selectedRoles: RoleDetail[] = [];
+  protected multiSelectTouched: Boolean = false;
   private userDetail: { [key: string]: any } = {};
 
   /**
@@ -97,7 +98,8 @@ export class UserDetailPageComponent implements OnInit {
 
   onSubmit() {
     this.userFormular.markAllAsTouched();
-    if (this.userFormular.invalid) {
+    this.multiSelectTouched = true;
+    if (this.userFormular.invalid || this.selectedRoles.length === 0) {
       return;
     }
 
