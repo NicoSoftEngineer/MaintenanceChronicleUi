@@ -9,7 +9,7 @@
         label="Příjmení" />
       <mach:forminput formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(userFormular.get('email'), 'email')!"/>
       <mach:multiSelect [options]="roleOptions"
-        [selecteOptionsInput]="selectedRoles"
+        [selectedOptionsInput]="selectedRoles"
         [(ngModel)]="selectedRoles"
         [ngModelOptions]="{standalone: true}"
         [required]="true"

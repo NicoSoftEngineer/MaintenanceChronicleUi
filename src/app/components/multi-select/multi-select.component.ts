@@ -63,7 +63,7 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
 
   // Inputs
   options = input.required<any[]>();
-  selecteOptionsInput = input<any[]>();
+  selectedOptionsInput = input<any[]>();
   placeholder = input<string>('Select options...');
   label = input<string>('');
   readonly = input<boolean>(false);
@@ -99,7 +99,7 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
     // Create effect to update styles when variant changes
     effect(() => {
       if (this.selectedOptions()?.length === 0) {
-        this.selecteOptionsInput()?.forEach((option) => {
+        this.selectedOptionsInput()?.forEach((option) => {
           this.toggleOption(option);
         });
       }
