@@ -21,7 +21,11 @@ export class UserService {
     return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  public createUser(user: UserDetail): Observable<UserDetail> {
-    return this.httpClient.post<UserDetail>(this.baseUrl, user);
+  public createUser(user: UserDetail): Observable<string> {
+    return this.httpClient.post<string>(this.baseUrl, user);
+  }
+
+  public getUserById(id: string): Observable<UserDetail> {
+    return this.httpClient.get<UserDetail>(`${this.baseUrl}/${id}`);
   }
 }

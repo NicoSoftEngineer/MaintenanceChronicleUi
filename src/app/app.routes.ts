@@ -11,6 +11,7 @@ import { LocationListPageComponent } from './pages/location/location-list-page/l
 import { LocationDetailComponent } from './pages/location/location-detail/location-detail.component';
 import { UserListPageComponent } from './pages/user/user-list-page/user-list-page.component';
 import { AdminRoleGuard } from './utils/admin-role-guard';
+import { UserDetailPageComponent } from './pages/user/user-detail-page/user-detail-page.component';
 
 export const routes: Routes = [
     {
@@ -25,7 +26,8 @@ export const routes: Routes = [
         { path: 'customers/:id', component: CustomerDetailPageComponent, title: 'Customer detail' },
         { path: 'locations', component: LocationListPageComponent, title: 'Location list' },
         { path: 'locations/:id', component: LocationDetailComponent, title: 'Location detail' },
-        { path: 'users', component: UserListPageComponent, title: 'User list', canActivate: [AdminRoleGuard] },
+        { path: 'users', component: UserListPageComponent, title: 'User list'/*, canActivate: [AdminRoleGuard]*/ },
+        { path: 'users/:id', component: UserDetailPageComponent, title: 'User detail'/*, canActivate: [AdminRoleGuard]*/},
       ]
     }
   ];
