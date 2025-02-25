@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { UserListDto } from '../models/bussiness/user/user-list-dto';
 import { UserDetail } from '../models/bussiness/user/user-detail';
+import { RoleDetail } from '../models/bussiness/role/role-detail';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +28,9 @@ export class UserService {
 
   public getUserById(id: string): Observable<UserDetail> {
     return this.httpClient.get<UserDetail>(`${this.baseUrl}/${id}`);
+  }
+
+  public getRoles(): Observable<RoleDetail[]> {
+    return this.httpClient.get<RoleDetail[]>(`${this.baseUrl}/roles`);
   }
 }

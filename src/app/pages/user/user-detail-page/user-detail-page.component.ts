@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,7 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../../services/user-service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import {
@@ -38,15 +38,21 @@ import { RoleDetail } from '../../../models/bussiness/role/role-detail';
 export class UserDetailPageComponent implements OnInit {
   protected readonly route = inject(ActivatedRoute);
   protected readonly fb = inject(FormBuilder);
+  protected readonly router = inject(Router);
   protected readonly userService = inject(UserService);
   protected readonly alertStateService = inject(AlertStateService);
   protected readonly getErrorMessage = getErrorMessage;
   protected readonly applyBackendErrors = applyBackendErrors;
   protected locations: LocationListDto[] = [];
-  protected roleOptions: RoleDetail[] = [{ id: '1', name: 'Admin' }, { id: '2', name: 'Technician' }];
+  protected roleOptions: RoleDetail[] = [];
   protected selectedRoles: RoleDetail[] = [];
   private userDetail: { [key: string]: any } = {};
 
+  /**
+   *
+   */
+  constructor(private cdr: ChangeDetectorRef) {
+  }
 
   protected userFormular = this.fb.group({
     email: new FormControl('', {
@@ -64,10 +70,14 @@ export class UserDetailPageComponent implements OnInit {
   });
 
   ngOnInit() {
+    console.log("init in user-detail-page");
     const id = this.route.snapshot.paramMap.get('id')!;
     if (id) {
       this.userService.getUserById(id).subscribe({
         next: (user) => {
+          this.selectedRoles = user.roles;
+          console.log('selected roles loaded in user-detail')
+          console.log(this.selectedRoles);
           this.userDetail = user;
           this.userFormular.patchValue(user);
         },
@@ -79,6 +89,10 @@ export class UserDetailPageComponent implements OnInit {
         },
       });
     }
+    this.userService.getRoles().subscribe((r) => {
+      this.roleOptions = r;
+      console.log('roles loaded in user-detail')
+    });
   }
 
   onSubmit() {
@@ -98,14 +112,16 @@ export class UserDetailPageComponent implements OnInit {
 
   addUser() {
     const dataRaw = this.userFormular.getRawValue();
-    const data = JSON.parse(JSON.stringify(dataRaw)) as UserDetail;
-
+    const data = JSON.parse(JSON.stringify(dataRaw));
+    data.roles = this.selectedRoles.map((r) => r.id);
+    console.log(data);
     this.userService.createUser(data).subscribe({
-      next: () => {
+      next: (id) => {
         this.alertStateService.openAlert(
           'Uživatel byl úspěšně vytvořen',
           'success'
         );
+        this.router.navigate(['/users', id]);
       },
       error: (errors) => {
         if (errors.error.errors) {

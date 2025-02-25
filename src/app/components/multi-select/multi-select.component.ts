@@ -1,6 +1,35 @@
-import { Component, input, output, signal, model, forwardRef, computed, effect, inject, ElementRef, ViewChild, TemplateRef, OnDestroy, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  signal,
+  model,
+  forwardRef,
+  computed,
+  effect,
+  inject,
+  ElementRef,
+  ViewChild,
+  TemplateRef,
+  OnDestroy,
+  ViewContainerRef,
+  AfterViewInit,
+  AfterContentInit,
+  OnInit,
+  SimpleChanges,
+  AfterContentChecked,
+  Input,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, Validator, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  NG_VALIDATORS,
+  Validator,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { Overlay, OverlayRef, OverlayModule } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 
@@ -14,14 +43,14 @@ import { TemplatePortal } from '@angular/cdk/portal';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => MultiSelect),
-      multi: true
+      multi: true,
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => MultiSelect),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
   private elementRef = inject(ElementRef);
@@ -29,10 +58,12 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
   readonly inputId = `input-${Math.random().toString(36).slice(2, 11)}`;
   // ViewChild references
   @ViewChild('trigger') trigger!: ElementRef;
-  @ViewChild('dropdownTemplate', { static: false }) dropdownTemplate!: TemplateRef<any>;
+  @ViewChild('dropdownTemplate', { static: false })
+  dropdownTemplate!: TemplateRef<any>;
 
   // Inputs
   options = input.required<any[]>();
+  selecteOptionsInput = input<any[]>();
   placeholder = input<string>('Select options...');
   label = input<string>('');
   readonly = input<boolean>(false);
@@ -61,16 +92,21 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
   private overlayRef: OverlayRef | null = null;
   private portal: TemplatePortal | null = null;
 
-  constructor( private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef) {
+  constructor(
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef
+  ) {
     // Create effect to update styles when variant changes
     effect(() => {
-      this.updateInputVariables();
+      if (this.selectedOptions()?.length === 0) {
+        this.selecteOptionsInput()?.forEach((option) => {
+          this.toggleOption(option);
+        });
+      }
     });
   }
 
   private updateInputVariables() {
-
     // Update CSS variables on the host element
     const el = this.elementRef.nativeElement;
   }
@@ -130,10 +166,18 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
     if (!this.overlayRef) {
       this.overlayRef = this.overlay.create({
         hasBackdrop: true,
-        positionStrategy: this.overlay.position()
+        positionStrategy: this.overlay
+          .position()
           .flexibleConnectedTo(triggerElement) // Ensure `triggerElement` is defined
-          .withPositions([{ originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' }]),
-        scrollStrategy: this.overlay.scrollStrategies.reposition()
+          .withPositions([
+            {
+              originX: 'start',
+              originY: 'bottom',
+              overlayX: 'start',
+              overlayY: 'top',
+            },
+          ]),
+        scrollStrategy: this.overlay.scrollStrategies.reposition(),
       });
     }
     // Create position strategy
@@ -146,15 +190,15 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
           originY: 'bottom',
           overlayX: 'start',
           overlayY: 'top',
-          offsetY: 4
+          offsetY: 4,
         },
         {
           originX: 'start',
           originY: 'top',
           overlayX: 'start',
           overlayY: 'bottom',
-          offsetY: -4
-        }
+          offsetY: -4,
+        },
       ]);
 
     // Create overlay
@@ -163,14 +207,17 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
       width: triggerElement.offsetWidth,
       hasBackdrop: true,
-      backdropClass: 'cdk-overlay-transparent-backdrop'
+      backdropClass: 'cdk-overlay-transparent-backdrop',
     });
 
     // Handle backdrop clicks
     this.overlayRef.backdropClick().subscribe(() => this.closeDropdown());
 
     // Create and attach portal with proper ViewContainerRef
-    this.portal = new TemplatePortal(this.dropdownTemplate, this.viewContainerRef);
+    this.portal = new TemplatePortal(
+      this.dropdownTemplate,
+      this.viewContainerRef
+    );
     this.overlayRef.attach(this.portal);
     this.isOpen.set(true);
     this.open.emit();
@@ -187,19 +234,21 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
 
   toggleOption(option: any) {
     if (!this.disabled() && !this.readonly()) {
-      const index = this.selectedOptions().findIndex(o => o.id === option.id);
+      const index = this.selectedOptions().findIndex((o) => o.id === option.id);
       const maxSel = this.maxSelections();
       const minSel = this.minSelections();
 
       if (index === -1) {
         if (!maxSel || this.selectedOptions().length < maxSel) {
-          this.selectedOptions.update(options => [...options, option]);
-          this.onChange(this.selectedOptions().map(o => o.id));
+          this.selectedOptions.update((options) => [...options, option]);
+          this.onChange(this.selectedOptions().map((o) => o));
         }
       } else {
         if (!minSel || this.selectedOptions().length > minSel) {
-          this.selectedOptions.update(options => options.filter(o => o.id !== option.id));
-          this.onChange(this.selectedOptions().map(o => o.id));
+          this.selectedOptions.update((options) =>
+            options.filter((o) => o.id !== option.id)
+          );
+          this.onChange(this.selectedOptions().map((o) => o));
         }
       }
 
@@ -219,19 +268,20 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
   }
 
   isSelected(option: any): boolean {
-    return this.selectedOptions().some(o => o.id === option.id);
+    return this.selectedOptions().some((o) => o.id === option.id);
   }
 
   selectAll() {
     if (!this.disabled() && !this.readonly()) {
-      const availableOptions = this.options().filter(o => !o.disabled);
+      const availableOptions = this.options().filter((o) => !o.disabled);
       const maxSel = this.maxSelections();
-      const selectedOptions = maxSel !== undefined
-        ? availableOptions.slice(0, maxSel)
-        : availableOptions;
+      const selectedOptions =
+        maxSel !== undefined
+          ? availableOptions.slice(0, maxSel)
+          : availableOptions;
 
       this.selectedOptions.set(selectedOptions);
-      this.onChange(selectedOptions.map(o => o.id));
+      this.onChange(selectedOptions.map((o) => o.id));
       this.selectionChange.emit(selectedOptions);
       this.markAsTouched();
     }
@@ -260,7 +310,7 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
   writeValue(values: any[]): void {
     if (values) {
       this.selectedOptions.set(
-        this.options().filter(option => values.includes(option.id))
+        this.options().filter((option) => values.includes(option.id))
       );
     } else {
       this.selectedOptions.set([]);

@@ -9,11 +9,13 @@
         label="Příjmení" />
       <mach:forminput formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(userFormular.get('email'), 'email')!"/>
       <mach:multiSelect [options]="roleOptions"
-      [(ngModel)]="selectedRoles"
-      [ngModelOptions]="{standalone: true}"
-      size="normal"
-      label="Vyberte role"
-      placeholder="Vybrat role..."/>
+        [selecteOptionsInput]="selectedRoles"
+        [(ngModel)]="selectedRoles"
+        [ngModelOptions]="{standalone: true}"
+        [required]="true"
+        label="Vyberte role"
+        placeholder="Vybrat role..."/>
+
       <div class="flex justify-end">
         <button type="submit" class="btn btn-primary">Uložit</button>
       </div>
