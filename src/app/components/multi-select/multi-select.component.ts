@@ -131,15 +131,7 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
 
   validationMessage = computed(() => {
     if (this.required() && this.selectedOptions().length === 0) {
-      return 'Please select at least one option';
-    }
-    const minSel = this.minSelections();
-    const maxSel = this.maxSelections();
-    if (minSel !== undefined && this.selectedOptions().length < minSel) {
-      return `Please select at least ${minSel} options`;
-    }
-    if (maxSel !== undefined && this.selectedOptions().length > maxSel) {
-      return `Please select no more than ${maxSel} options`;
+      return 'Prosím vyberte alespoň jednu možnost';
     }
     return '';
   });

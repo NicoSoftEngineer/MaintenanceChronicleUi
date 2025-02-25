@@ -21,7 +21,7 @@
   @apply disabled:opacity-50 disabled:cursor-not-allowed;
   @apply text-gray-900 dark:text-white;
   @apply border rounded-lg border-solid border-gray-400 dark:border-gray-600;
-  @apply flex flex-wrap gap-2 items-center;
+  @apply flex flex-wrap gap-2 items-center justify-between;
   @apply cursor-pointer;
 }
 
