@@ -3,10 +3,10 @@ import { initFlowbite } from 'flowbite';
 import { PopUpStateService } from '../../../components/pop-up-modal/pop-up-state.service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { LocationListDto } from '../../../models/bussiness/location/location-list-dto';
-import { LocationService } from '../../../../services/location-service';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { PopUpModalComponent } from '../../../components/pop-up-modal/pop-up-modal.component';
 import { RouterLink } from '@angular/router';
+import { LocationService } from '../../../services/location-service';
 
 @Component({
   selector: 'app-location-list-page',

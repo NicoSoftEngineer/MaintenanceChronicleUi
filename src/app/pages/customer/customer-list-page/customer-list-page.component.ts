@@ -3,10 +3,10 @@ import { PopUpStateService } from './../../../components/pop-up-modal/pop-up-sta
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AlertComponent } from '../../../components/alert/alert.component';
-import { CustomerService } from '../../../../services/customer-service';
 import { PopUpModalComponent } from '../../../components/pop-up-modal/pop-up-modal.component';
 import { initFlowbite } from 'flowbite';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
+import { CustomerService } from '../../../services/customer-service';
 
 @Component({
   selector: 'app-customer-list-page',

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TenantListComponent } from './tenant-list.component';
+import { MultiSelectComponent } from './multi-select.component';
 
-describe('TenantListComponent', () => {
-  let component: TenantListComponent;
-  let fixture: ComponentFixture<TenantListComponent>;
+describe('MultiSelectComponent', () => {
+  let component: MultiSelectComponent;
+  let fixture: ComponentFixture<MultiSelectComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TenantListComponent]
+      imports: [MultiSelectComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TenantListComponent);
+    fixture = TestBed.createComponent(MultiSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NewCustomerDetail } from '../app/models/bussiness/customer/new-customer-detail';
-import { CustomerListDto } from '../app/models/bussiness/customer/customer-list-dto';
-import { CustomerDetail } from '../app/models/bussiness/customer/customer-detail';
+import { NewCustomerDetail } from '../models/bussiness/customer/new-customer-detail';
+import { CustomerDetail } from '../models/bussiness/customer/customer-detail';
+import { CustomerListDto } from '../models/bussiness/customer/customer-list-dto';
 
 @Injectable({
   providedIn: 'root',

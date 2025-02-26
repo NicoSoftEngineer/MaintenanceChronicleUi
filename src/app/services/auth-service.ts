@@ -1,10 +1,9 @@
-import { EmailConfirmTokenForUserDto } from './../../app/models/email-confirm-token-for-user-dto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, ReplaySubject, tap } from 'rxjs';
-import { LoginDto } from '../../app/models/login-dto';
-import { RegisterUserTenantDto } from '../../app/models/register-user-tenant-dto';
-import { LoggedInUserInfoDto } from '../../app/models/logged-in-user-info-dto';
+import { LoggedInUserInfoDto } from '../models/account/logged-in-user-info-dto';
+import { LoginDto } from '../models/account/login-dto';
+import { RegisterUserTenantDto } from '../models/account/register-user-tenant-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,27 @@ export class AuthService {
   protected readonly baseUrl = '/api/v1/auth';
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private rolesSubject = new BehaviorSubject<string[]>([]);
+  roles$ = this.rolesSubject.asObservable();
+
+  loadUserRoles() {
+    const url = this.baseUrl + '/current-user-roles';
+    this.httpClient.get<string[]>(url).subscribe({
+      next: (roles) => {
+        this.rolesSubject.next(roles);
+      },
+      error: () => {
+        this.rolesSubject.next([]);
+      }
+    });
+  }
+
+  hasRole(role: string): boolean {
+    return this.rolesSubject.getValue().includes(role);
+  }
 
   checkLoginStatus() {
+    this.loadUserRoles();
     this.userinfo().subscribe({
       next: () => {
         this.isLoggedInSubject.next(true);
@@ -30,7 +48,11 @@ export class AuthService {
 
   userinfo(): Observable<LoggedInUserInfoDto> {
     const url = this.baseUrl + '/current-user-info';
-    return this.httpClient.get<LoggedInUserInfoDto>(url);
+    return this.httpClient.get<LoggedInUserInfoDto>(url).pipe(tap((user) => {
+      if(user) {
+        this.isLoggedInSubject.next(true);
+      }
+    }));
   }
 
   login(data: LoginDto): Observable<undefined> {

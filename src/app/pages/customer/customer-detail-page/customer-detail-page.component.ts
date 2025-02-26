@@ -11,11 +11,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AlertComponent } from '../../../components/alert/alert.component';
-import { CustomerService } from '../../../../services/customer-service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { getErrorMessage } from '../../../utils/form-control-error-helper.service';
 import { getJsonPatch } from '../../../utils/patch-form-helper.service';
 import { LocationListDto } from '../../../models/bussiness/location/location-list-dto';
+import { CustomerService } from '../../../services/customer-service';
 @Component({
   selector: 'app-customer-detail-page',
   imports: [

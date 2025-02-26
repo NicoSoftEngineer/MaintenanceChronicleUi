@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LocationListDto } from '../app/models/bussiness/location/location-list-dto';
-import { LocationDetailDto } from '../app/models/bussiness/location/location-detail-dto';
-import { NewLocationDetailDto } from '../app/models/bussiness/location/new-location-detail-dto';
-import { CustomerDetailForLocation } from '../app/models/bussiness/customer/customer-detail-for-location';
+import { LocationListDto } from '../models/bussiness/location/location-list-dto';
+import { LocationDetailDto } from '../models/bussiness/location/location-detail-dto';
+import { NewLocationDetailDto } from '../models/bussiness/location/new-location-detail-dto';
+import { CustomerDetailForLocation } from '../models/bussiness/customer/customer-detail-for-location';
 
 @Injectable({
   providedIn: 'root'

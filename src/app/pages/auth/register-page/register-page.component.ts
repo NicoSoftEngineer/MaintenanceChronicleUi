@@ -11,15 +11,15 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../../../../services/auth/auth-service.service';
 import { Router, RouterLink } from '@angular/router';
-import { confirmPasswordValidator } from '../../../../validators/confirm-password-validator';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import {
   applyBackendErrors,
   getErrorMessage,
 } from '../../../utils/form-control-error-helper.service';
 import { AlertComponent } from '../../../components/alert/alert.component';
+import { confirmPasswordValidator } from '../../../validators/confirm-password-validator';
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-register-page',
