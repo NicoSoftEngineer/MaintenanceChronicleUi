@@ -19,18 +19,26 @@ export class UserService {
   }
 
   public deleteUser(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
+    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`).pipe();
   }
 
   public createUser(user: UserDetail): Observable<string> {
-    return this.httpClient.post<string>(this.baseUrl, user);
+    return this.httpClient.post<string>(this.baseUrl, user).pipe();
   }
 
   public getUserById(id: string): Observable<UserDetail> {
-    return this.httpClient.get<UserDetail>(`${this.baseUrl}/${id}`);
+    return this.httpClient.get<UserDetail>(`${this.baseUrl}/${id}`).pipe();
   }
 
   public getRoles(): Observable<RoleDetail[]> {
-    return this.httpClient.get<RoleDetail[]>(`${this.baseUrl}/roles`);
+    return this.httpClient.get<RoleDetail[]>(`${this.baseUrl}/roles`).pipe();
+  }
+
+  public updateUser(id: string, patchValue: any[]): Observable<any> {
+    return this.httpClient.patch<any>(`${this.baseUrl}/${id}`, patchValue).pipe();
+  }
+
+  public manageUserRoles(id: string, roles: RoleDetail[]): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseUrl}/${id}/roles`, roles).pipe();
   }
 }
