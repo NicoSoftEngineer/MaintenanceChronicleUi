@@ -3,9 +3,9 @@
     <mach:alert class="w-full m-2" />
     <mach:pop-up />
     <div class="flex justify-between items-baseline">
-      <h1 class="p-2 text-2xl font-bold text-center text-black">Lokace</h1>
+      <h1 class="p-2 text-2xl font-bold text-center text-black">Pobočky</h1>
       <div class="">
-        <a [routerLink]="['/locations', '']" class="btn btn-primary">Nová lokace</a>
+        <h2>Pro vytvoření nové pobočky běžte na detail zákazníka</h2>
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@
       </div>
       <div class="flex justify-end items-center h-1/4 w-1/4">
         <a [routerLink]="['/locations', location.id]" class="btn btn-primary">Detail</a>
-        <button (click)="undefined" class="btn btn-danger">Smazat</button>
+        <button (click)="openPopUp(location)" class="btn btn-danger">Smazat</button>
       </div>
     </div>
   </div>

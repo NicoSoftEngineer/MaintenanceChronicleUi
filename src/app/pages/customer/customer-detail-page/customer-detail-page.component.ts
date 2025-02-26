@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { getErrorMessage } from '../../../utils/form-control-error-helper.service';
@@ -31,6 +31,7 @@ import { CustomerService } from '../../../services/customer-service';
 })
 export class CustomerDetailPageComponent implements OnInit {
   protected readonly route = inject(ActivatedRoute);
+  protected readonly router = inject(Router);
   protected readonly fb = inject(FormBuilder);
   protected readonly customerService = inject(CustomerService);
   protected readonly alertStateService = inject(AlertStateService);
@@ -144,4 +145,7 @@ export class CustomerDetailPageComponent implements OnInit {
     });
   }
 
+  newLocation(){
+    this.router.navigate(['/locations', ''],{queryParams:{  customerId: this.customerDeatil['id']}});
+  }
 }

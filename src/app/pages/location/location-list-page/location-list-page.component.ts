@@ -26,13 +26,16 @@ export class LocationListPageComponent implements OnInit {
     initFlowbite();
   }
 
-  // deleteLocation = (id: string) => {
-  //   this.locationService.deleteLocation(id).subscribe(() => {
-  //     this.locations = this.locations.filter((location) => location.id !== id);
-  //   });
-  //   this.loadLocations();
-  //   this.alertStateService.openAlert('Lokace byla úspěšně vymazána', 'success');
-  // };
+  deleteLocation = (id: string) => {
+    this.locationService.deleteLocation(id).subscribe(() => {
+      this.locations = this.locations.filter((location) => location.id !== id);
+    });
+    this.loadLocations();
+    this.alertStateService.openAlert('Lokace byla úspěšně vymazána', 'success');
+  };
+  openPopUp = (location: LocationListDto) => {
+      this.popUpStateService.openPopUp(`Jste si jistí, že chcete vymazat zákazníka "${location.name}"`, this.deleteLocation, location.id);
+    };
   loadLocations = () =>{
     this.locationService.getLocations().subscribe((locations) => {this.locations = locations});
   }
