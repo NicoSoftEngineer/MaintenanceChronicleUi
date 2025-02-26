@@ -20,6 +20,7 @@ import { AlertComponent } from '../../../components/alert/alert.component';
 import { UserDetail } from '../../../models/bussiness/user/user-detail';
 import { MultiSelect } from '../../../components/multi-select/multi-select.component';
 import { RoleDetail } from '../../../models/bussiness/role/role-detail';
+import { getJsonPatch } from '../../../utils/patch-form-helper.service';
 
 @Component({
   selector: 'app-user-detail-page',
@@ -43,16 +44,12 @@ export class UserDetailPageComponent implements OnInit {
   protected readonly alertStateService = inject(AlertStateService);
   protected readonly getErrorMessage = getErrorMessage;
   protected readonly applyBackendErrors = applyBackendErrors;
+  protected readonly getJsonPatch = getJsonPatch;
   protected locations: LocationListDto[] = [];
   protected roleOptions: RoleDetail[] = [];
   protected selectedRoles: RoleDetail[] = [];
+  protected multiSelectTouched: Boolean = false;
   private userDetail: { [key: string]: any } = {};
-
-  /**
-   *
-   */
-  constructor(private cdr: ChangeDetectorRef) {
-  }
 
   protected userFormular = this.fb.group({
     email: new FormControl('', {
@@ -97,7 +94,8 @@ export class UserDetailPageComponent implements OnInit {
 
   onSubmit() {
     this.userFormular.markAllAsTouched();
-    if (this.userFormular.invalid) {
+    this.multiSelectTouched = true;
+    if (this.userFormular.invalid || this.selectedRoles.length === 0) {
       return;
     }
 
@@ -108,7 +106,37 @@ export class UserDetailPageComponent implements OnInit {
     this.addUser();
   }
 
-  updateUser() {}
+  updateUser() {
+    const id = this.route.snapshot.paramMap.get('id')!;
+    const patchValue = this.getJsonPatch(this.userFormular, this.userDetail);
+    this.userService.updateUser(id, patchValue).subscribe({
+      next: (user) => {
+        this.userDetail = user;
+        this.userFormular.patchValue(user);
+        this.userService.manageUserRoles(id, this.selectedRoles).subscribe({
+          next: () => {
+            this.alertStateService.openAlert(
+              'Uživatel byl úspěšně upraven',
+              'success'
+            );
+          },
+          error: (error) => {
+            this.alertStateService.openAlert(
+              'Něco se pokazilo, zkuste to prosím znovu',
+              'error'
+            );
+          },
+        });
+      },
+      error: (error) => {
+        this.alertStateService.openAlert(
+          'Něco se pokazilo, zkuste to prosím znovu',
+          'error'
+        );
+      },
+    });
+
+  }
 
   addUser() {
     const dataRaw = this.userFormular.getRawValue();
