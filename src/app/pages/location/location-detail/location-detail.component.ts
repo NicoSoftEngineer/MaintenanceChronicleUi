@@ -1,26 +1,34 @@
 import { Component, inject } from '@angular/core';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { getJsonPatch } from '../../../utils/patch-form-helper.service';
 import { CustomerDetailForLocation } from '../../../models/bussiness/customer/customer-detail-for-location';
 import { LocationService } from '../../../services/location-service';
+import { CustomerService } from '../../../services/customer-service';
+import { SearchSelectComponent } from '../../../components/search-select/search-select.component';
+import { UserListDto } from '../../../models/bussiness/user/user-list-dto';
+import { UserContactList } from '../../../models/bussiness/contact/user-contact-list';
 
 @Component({
   selector: 'app-location-detail',
-  imports: [AlertComponent, FormInputComponent, ReactiveFormsModule, RouterLink],
+  imports: [AlertComponent, FormInputComponent, ReactiveFormsModule, RouterLink, SearchSelectComponent],
   templateUrl: './location-detail.component.html',
   styleUrl: './location-detail.component.scss',
 })
 export class LocationDetailComponent {
   protected readonly route = inject(ActivatedRoute);
+  protected readonly router = inject(Router);
   protected readonly fb = inject(FormBuilder);
   protected readonly locationService = inject(LocationService);
+  protected readonly customerService = inject(CustomerService);
   protected readonly alertStateService = inject(AlertStateService);
   protected readonly getJsonPatch = getJsonPatch;
   protected customerDetail!: CustomerDetailForLocation;
+  protected contactList: UserContactList[] = [];
+  protected selectedContacts: UserContactList[] = [];
   private locationDetail: { [key: string]: any } = {};
 
   protected locationFormular = this.fb.group({
@@ -40,11 +48,12 @@ export class LocationDetailComponent {
       nonNullable: true,
       validators: [Validators.required],
     }),
+    customerId:'',
   });
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
-    if (id) {
+    if (id && id !== 'new') {
       this.locationService.getLocationById(id).subscribe({
         next: (location) => {
           this.locationDetail = location;
@@ -58,6 +67,20 @@ export class LocationDetailComponent {
         },
       });
       this.getCustomerDetail();
+      this.getContactsForLocation();
+      this.getAllContacts();
+      return;
+    }
+
+    const custId = this.route.snapshot.queryParamMap.get('customerId')!;
+    if(custId){
+      this.locationFormular.controls['customerId'].setValue(custId);
+      this.customerService.getCustomerById(custId).subscribe({
+        next: (customer) => {
+          console.log(customer);
+          this.customerDetail = customer as CustomerDetailForLocation;
+        }
+      });
     }
   }
 
@@ -71,7 +94,29 @@ export class LocationDetailComponent {
     });
   }
 
+  getContactsForLocation(): void {
+    const id = this.route.snapshot.paramMap.get('id')!;
+    this.locationService.getContactsForLocation(id).subscribe({
+      next: (contacts) => {
+        this.selectedContacts = contacts;
+        console.log(contacts);
+      }
+    });
+  }
+
+  getAllContacts(): void {
+    this.locationService.getAllContacts().subscribe({
+      next: (contacts) => {
+        this.contactList = contacts;
+        console.log(contacts);
+
+      }
+    });
+  }
+
   onSubmit(): void {
+    console.log(this.selectedContacts);
+
     this.locationFormular.markAllAsTouched();
     if (this.locationFormular.invalid) {
       return;
@@ -85,11 +130,13 @@ export class LocationDetailComponent {
   }
 
   updateLocation(){
-    const patchValue = this.getJsonPatch(this.locationFormular, this.locationDetail);
+    let patchValue = this.getJsonPatch(this.locationFormular, this.locationDetail);
+    patchValue = patchValue.filter((p) => p.path === '/customerId');
     this.locationService.updateLocation(this.locationDetail['id'], patchValue).subscribe({
       next: (cust) => {
         this.locationDetail = cust;
         this.locationFormular.patchValue(cust);
+        this.manageContactsForLocation(this.route.snapshot.paramMap.get('id')!);
         this.alertStateService.openAlert(
           'Pobočka byla úspěšně upravena',
           'success'
@@ -107,13 +154,15 @@ export class LocationDetailComponent {
   addLocation(){
     const dataRaw = this.locationFormular.getRawValue();
     const data = JSON.parse(JSON.stringify(dataRaw));
-
+    console.log(data);
     this.locationService.createLocation(data).subscribe({
-      next: () => {
+      next: (id) => {
         this.alertStateService.openAlert(
           'Pobočka byla úspěšně vytvořena',
           'success'
         );
+        this.manageContactsForLocation(id as unknown as string);
+        this.router.navigate(['/locations', id]);
       },
       error: (error) => {
         this.alertStateService.openAlert(
@@ -122,5 +171,9 @@ export class LocationDetailComponent {
         );
       },
     });
+  }
+
+  manageContactsForLocation(id:string): void {
+    this.locationService.manageContactsForLocation(id, this.selectedContacts).subscribe({});
   }
 }

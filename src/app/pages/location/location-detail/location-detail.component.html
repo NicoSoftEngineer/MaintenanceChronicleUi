@@ -16,6 +16,7 @@
         <mach:forminput formControlName="street" type="text" name="street" [required]="true" label="Ulice" />
         <mach:forminput formControlName="city" type="text" name="city" [required]="true" label="Město" />
         <mach:forminput formControlName="country" type="text" name="country" [required]="true" label="Země" />
+        <mach:searchSelect label="Kontakty" [required]="false" [options]="contactList" [(selectedOptions)]="selectedContacts"/>
         <div class="flex justify-end">
           <button type="submit" class="btn btn-primary">Uložit</button>
         </div>

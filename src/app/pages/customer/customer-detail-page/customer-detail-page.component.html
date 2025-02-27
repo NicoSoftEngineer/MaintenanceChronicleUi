@@ -17,7 +17,11 @@
   </section>
   <!-- Locations list section -->
   <section class="p-4 w-1/2">
-    <h2 class="pt-6 text-lg font-bold text-start text-black">Pobočky</h2>
+    <div class="flex justify-between">
+      <h2 class="pt-6 text-lg font-bold text-start text-black">Pobočky</h2>
+      <button (click)="newLocation()" class="btn btn-primary mt-4">Přidat pobočku</button>
+    </div>
+
     @for (location of locations; track location.id) {
       <div class="mt-6 p-4 bg-gray-100 border-l-4 border-[#093d82] rounded-lg w-full flex justify-between items-center">
         <p class="text-xl font-extrabold text-black">{{location.name}}</p>
