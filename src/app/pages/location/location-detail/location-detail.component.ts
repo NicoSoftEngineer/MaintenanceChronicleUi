@@ -131,7 +131,7 @@ export class LocationDetailComponent {
 
   updateLocation(){
     let patchValue = this.getJsonPatch(this.locationFormular, this.locationDetail);
-    patchValue = patchValue.filter((p) => p.path === '/customerId');
+    patchValue = patchValue.filter((p) => p.path !== 'customerId');
     this.locationService.updateLocation(this.locationDetail['id'], patchValue).subscribe({
       next: (cust) => {
         this.locationDetail = cust;
@@ -175,5 +175,9 @@ export class LocationDetailComponent {
 
   manageContactsForLocation(id:string): void {
     this.locationService.manageContactsForLocation(id, this.selectedContacts).subscribe({});
+  }
+
+  newMachine(){
+    this.router.navigate(['/machines', ''],{queryParams:{  locationId: this.locationDetail['id']}});
   }
 }

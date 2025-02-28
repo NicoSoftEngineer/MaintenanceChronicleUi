@@ -13,6 +13,7 @@ import { UserListPageComponent } from './pages/user/user-list-page/user-list-pag
 import { AdminRoleGuard } from './utils/admin-role-guard';
 import { UserDetailPageComponent } from './pages/user/user-detail-page/user-detail-page.component';
 import { MachineListPageComponent } from './pages/machines/machine-list-page/machine-list-page.component';
+import { MachineDetailPageComponent } from './pages/machines/machine-detail-page/machine-detail-page.component';
 
 export const routes: Routes = [
     {
@@ -30,7 +31,7 @@ export const routes: Routes = [
         { path: 'users', component: UserListPageComponent, title: 'User list'/*, canActivate: [AdminRoleGuard]*/ },
         { path: 'users/:id', component: UserDetailPageComponent, title: 'User detail'/*, canActivate: [AdminRoleGuard]*/},
         { path: 'machines', component: MachineListPageComponent, title: 'Machine list' },
-
+        { path: 'machines/:id', component: MachineDetailPageComponent, title: 'Machine Detail' },
       ]
     }
   ];

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { RouterLink } from '@angular/router';
 import { PopUpModalComponent } from '../../../components/pop-up-modal/pop-up-modal.component';
-import { MachineListDto } from '../../../models/bussiness/machine/machine-list-dto';
+import { MachineListDto } from '../../../models/bussiness/machine/machine-dto';
 import { PopUpStateService } from '../../../components/pop-up-modal/pop-up-state.service';
 import { AlertStateService } from '../../../components/alert/alert-state.service';
 import { MachineService } from '../../../services/machine-service';
