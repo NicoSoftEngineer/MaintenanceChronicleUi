@@ -1,5 +1,5 @@
 import { LocationService } from './../../../services/location-service';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -15,6 +15,8 @@ import { MachineService } from '../../../services/machine-service';
 import { LocationDetailDto } from '../../../models/bussiness/location/location-detail-dto';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
+import QRCodeStyling from 'qr-code-styling';
+import { QrCodeComponent } from '../../../components/qr-code/qr-code.component';
 
 @Component({
   selector: 'app-machine-detail-page',
@@ -24,11 +26,14 @@ import { FormInputComponent } from '../../../components/form-input/form-input.co
     FormInputComponent,
     FormsModule,
     ReactiveFormsModule,
+    QrCodeComponent,
   ],
   templateUrl: './machine-detail-page.component.html',
   styleUrl: './machine-detail-page.component.scss',
 })
 export class MachineDetailPageComponent {
+  @ViewChild("canvas", { static: true }) canvas?: ElementRef;
+
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
   protected readonly fb = inject(FormBuilder);
@@ -39,6 +44,7 @@ export class MachineDetailPageComponent {
   protected readonly getJsonPatch = getJsonPatch;
   protected locationDetail: LocationDetailDto = {} as LocationDetailDto;
   private machineDetail: { [key: string]: any } = {};
+  protected sideText = '';
 
   protected machineFormular = this.fb.group({
     model: new FormControl('', {
@@ -69,6 +75,8 @@ export class MachineDetailPageComponent {
     if (id && id !== 'new') {
       this.machineService.getMachineById(id).subscribe({
         next: (machine) => {
+          console.log(machine['model'] + ' ' + machine['color'])
+          this.sideText = machine['model'] + ' - ' + machine['serialNumber'];
           this.machineDetail = machine;
           this.machineFormular.patchValue(machine);
         },
@@ -84,6 +92,7 @@ export class MachineDetailPageComponent {
           this.locationDetail = location;
         },
       });
+
       return;
     }
 

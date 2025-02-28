@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -12,6 +12,7 @@ import { SearchSelectComponent } from '../../../components/search-select/search-
 import { UserListDto } from '../../../models/bussiness/user/user-list-dto';
 import { UserContactList } from '../../../models/bussiness/contact/user-contact-list';
 import { MachineListDto } from '../../../models/bussiness/machine/machine-dto';
+import * as QRCodeStyling from "qr-code-styling";
 
 @Component({
   selector: 'app-location-detail',
@@ -20,6 +21,7 @@ import { MachineListDto } from '../../../models/bussiness/machine/machine-dto';
   styleUrl: './location-detail.component.scss',
 })
 export class LocationDetailComponent {
+
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
   protected readonly fb = inject(FormBuilder);
@@ -85,6 +87,7 @@ export class LocationDetailComponent {
         }
       });
     }
+
   }
 
   getCustomerDetail(): void {
