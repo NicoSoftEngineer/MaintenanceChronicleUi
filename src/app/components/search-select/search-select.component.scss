@@ -82,7 +82,7 @@
 
 /* Dropdown menu */
 .dropdown-menu {
-  @apply absolute z-50 w-full mt-1 overflow-hidden;
+  @apply absolute z-50 w-2/3 mt-1 overflow-hidden;
   @apply bg-white dark:bg-gray-800 rounded-lg shadow-lg;
   @apply border border-solid border-gray-200 dark:border-gray-700;
 }

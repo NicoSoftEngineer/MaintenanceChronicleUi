@@ -2,6 +2,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
   AfterContentChecked,
+  AfterContentInit,
   Component,
   computed,
   ElementRef,
@@ -25,7 +26,7 @@ import { filter } from 'rxjs';
   templateUrl: './search-select.component.html',
   styleUrls: ['./search-select.component.scss'],
 })
-export class SearchSelectComponent implements AfterContentChecked {
+export class SearchSelectComponent {
   private control: AbstractControl | null = null;
 
   // ViewChild references
@@ -48,12 +49,12 @@ export class SearchSelectComponent implements AfterContentChecked {
 
   //Filtered options
   filterOptions(event: any | null) {
+    if(!this.isOpen()) {
+      this.openDropdown();
+    }
     if(!event) {
       this.filteredOptions = this.options();
       return;
-    }
-    if(!this.isOpen()) {
-      this.openDropdown();
     }
     const value = event.target.value.toLowerCase();
     if (!value) {
@@ -88,11 +89,8 @@ export class SearchSelectComponent implements AfterContentChecked {
     private viewContainerRef: ViewContainerRef
   ) {}
 
-  ngAfterContentChecked() {
-    this.filteredOptions = this.options();
-  }
-
   onFocus() {
+    this.filterOptions(null);
     this.focused.set(true);
   }
 
@@ -113,6 +111,9 @@ export class SearchSelectComponent implements AfterContentChecked {
   }
 
   toggleDropdown() {
+    if(this.filteredOptions.length === 0) {
+    this.filterOptions(null);
+  }
     this.isOpen() ? this.closeDropdown() : this.openDropdown();
   }
 
