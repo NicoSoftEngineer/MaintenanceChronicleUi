@@ -11,6 +11,7 @@ import { CustomerService } from '../../../services/customer-service';
 import { SearchSelectComponent } from '../../../components/search-select/search-select.component';
 import { UserListDto } from '../../../models/bussiness/user/user-list-dto';
 import { UserContactList } from '../../../models/bussiness/contact/user-contact-list';
+import { MachineListDto } from '../../../models/bussiness/machine/machine-dto';
 
 @Component({
   selector: 'app-location-detail',
@@ -28,6 +29,7 @@ export class LocationDetailComponent {
   protected readonly getJsonPatch = getJsonPatch;
   protected customerDetail!: CustomerDetailForLocation;
   protected contactList: UserContactList[] = [];
+  protected machines: MachineListDto[] = [];
   protected selectedContacts: UserContactList[] = [];
   private locationDetail: { [key: string]: any } = {};
 
@@ -69,6 +71,7 @@ export class LocationDetailComponent {
       this.getCustomerDetail();
       this.getContactsForLocation();
       this.getAllContacts();
+      this.getMachinesForLocation();
       return;
     }
 
@@ -110,6 +113,15 @@ export class LocationDetailComponent {
         this.contactList = contacts;
         console.log(contacts);
 
+      }
+    });
+  }
+
+  getMachinesForLocation(): void {
+    const id = this.route.snapshot.paramMap.get('id')!;
+    this.locationService.getMachinesForLocation(id).subscribe({
+      next: (machines) => {
+        this.machines = machines;
       }
     });
   }

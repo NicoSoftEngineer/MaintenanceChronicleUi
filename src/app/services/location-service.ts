@@ -6,6 +6,7 @@ import { LocationDetailDto } from '../models/bussiness/location/location-detail-
 import { NewLocationDetailDto } from '../models/bussiness/location/new-location-detail-dto';
 import { CustomerDetailForLocation } from '../models/bussiness/customer/customer-detail-for-location';
 import { UserContactList } from '../models/bussiness/contact/user-contact-list';
+import { MachineListDto } from '../models/bussiness/machine/machine-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -58,4 +59,10 @@ export class LocationService {
     const url = `${this.baseUrl}/contacts`;
     return this.httpClient.get<UserContactList[]>(url).pipe();
   }
+
+  getMachinesForLocation(id: string): Observable<MachineListDto[]> {
+    const url = `${this.baseUrl}/${id}/machines`;
+    return this.httpClient.get<MachineListDto[]>(url).pipe();
+  }
+
 }
