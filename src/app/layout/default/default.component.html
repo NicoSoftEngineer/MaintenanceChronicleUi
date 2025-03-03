@@ -48,6 +48,7 @@
         </svg>
       </button>
     </div>
+    @if (isLoggedIn) {
     <div class="items-center justify-between hidden w-full md:flex md:w-1/4 md:order-1" id="navbar-user">
       <div class="flex items-end justify-end w-full">
         <ul
@@ -65,13 +66,14 @@
             <a href="#" class="text-[#FFDB99] no-underline">Záznamy</a>
           </li>
           @if (authService.hasRole('Admin')) {
-            <li>
-              <a [routerLink]="['/users']" class="text-[#FFDB99] no-underline">Uživatelé</a>
-            </li>
+          <li>
+            <a [routerLink]="['/users']" class="text-[#FFDB99] no-underline">Uživatelé</a>
+          </li>
           }
         </ul>
       </div>
     </div>
+    }
   </div>
 </nav>
 <div class=" h-full">

@@ -14,6 +14,7 @@ import { AdminRoleGuard } from './utils/admin-role-guard';
 import { UserDetailPageComponent } from './pages/user/user-detail-page/user-detail-page.component';
 import { MachineListPageComponent } from './pages/machines/machine-list-page/machine-list-page.component';
 import { MachineDetailPageComponent } from './pages/machines/machine-detail-page/machine-detail-page.component';
+import { MachineDetailUnauthorizedPageComponent } from './pages/machines/machine-detail-unauthorized-page/machine-detail-unauthorized-page/machine-detail-unauthorized-page.component';
 
 export const routes: Routes = [
     {
@@ -32,6 +33,7 @@ export const routes: Routes = [
         { path: 'users/:id', component: UserDetailPageComponent, title: 'User detail'/*, canActivate: [AdminRoleGuard]*/},
         { path: 'machines', component: MachineListPageComponent, title: 'Machine list' },
         { path: 'machines/:id', component: MachineDetailPageComponent, title: 'Machine Detail' },
+        { path: 'machines-unauthorized/:id', component: MachineDetailUnauthorizedPageComponent, title: 'Machine Detail' },
       ]
     }
   ];

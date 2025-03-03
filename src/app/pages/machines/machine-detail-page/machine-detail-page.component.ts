@@ -17,6 +17,7 @@ import { AlertComponent } from '../../../components/alert/alert.component';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import QRCodeStyling from 'qr-code-styling';
 import { QrCodeComponent } from '../../../components/qr-code/qr-code.component';
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-machine-detail-page',
@@ -40,6 +41,7 @@ export class MachineDetailPageComponent {
   protected readonly machineService = inject(MachineService);
   protected readonly locationService = inject(LocationService);
   protected readonly customerService = inject(CustomerService);
+  protected readonly authService = inject(AuthService);
   protected readonly alertStateService = inject(AlertStateService);
   protected readonly getJsonPatch = getJsonPatch;
   protected locationDetail: LocationDetailDto = {} as LocationDetailDto;
@@ -71,11 +73,15 @@ export class MachineDetailPageComponent {
   });
 
   ngOnInit(): void {
+    this.authService.isLoggedIn$.subscribe((status) => {
+      if (!status) {
+        this.router.navigate(['machines-unauthorized',  this.route.snapshot.paramMap.get('id') ]);
+      }
+    });
     const id = this.route.snapshot.paramMap.get('id')!;
     if (id && id !== 'new') {
       this.machineService.getMachineById(id).subscribe({
         next: (machine) => {
-          console.log(machine['model'] + ' ' + machine['color'])
           this.sideText = machine['model'] + ' - ' + machine['serialNumber'];
           this.machineDetail = machine;
           this.machineFormular.patchValue(machine);
@@ -92,7 +98,6 @@ export class MachineDetailPageComponent {
           this.locationDetail = location;
         },
       });
-
       return;
     }
 
