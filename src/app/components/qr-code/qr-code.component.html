@@ -1,6 +1,7 @@
 <!-- Container for QR code and text -->
-<div #captureContainer class="bg-white border border-gray-300 inline-block max-w-xs">
-    <div #qrContainer class="m-1"></div>
-</div>
 
-<button (click)="downloadQrCode()" class="btn btn-primary">Download QR Code with Text</button>
+<div class="flex flex-col">
+  <div #qrContainer class="m-1"></div>
+  @if(sideText() !== ''){
+  <button (click)="downloadQrCode()" class="btn btn-primary">Download QR Code with Text</button>}
+</div>
