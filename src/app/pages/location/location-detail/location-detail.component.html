@@ -23,7 +23,20 @@
       </form>
     </section>
     <!-- Locations list section -->
-    <section class="flex justify-start">
-      <h2 class="p-2 text-lg font-bold text-center text-black">Stroje</h2>
+    <section class="m-2 p-4 w-1/2">
+      <div class="flex justify-between">
+        <h2 class="pt-6 text-lg font-bold text-start text-black">Stroje</h2>
+        <button (click)="newMachine()" class="btn btn-primary mt-4">Přidat stroj</button>
+      </div>
+      @for (machine of machines; track machine.id) {
+        <div class="mt-6 p-4 bg-gray-100 border-l-4 border-[#093d82] rounded-lg w-full flex justify-between items-center">
+          <p class="text-xl font-extrabold text-black">{{machine.model}}</p>
+          <a [routerLink]="['/machines', machine.id]" class="no-underline">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 14v4.833A1.166 1.166 0 0 1 16.833 20H5.167A1.167 1.167 0 0 1 4 18.833V7.167A1.166 1.166 0 0 1 5.167 6h4.618m4.447-2H20v5.768m-7.889 2.121 7.778-7.778"/>
+            </svg>
+          </a>
+        </div>
+      }
     </section>
 </div>

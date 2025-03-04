@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -11,6 +11,8 @@ import { CustomerService } from '../../../services/customer-service';
 import { SearchSelectComponent } from '../../../components/search-select/search-select.component';
 import { UserListDto } from '../../../models/bussiness/user/user-list-dto';
 import { UserContactList } from '../../../models/bussiness/contact/user-contact-list';
+import { MachineListDto } from '../../../models/bussiness/machine/machine-dto';
+import * as QRCodeStyling from "qr-code-styling";
 
 @Component({
   selector: 'app-location-detail',
@@ -19,6 +21,7 @@ import { UserContactList } from '../../../models/bussiness/contact/user-contact-
   styleUrl: './location-detail.component.scss',
 })
 export class LocationDetailComponent {
+
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
   protected readonly fb = inject(FormBuilder);
@@ -28,6 +31,7 @@ export class LocationDetailComponent {
   protected readonly getJsonPatch = getJsonPatch;
   protected customerDetail!: CustomerDetailForLocation;
   protected contactList: UserContactList[] = [];
+  protected machines: MachineListDto[] = [];
   protected selectedContacts: UserContactList[] = [];
   private locationDetail: { [key: string]: any } = {};
 
@@ -69,6 +73,7 @@ export class LocationDetailComponent {
       this.getCustomerDetail();
       this.getContactsForLocation();
       this.getAllContacts();
+      this.getMachinesForLocation();
       return;
     }
 
@@ -82,6 +87,7 @@ export class LocationDetailComponent {
         }
       });
     }
+
   }
 
   getCustomerDetail(): void {
@@ -114,6 +120,15 @@ export class LocationDetailComponent {
     });
   }
 
+  getMachinesForLocation(): void {
+    const id = this.route.snapshot.paramMap.get('id')!;
+    this.locationService.getMachinesForLocation(id).subscribe({
+      next: (machines) => {
+        this.machines = machines;
+      }
+    });
+  }
+
   onSubmit(): void {
     console.log(this.selectedContacts);
 
@@ -131,7 +146,7 @@ export class LocationDetailComponent {
 
   updateLocation(){
     let patchValue = this.getJsonPatch(this.locationFormular, this.locationDetail);
-    patchValue = patchValue.filter((p) => p.path === '/customerId');
+    patchValue = patchValue.filter((p) => p.path !== 'customerId');
     this.locationService.updateLocation(this.locationDetail['id'], patchValue).subscribe({
       next: (cust) => {
         this.locationDetail = cust;
@@ -175,5 +190,9 @@ export class LocationDetailComponent {
 
   manageContactsForLocation(id:string): void {
     this.locationService.manageContactsForLocation(id, this.selectedContacts).subscribe({});
+  }
+
+  newMachine(){
+    this.router.navigate(['/machines', ''],{queryParams:{  locationId: this.locationDetail['id']}});
   }
 }
