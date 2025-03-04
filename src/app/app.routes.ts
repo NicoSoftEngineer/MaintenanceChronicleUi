@@ -15,6 +15,7 @@ import { UserDetailPageComponent } from './pages/user/user-detail-page/user-deta
 import { MachineListPageComponent } from './pages/machines/machine-list-page/machine-list-page.component';
 import { MachineDetailPageComponent } from './pages/machines/machine-detail-page/machine-detail-page.component';
 import { MachineDetailUnauthorizedPageComponent } from './pages/machines/machine-detail-unauthorized-page/machine-detail-unauthorized-page.component';
+import { RecordListPageComponent } from './pages/record/record-list-page/record-list-page.component';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,8 @@ export const routes: Routes = [
         { path: 'machines', component: MachineListPageComponent, title: 'Machine list' },
         { path: 'machines/:id', component: MachineDetailPageComponent, title: 'Machine Detail' },
         { path: 'machines-unauthorized/:id', component: MachineDetailUnauthorizedPageComponent, title: 'Machine Detail' },
+        { path: 'records', component: RecordListPageComponent, title: 'Record list' },
+
       ]
     }
   ];

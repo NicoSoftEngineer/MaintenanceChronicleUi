@@ -63,7 +63,7 @@
             <a [routerLink]="['/machines']" class="text-[#FFDB99] no-underline">Stroje</a>
           </li>
           <li>
-            <a href="#" class="text-[#FFDB99] no-underline">Záznamy</a>
+            <a [routerLink]="['/records']" class="text-[#FFDB99] no-underline">Záznamy</a>
           </li>
           @if (authService.hasRole('Admin')) {
           <li>
