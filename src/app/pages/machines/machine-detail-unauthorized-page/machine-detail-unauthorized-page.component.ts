@@ -1,8 +1,8 @@
-import { LocationService } from './../../../../services/location-service';
+import { LocationService } from './../../../services/location-service';
 import { Component, inject } from '@angular/core';
-import { UserContactList } from '../../../../models/bussiness/contact/user-contact-list';
-import { MachineDetailDto } from '../../../../models/bussiness/machine/machine-dto';
-import { MachineService } from '../../../../services/machine-service';
+import { UserContactList } from '../../../models/bussiness/contact/user-contact-list';
+import { MachineDetailDto } from '../../../models/bussiness/machine/machine-dto';
+import { MachineService } from '../../../services/machine-service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -27,6 +27,17 @@ export class MachineDetailUnauthorizedPageComponent {
           this.contacts = contacts;
         });
       });
+    });
+  }
+
+  copiedText: string | null = null;
+
+  copyToClipboard(text: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      this.copiedText = text;
+      setTimeout(() => {
+        this.copiedText = null;
+      }, 2000); // Message disappears after 2 seconds
     });
   }
 }

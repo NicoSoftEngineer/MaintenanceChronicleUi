@@ -111,5 +111,5 @@ a {
 }
 
 .list-item{
-  @apply list-none w-2/3 border p-2 m-2 border-[#1F0F53] text-[#1F0F53] rounded-xl dark:border-gray-700 bg-blue-50 shadow-md;
+  @apply list-none w-2/3 p-2 m-2  text-[#1F0F53] rounded-xl bg-white shadow-md;
 }
