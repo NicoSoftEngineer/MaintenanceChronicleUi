@@ -33,8 +33,6 @@ import { AuthService } from '../../../services/auth-service';
   styleUrl: './machine-detail-page.component.scss',
 })
 export class MachineDetailPageComponent {
-  @ViewChild("canvas", { static: true }) canvas?: ElementRef;
-
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
   protected readonly fb = inject(FormBuilder);
@@ -177,5 +175,9 @@ export class MachineDetailPageComponent {
         );
       },
     });
+  }
+
+  newRecord(){
+    this.router.navigate(['/records', ''],{queryParams:{  machineId: this.machineDetail['id']}});
   }
 }

@@ -59,7 +59,7 @@ export class FormInputComponent
   // Inputs
   label = input<string>('');
   placeholder = input<string>('');
-  type = input<'text' | 'password' | 'email' | 'number' | 'tel' | 'url'>(
+  type = input<'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'multiline' | 'date'>(
     'text'
   );
   required = input<boolean>(false);

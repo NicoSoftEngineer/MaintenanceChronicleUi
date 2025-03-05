@@ -7,3 +7,17 @@ export interface RecordListDto {
   date: string;
   description: string;
 }
+
+export interface RecordDetailDto {
+  id: string;
+  type: string;
+  date: string;
+  description: string;
+}
+
+export interface CreateRecordDetailDto {
+  machineId: string;
+  type: string;
+  date: string;
+  description: string;
+}

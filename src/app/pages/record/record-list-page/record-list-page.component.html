@@ -15,14 +15,14 @@
     <div class="list-item">
       <div class="flex justify-between md:flex-row flex-col gap-4">
         <div class="columns-1 flex justify-evenly">
-          <div class="flex flex-col justify-start self-start">
-            <span>Pobočka:</span>
-            <span>Stroj:</span>
-            <span>Seriové číslo:</span>
-            <span>Typ:</span>
-            <span>Datum:</span>
+          <div class="flex flex-col justify-evenly self-start h-full">
+            <p>Pobočka:</p>
+            <p>Stroj:</p>
+            <p>Seriové číslo:</p>
+            <p>Typ:</p>
+            <p>Datum:</p>
           </div>
-          <div class="flex flex-col justify-start font-bold ms-2">
+          <div class="flex flex-col justify-evenly font-bold ms-2 h-full">
             <p>{{record.locationName}}</p>
             <p>{{record.machineName}}</p>
             <p>{{record.machineSerialNumber}}</p>
@@ -38,7 +38,7 @@
         </div>
         <div class="">
           <div class="flex md:justify-end justify-center items-center h-1/4">
-            <a [routerLink]="['/machines', record.id]" class="btn btn-primary">Detail</a>
+            <a [routerLink]="['/records', record.id]" class="btn btn-primary">Detail</a>
             <button (click)="openPopUp(record)" class="btn btn-danger">Smazat</button>
           </div>
         </div>

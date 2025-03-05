@@ -23,8 +23,13 @@
       </div>
     </form>
   </section>
+
   <!-- Service record list section -->
   <section class="flex justify-start">
+    <div class="flex justify-between">
+      <h2 class="pt-6 text-lg font-bold text-start text-black">Záznamy</h2>
+      <button (click)="newRecord()" class="btn btn-primary mt-4">Přidat záznam</button>
+    </div>
     <mach:qrCode [sideText]="sideText"/>
   </section>
 </div>

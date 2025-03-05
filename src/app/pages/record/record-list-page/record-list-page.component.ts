@@ -29,10 +29,10 @@ export class RecordListPageComponent {
           this.records = this.records.filter((record) => record.id !== id);
         });
         this.loadRecords();
-        this.alertStateService.openAlert('Stroj byl úspěšně vymazán', 'success');
+        this.alertStateService.openAlert('Záznam byl úspěšně vymazán', 'success');
       };
       openPopUp = (record: RecordListDto) => {
-          this.popUpStateService.openPopUp(`Jste si jistí, že chcete vymazat stroj "${record.date}"`, this.deleteLocation, record.id);
+          this.popUpStateService.openPopUp(`Jste si jistí, že chcete vymazat záznam z "${record.date}"`, this.deleteLocation, record.id);
       };
       loadRecords = () =>{
         this.recordService.getRecords().subscribe((records) => {
