@@ -45,7 +45,7 @@ export class RecordDetailPageComponent implements OnInit{
   protected readonly getJsonPatch = getJsonPatch;
   protected machineDetail: MachineDetailDto = {} as MachineDetailDto;
   protected typeOptions: RecordTypeDto[] = [];
-  protected selectedType: number[] = [];
+  protected selectedType: RecordTypeDto[] = [];
   private recordDetail: { [key: string]: any } = {};
 
   protected recordFormular = this.fb.group({
@@ -76,7 +76,7 @@ export class RecordDetailPageComponent implements OnInit{
     if(id){
       this.recordService.getRecordById(id).subscribe((record) => {
         record.date = new Date(record.date).toISOString().split('T')[0];
-        this.selectedType = this.typeOptions.filter(o => o.name == record.type).map(o => o.id);
+        this.selectedType = this.typeOptions.filter(o => o.name == record.type);
         this.recordDetail = record;
         console.log(record);
         this.recordFormular.patchValue(record);
@@ -158,6 +158,7 @@ export class RecordDetailPageComponent implements OnInit{
   addRecord() {
     const dataRaw = this.recordFormular.getRawValue();
     const data = JSON.parse(JSON.stringify(dataRaw));
+    data.recordType = this.selectedType[0].id;
     console.log(data);
     this.recordService.createRecord(data).subscribe({
       next: (id) => {
