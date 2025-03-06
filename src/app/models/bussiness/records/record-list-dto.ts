@@ -15,6 +15,13 @@ export interface RecordDetailDto {
   description: string;
 }
 
+export interface MachineRecordInListDto {
+  id: string;
+  type: string;
+  date: string;
+  description: string;
+}
+
 export interface CreateRecordDetailDto {
   machineId: string;
   type: string;

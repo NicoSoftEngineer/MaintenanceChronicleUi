@@ -1,17 +1,6 @@
 <div class="form-field" [class.focused]="isOpen()" [class.disabled]="disabled()">
   <div class="field-container">
-    @if (label()) {
-    <label [for]="label()" class="field-label" [class.floating]="hasValue() || isOpen()" [class]="[
-          'field-label',
-          'field-label-normal',
-          (error() || (validationError() && (touched() || touchSign()))) ? 'error' : ''
-        ].join(' ')">
-      {{ label() }}
-      @if (required()) {
-      <span class="required-marker">*</span>
-      }
-    </label>
-    }
+
 
     <div class="input-wrapper">
       <div #trigger (click)="toggleDropdown()" class="multi-select-field" [class]="[
@@ -62,6 +51,18 @@
           }
         </div>
       </div>
+      @if (label()) {
+        <label [for]="label()" class="field-label" [class.floating]="hasValue() || isOpen()" [class]="[
+              'field-label',
+              'field-label-normal',
+              (error() || (validationError() && (touched() || touchSign()))) ? 'error' : ''
+            ].join(' ')">
+          {{ label() }}
+          @if (required()) {
+          <span class="required-marker">*</span>
+          }
+        </label>
+        }
     </div>
 
     @if (error() || (validationError() && (touched() || touchSign()))) {

@@ -53,13 +53,10 @@
 .field-label {
   @apply absolute pointer-events-none z-20 bg-white;
   @apply text-gray-500 dark:text-gray-400 text-sm;
-  @apply peer-placeholder-shown:scale-100;
-  @apply peer-placeholder-shown:-translate-y-1/2;
-  @apply peer-placeholder-shown:top-1/2;
   @apply peer-focus:top-2;
   @apply peer-focus:scale-75;
-  @apply peer-focus:-translate-y-4;
-  @apply rtl:peer-focus:translate-x-1/4;
+  @apply peer-focus:-translate-y-6;
+  @apply rtl:peer-focus:translate-x-1/2;
   @apply rtl:peer-focus:left-auto;
   @apply start-1;
   transform-origin: 0 0;

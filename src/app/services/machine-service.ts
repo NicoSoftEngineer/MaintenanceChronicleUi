@@ -7,6 +7,7 @@ import {
   NewMachineDetailDto,
 } from '../models/bussiness/machine/machine-dto';
 import { LocationDetailDto } from '../models/bussiness/location/location-detail-dto';
+import { MachineRecordInListDto } from '../models/bussiness/records/record-list-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -44,5 +45,10 @@ export class MachineService {
   getLocationForMachine(id: string): Observable<LocationDetailDto> {
     const url = `${this.baseUrl}/${id}/location`;
     return this.httpClient.get<LocationDetailDto>(url).pipe();
+  }
+
+  getRecordsForMachine(id: string): Observable<MachineRecordInListDto[]> {
+    const url = `${this.baseUrl}/${id}/maintenance-records`;
+    return this.httpClient.get<MachineRecordInListDto[]>(url).pipe();
   }
 }

@@ -18,6 +18,7 @@ import { FormInputComponent } from '../../../components/form-input/form-input.co
 import QRCodeStyling from 'qr-code-styling';
 import { QrCodeComponent } from '../../../components/qr-code/qr-code.component';
 import { AuthService } from '../../../services/auth-service';
+import { MachineRecordInListDto } from '../../../models/bussiness/records/record-list-dto';
 
 @Component({
   selector: 'app-machine-detail-page',
@@ -42,9 +43,11 @@ export class MachineDetailPageComponent {
   protected readonly authService = inject(AuthService);
   protected readonly alertStateService = inject(AlertStateService);
   protected readonly getJsonPatch = getJsonPatch;
+  protected records: MachineRecordInListDto[] = [];
   protected locationDetail: LocationDetailDto = {} as LocationDetailDto;
   private machineDetail: { [key: string]: any } = {};
   protected sideText = '';
+  protected viewRecordSection = true;
 
   protected machineFormular = this.fb.group({
     model: new FormControl('', {
@@ -95,6 +98,17 @@ export class MachineDetailPageComponent {
         next: (location) => {
           this.locationDetail = location;
         },
+      });
+      this.machineService.getRecordsForMachine(id).subscribe({
+        next: (records) => {
+          this.records = records;
+        },
+        error: (error) => {
+          this.alertStateService.openAlert(
+            'Nedokázalo se získat záznamy pro tento stroj!',
+            'error'
+          );
+        }
       });
       return;
     }
