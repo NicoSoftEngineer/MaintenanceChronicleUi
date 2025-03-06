@@ -83,6 +83,7 @@ export class MachineDetailPageComponent {
     if (id && id !== 'new') {
       this.machineService.getMachineById(id).subscribe({
         next: (machine) => {
+          machine.inUseSince = new Date(machine.inUseSince).toISOString().split('T')[0];
           this.sideText = machine['model'] + ' - ' + machine['serialNumber'];
           this.machineDetail = machine;
           this.machineFormular.patchValue(machine);
