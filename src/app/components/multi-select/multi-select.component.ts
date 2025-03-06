@@ -235,6 +235,9 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
         if (!maxSel || this.selectedOptions().length < maxSel) {
           this.selectedOptions.update((options) => [...options, option]);
           this.onChange(this.selectedOptions().map((o) => o));
+        } else if(maxSel === 1) {
+          this.selectedOptions.set([option]);
+          this.onChange([option.id]);
         }
       } else {
         if (!minSel || this.selectedOptions().length > minSel) {
