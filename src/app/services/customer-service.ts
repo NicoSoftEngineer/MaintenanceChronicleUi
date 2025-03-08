@@ -32,8 +32,9 @@ export class CustomerService {
     const url = this.baseUrl;
     return this.httpClient.get<CustomerListDto[]>(url).pipe(
       tap((customers) =>
-        customers.map((customer) =>
-          ({ id: customer.id, name: customer.name })
+        customers.map((customer) =>{
+          return { id: customer.id, name: customer.name } as CustomerInFilter;
+        }
         )
       ));
   }

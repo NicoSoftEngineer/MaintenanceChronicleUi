@@ -115,7 +115,6 @@ export class LocationDetailComponent {
       next: (contacts) => {
         this.contactList = contacts;
         console.log(contacts);
-
       }
     });
   }

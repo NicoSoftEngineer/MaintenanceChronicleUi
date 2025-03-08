@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { LocationListDto } from '../models/bussiness/location/location-list-dto';
 import { LocationDetailDto } from '../models/bussiness/location/location-detail-dto';
 import { NewLocationDetailDto } from '../models/bussiness/location/new-location-detail-dto';
@@ -18,6 +18,13 @@ export class LocationService {
   getLocations(): Observable<LocationListDto[]> {
     const url = this.baseUrl;
     return this.httpClient.get<LocationListDto[]>(url).pipe();
+  }
+
+  getLocationsForFilter(): Observable<LocationListDto[]> {
+    const url = this.baseUrl;
+    return this.httpClient.get<LocationListDto[]>(url).pipe(tap((locations) => locations.map((location) => {
+      return { id: location.id, name: location.name } as LocationListDto;
+    })));
   }
 
   getLocationById(id: string): Observable<LocationDetailDto> {

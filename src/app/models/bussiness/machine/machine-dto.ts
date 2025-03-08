@@ -2,6 +2,7 @@ export interface MachineListDto {
   id:string;
   model:string;
   locationName:string;
+  customerName:string;
 }
 export interface NewMachineDetailDto {
   id:string;
@@ -19,4 +20,9 @@ export interface MachineDetailDto {
   serialNumber:string;
   color:string;
   inUseSince:string;
+}
+export interface MachineFilter {
+  searchText:string;
+  customer:any[];
+  location:any[];
 }
