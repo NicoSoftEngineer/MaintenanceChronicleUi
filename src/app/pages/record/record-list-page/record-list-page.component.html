@@ -4,14 +4,18 @@
     <mach:pop-up />
     <div class="flex justify-between items-baseline w-full">
       <h1 class="p-2 text-2xl font-bold text-center text-black">Záznamy</h1>
-      <div class="">
+      <div class="flex items-baseline">
         <h2>Pro vytvoření nového záznamu běžte na detail stroje</h2>
+        <button (click)="drawerOpen = true" class="btn btn-primary">Filtrovat</button>
+        @if(!isFilterClear()){
+        <button (click)="clearFilter()" class="btn btn-primary">Zrušit filtry</button>
+        }
       </div>
     </div>
   </div>
 
   <div class="w-full flex items-center flex-col">
-    @for(record of records; track record.id){
+    @for(record of filteredRecords; track record.id){
     <div class="list-item">
       <div class="flex justify-between md:flex-row flex-col gap-4">
         <div class="columns-1 flex justify-evenly">
@@ -46,5 +50,36 @@
     </div>
     }
   </div>
-
+  <mach:offCanvas
+  [title]="'Filtrovat'"
+  [confirmLabel]="'Filtrovat'"
+  [(isOpen)]="drawerOpen"
+  (saved)="filterRecords()"
+  >
+    <mach:forminput [(value)]="filter.searchText" type="text" label="Text"/>
+    <mach:multiSelect [options]="customersInFilter"
+      [(ngModel)]="filter.customer"
+      [ngModelOptions]="{standalone: true}"
+      [required]="false"
+      label="Zákazník"
+      [closeOnSelect]="true"
+      [maxSelections]="1"
+      placeholder="Vybrat zákazníka..." />
+      <mach:multiSelect [options]="locationsInFilter"
+      [(ngModel)]="filter.location"
+      [ngModelOptions]="{standalone: true}"
+      [required]="false"
+      label="Pobočka"
+      [closeOnSelect]="true"
+      [maxSelections]="1"
+      placeholder="Vybrat pobočku..." />
+      <mach:multiSelect [options]="machinesForFilter"
+      [(ngModel)]="filter.machine"
+      [ngModelOptions]="{standalone: true}"
+      [required]="false"
+      label="Zařízení"
+      [closeOnSelect]="true"
+      [maxSelections]="1"
+      placeholder="Vybrat zařízení..." />
+  </mach:offCanvas>
 </div>
