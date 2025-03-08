@@ -10,4 +10,7 @@ module.exports = {
   plugins: [
     require('flowbite/plugin')
   ],
+  corePlugins: {
+    scrollbar: false,
+  },
 }
