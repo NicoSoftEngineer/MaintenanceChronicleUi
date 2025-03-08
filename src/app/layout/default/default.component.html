@@ -1,85 +1,86 @@
-<nav class="bg-[#1F0F53] border-gray-200 dark:bg-gray-900 h-14  w-full">
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
-    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="mach-logo-transparent.png" class="max-h-8" alt="Mach logo" />
-    </a>
-    <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse h-14 text-[#FFDB99]">
-      @let user = user$ | async;
-      <!-- Dropdown menu -->
-      @if (isLoggedIn) {
-      <button type="button"
-        class="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-        id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-        data-dropdown-placement="bottom">
-        <span class="sr-only">Open user menu</span>
-        <svg class="w-6 h-6 text-[#FFDB99] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-          width="24" height="24" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-        </svg>
-      </button>
-      <div
-        class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600"
-        id="user-dropdown">
-        <div class="px-4 py-3">
-          <span class="block text-sm text-gray-900 dark:text-white">{{user?.firstName}} {{user?.lastName}}</span>
-          <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{user?.email}}</span>
+<div class="flex flex-col min-h-screen">
+  <nav class="bg-[#1F0F53] border-gray-200 dark:bg-gray-900 h-14  w-full">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="mach-logo-transparent.png" class="max-h-8" alt="Mach logo" />
+      </a>
+      <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse h-14 text-[#FFDB99]">
+        @let user = user$ | async;
+        <!-- Dropdown menu -->
+        @if (isLoggedIn) {
+        <button type="button"
+          class="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+          id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+          data-dropdown-placement="bottom">
+          <span class="sr-only">Open user menu</span>
+          <svg class="w-6 h-6 text-[#FFDB99] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          </svg>
+        </button>
+        <div
+          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600"
+          id="user-dropdown">
+          <div class="px-4 py-3">
+            <span class="block text-sm text-gray-900 dark:text-white">{{user?.firstName}} {{user?.lastName}}</span>
+            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{user?.email}}</span>
+          </div>
+          <ul class="py-2" aria-labelledby="user-menu-button">
+            <li>
+              <a href="#" (click)="logout()"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
+                out</a>
+            </li>
+          </ul>
         </div>
-        <ul class="py-2" aria-labelledby="user-menu-button">
-          <li>
-            <a href="#" (click)="logout()"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
-              out</a>
-          </li>
-        </ul>
-      </div>
-      }
-      @else {
-      <a routerLink="/login" class="router-button m-5">Přihlásit se</a>
-      }
+        }
+        @else {
+        <a routerLink="/login" class="router-button m-5">Přihlásit se</a>
+        }
 
-      <button data-collapse-toggle="navbar-user" type="button"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-        aria-controls="navbar-user" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M1 1h15M1 7h15M1 13h15" />
-        </svg>
-      </button>
-    </div>
-    @if (isLoggedIn) {
-    <div class="items-center justify-between hidden w-full md:flex md:w-1/4 md:order-1" id="navbar-user">
-      <div class="flex items-end justify-end w-full">
-        <ul
-          class="flex flex-col items-baseline font-medium p-4 border border-[#1F0F53] rounded-lg bg-[#1F0F53] rtl:space-x-reverse md:p-0 md:space-x-8 w-max md:flex-row md:border-0 md:bg-[#1F0F53] dark:bg-[#1F0F53] md:dark:bg-[#1F0F53] dark:border-[#1F0F53]">
-          <li>
-            <a [routerLink]="['/customers']" class="text-[#FFDB99] no-underline">Zákazníci</a>
-          </li>
-          <li>
-            <a [routerLink]="['/locations']" class="text-[#FFDB99] no-underline">Pobočky</a>
-          </li>
-          <li>
-            <a [routerLink]="['/machines']" class="text-[#FFDB99] no-underline">Stroje</a>
-          </li>
-          <li>
-            <a [routerLink]="['/records']" class="text-[#FFDB99] no-underline">Záznamy</a>
-          </li>
-          @if (authService.hasRole('Admin')) {
-          <li>
-            <a [routerLink]="['/users']" class="text-[#FFDB99] no-underline">Uživatelé</a>
-          </li>
-          }
-        </ul>
+        <button data-collapse-toggle="navbar-user" type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-user" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </button>
       </div>
+      @if (isLoggedIn) {
+      <div class="items-center justify-between hidden w-full md:flex md:w-1/4 md:order-1" id="navbar-user">
+        <div class="flex items-end justify-end w-full">
+          <ul
+            class="flex flex-col items-baseline font-medium p-4 border border-[#1F0F53] rounded-lg bg-[#1F0F53] rtl:space-x-reverse md:p-0 md:space-x-8 w-max md:flex-row md:border-0 md:bg-[#1F0F53] dark:bg-[#1F0F53] md:dark:bg-[#1F0F53] dark:border-[#1F0F53]">
+            <li>
+              <a [routerLink]="['/customers']" class="text-[#FFDB99] no-underline">Zákazníci</a>
+            </li>
+            <li>
+              <a [routerLink]="['/locations']" class="text-[#FFDB99] no-underline">Pobočky</a>
+            </li>
+            <li>
+              <a [routerLink]="['/machines']" class="text-[#FFDB99] no-underline">Stroje</a>
+            </li>
+            <li>
+              <a [routerLink]="['/records']" class="text-[#FFDB99] no-underline">Záznamy</a>
+            </li>
+            @if (authService.hasRole('Admin')) {
+            <li>
+              <a [routerLink]="['/users']" class="text-[#FFDB99] no-underline">Uživatelé</a>
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+      }
     </div>
-    }
+  </nav>
+  <div class="flex-grow">
+    <router-outlet />
   </div>
-</nav>
-<div class=" h-full">
-  <router-outlet />
-
+  <footer class=" bottom-0 left-0 w-full bg-[#1F0F53] p-4 text-center text-[#FFDB99]">
+    <p>&copy; 2024 Maintenance Chronicle. Všechna práva vyhrazena.</p>
+  </footer>
 </div>
-<footer class="footer w-full">
-  <p>&copy; 2024 Maintenance Chronicle. Všechna práva vyhrazena.</p>
-</footer>
