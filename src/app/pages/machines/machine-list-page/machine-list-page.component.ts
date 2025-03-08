@@ -86,6 +86,7 @@ export class MachineListPageComponent {
   loadMachines = () => {
     this.machineService.getMachines().subscribe((machines) => {
       this.machines = machines;
+      this.filteredMachines = machines
     });
   };
   filterMachines = () => {

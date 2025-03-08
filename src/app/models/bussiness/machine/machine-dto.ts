@@ -21,6 +21,10 @@ export interface MachineDetailDto {
   color:string;
   inUseSince:string;
 }
+export interface MachineInFilterDto {
+  id:string;
+  name:string;
+}
 export interface MachineFilter {
   searchText:string;
   customer:any[];
