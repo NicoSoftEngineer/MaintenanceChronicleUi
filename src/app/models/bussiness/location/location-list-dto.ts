@@ -4,4 +4,5 @@ export interface LocationListDto {
   street:string;
   city:string;
   country:string;
+  customerName:string;
 }
