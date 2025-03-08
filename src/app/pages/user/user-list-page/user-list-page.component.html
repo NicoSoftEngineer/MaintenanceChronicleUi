@@ -4,12 +4,16 @@
     <mach:pop-up />
     <div class="flex justify-between items-center">
       <h1 class="p-2 text-2xl font-bold text-center text-black">Uživatel</h1>
-      <div class="">
+      <div class="flex items-baseline">
         <a [routerLink]="['/users', '']" class="btn btn-primary">Nový uživatel</a>
+        <button (click)="drawerOpen = true" class="btn btn-primary">Filtrovat</button>
+        @if(!isFilterClear()){
+        <button (click)="clearFilter()" class="btn btn-primary">Zrušit filtry</button>
+        }
       </div>
     </div>
   </div>
-  @for(user of users;track user.id){
+  @for(user of filteredUsers;track user.id){
   <div class="list-item">
     <div class="flex justify-between p-2 ">
       <div class="flex self-start">
@@ -41,4 +45,20 @@
     </div>
   </div>
   }
+  <mach:offCanvas
+  [title]="'Filtrovat'"
+  [confirmLabel]="'Filtrovat'"
+  [(isOpen)]="drawerOpen"
+  (saved)="filterMachines()"
+  >
+    <mach:forminput [(value)]="filter.searchText" type="text" label="Text"/>
+    <mach:multiSelect [options]="roleOptions"
+      [(ngModel)]="filter.roles"
+      [ngModelOptions]="{standalone: true}"
+      [required]="false"
+      label="Role"
+      [closeOnSelect]="true"
+      [maxSelections]="1"
+      placeholder="Vybrat roli..." />
+  </mach:offCanvas>
 </section>

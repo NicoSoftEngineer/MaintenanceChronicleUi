@@ -7,3 +7,7 @@ export interface UserListDto {
   email: string;
   roles: RoleDetail[];
 }
+export interface UserFilter {
+  searchText: string;
+  roles: any[];
+}
