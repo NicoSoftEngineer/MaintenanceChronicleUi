@@ -113,3 +113,23 @@ a {
 .list-item{
   @apply list-none w-2/3 p-2 m-2  text-[#1F0F53] rounded-xl bg-white shadow-md;
 }
+
+/* Customize scrollbar for Chrome, Edge, Safari */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Width of scrollbar */
+  @apply py-6 ;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar color */
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker on hover */
+}
