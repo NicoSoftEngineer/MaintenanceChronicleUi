@@ -144,8 +144,6 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
   }
 
   private openDropdown() {
-    console.log(this.options());
-    console.log(this.selectedOptions());
 
     if (this.overlayRef) return;
 

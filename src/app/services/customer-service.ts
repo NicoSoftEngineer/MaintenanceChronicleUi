@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { NewCustomerDetail } from '../models/bussiness/customer/new-customer-detail';
 import { CustomerDetail } from '../models/bussiness/customer/customer-detail';
 import { CustomerListDto } from '../models/bussiness/customer/customer-list-dto';
+import { CustomerInFilter } from '../models/bussiness/customer/customer-in-filter-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,16 @@ export class CustomerService {
   getCustomers(): Observable<CustomerListDto[]> {
     const url = this.baseUrl;
     return this.httpClient.get<CustomerListDto[]>(url).pipe();
+  }
+
+  getCustomersForFilter(): Observable<CustomerInFilter[]> {
+    const url = this.baseUrl;
+    return this.httpClient.get<CustomerListDto[]>(url).pipe(
+      tap((customers) =>
+        customers.map((customer) =>
+          ({ id: customer.id, name: customer.name })
+        )
+      ));
   }
 
   deleteCustomer(id: string): Observable<undefined> {

@@ -56,6 +56,7 @@ export class LocationDetailComponent {
   });
 
   ngOnInit(): void {
+    this.getAllContacts();
     const id = this.route.snapshot.paramMap.get('id')!;
     if (id && id !== 'new') {
       this.locationService.getLocationById(id).subscribe({
@@ -72,7 +73,6 @@ export class LocationDetailComponent {
       });
       this.getCustomerDetail();
       this.getContactsForLocation();
-      this.getAllContacts();
       this.getMachinesForLocation();
       return;
     }

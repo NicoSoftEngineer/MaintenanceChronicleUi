@@ -4,12 +4,16 @@
     <mach:pop-up />
     <div class="flex justify-between items-baseline">
       <h1 class="p-2 text-2xl font-bold text-center text-black">Pobočky</h1>
-      <div class="">
+      <div class="flex items-baseline">
         <h2>Pro vytvoření nové pobočky běžte na detail zákazníka</h2>
+        <button (click)="drawerOpen = true" class="btn btn-primary">Filtrovat</button>
+        @if(!isFilterClear()){
+        <button (click)="clearFilter()" class="btn btn-primary">Zrušit filtry</button>
+        }
       </div>
     </div>
   </div>
-  @for(location of locations;track location.name){
+  @for(location of filteredLocations;track location.name){
   <div
     class="list-item">
     <div class="flex justify-stretch  p-2 ">
@@ -31,4 +35,20 @@
     </div>
   </div>
   }
+  <mach:offCanvas
+  [title]="'Filtrovat'"
+  [confirmLabel]="'Filtrovat'"
+  [(isOpen)]="drawerOpen"
+  (saved)="filterLocations()"
+  >
+    <mach:forminput [(value)]="filter.searchText" type="text" label="Text"/>
+    <mach:multiSelect [options]="customersInFilterList"
+      [(ngModel)]="filter.customer"
+      [ngModelOptions]="{standalone: true}"
+      [required]="false"
+      label="Zákazník"
+      [closeOnSelect]="true"
+      [maxSelections]="1"
+      placeholder="Vybrat zákazníka..." />
+  </mach:offCanvas>
 </section>
