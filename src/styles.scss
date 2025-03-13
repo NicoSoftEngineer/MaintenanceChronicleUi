@@ -34,6 +34,10 @@ body {
   font-style: normal;
 }
 
+.min-h-80screen {
+  min-height: 80vh;
+}
+
 .btn {
   @apply bg-gradient-to-bl;
   @apply no-underline;

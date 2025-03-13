@@ -73,7 +73,8 @@ export class MachineDetailPageComponent {
     locationId: '',
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.authService.checkLoginStatus();
     this.authService.isLoggedIn$.subscribe((status) => {
       if (!status) {
         this.router.navigate(['machines-unauthorized',  this.route.snapshot.paramMap.get('id') ]);

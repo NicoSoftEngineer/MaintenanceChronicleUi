@@ -42,6 +42,8 @@ export function applyBackendErrors(form: FormGroup ,errors: { [key: string]: str
         'backend',
         errors[key].join(' ')
       );
+    } else if(!key){
+      form.setErrors({ ["general"]: errors[key].join(' ') || true });
     }
   }
 }

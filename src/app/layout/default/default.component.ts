@@ -17,7 +17,8 @@ export class DefaultComponent {
   protected user$ = this.authService.userinfo();
   isLoggedIn = false;
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.authService.checkLoginStatus();
     // Subscribe to the isLoggedIn$ observable to update UI reactively
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;

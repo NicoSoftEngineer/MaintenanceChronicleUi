@@ -76,6 +76,7 @@ export class RegisterPageComponent {
   onSubmit(): void {
     this.userFormular.markAllAsTouched();
     if (this.userFormular.invalid) {
+      console.log(this.userFormular.controls.passwordConfirm);
       return;
     }
 

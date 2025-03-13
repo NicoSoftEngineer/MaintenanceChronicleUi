@@ -48,12 +48,18 @@ export class LoginPageComponent {
   });
 
   onSubmit(): void {
+    this.formular.markAllAsTouched();
+    if (this.formular.invalid) {
+      return;
+    }
+
     const dataRaw = this.formular.getRawValue();
 
     const data = JSON.parse(JSON.stringify(dataRaw));
 
     this.authService.login(data).subscribe({
       next: async () => {
+          await this.authService.checkLoginStatus();
           await this.router.navigate(['/']);
       },
       error: (errors) => {

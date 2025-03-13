@@ -1,4 +1,5 @@
-<section class="flex flex-col justify-center items-center h-80p">
+<section class="flex justify-center items-center flex-col w-full min-h-80screen">
+
   <mach:alert class="w-25p m-2" type="error"/>
   <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p pt-1">
     <form class="p-2 border-0" [formGroup]="formular" (ngSubmit)="formular.valid && formular.markAllAsTouched(); onSubmit()" novalidate>

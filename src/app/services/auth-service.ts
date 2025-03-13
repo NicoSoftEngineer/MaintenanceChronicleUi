@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, ReplaySubject, tap } from 'rxjs';
+import { BehaviorSubject, catchError, lastValueFrom, Observable, ReplaySubject, tap } from 'rxjs';
 import { LoggedInUserInfoDto } from '../models/account/logged-in-user-info-dto';
 import { LoginDto } from '../models/account/login-dto';
 import { RegisterUserTenantDto } from '../models/account/register-user-tenant-dto';
+import { UserPasswordDto } from '../models/account/user-password-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,24 +19,22 @@ export class AuthService {
   private rolesSubject = new BehaviorSubject<string[]>([]);
   roles$ = this.rolesSubject.asObservable();
 
-  loadUserRoles() {
+  async loadUserRoles(): Promise<void> {
     const url = this.baseUrl + '/current-user-roles';
-    this.httpClient.get<string[]>(url).subscribe({
-      next: (roles) => {
-        this.rolesSubject.next(roles);
-      },
-      error: () => {
-        this.rolesSubject.next([]);
-      }
-    });
+    try {
+      const roles = await lastValueFrom(this.httpClient.get<string[]>(url));
+      this.rolesSubject.next(roles);
+    } catch (error) {
+      this.rolesSubject.next([]);
+    }
   }
 
   hasRole(role: string): boolean {
     return this.rolesSubject.getValue().includes(role);
   }
 
-  checkLoginStatus() {
-    this.loadUserRoles();
+  async checkLoginStatus() : Promise<void> {
+    await this.loadUserRoles();
     this.userinfo().subscribe({
       next: () => {
         this.isLoggedInSubject.next(true);
@@ -63,6 +62,12 @@ export class AuthService {
   logout(): Observable<undefined> {
     const url = this.baseUrl + '/logout';
     return this.httpClient.get<undefined>(url).pipe(tap(() => this.isLoggedInSubject.next(false)));
+  }
+
+  resetPassword(data:UserPasswordDto): Observable<undefined> {
+    const url = this.baseUrl + '/reset-password';
+    return this.httpClient.post<undefined>(url, data).pipe(
+    );
   }
 
   register(data: RegisterUserTenantDto): Observable<undefined> {

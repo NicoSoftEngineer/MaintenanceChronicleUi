@@ -1,5 +1,6 @@
 
-<section class="flex justify-center items-center h-80p flex-col  w-full">
+<section class="flex justify-center items-center flex-col w-full min-h-80screen">
+
   <mach:alert class="w-25p m-2" type="success"/>
   <div class="rounded-md h-fit shadow-lg shadow-slate-500 w-25p pt-1">
 
@@ -21,7 +22,7 @@
       </div>
       <mach:forminput formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(userFormular.get('email'), 'email')!"/>
       <mach:forminput formControlName="password" type="password" name="password" [required]="true" label="Heslo"/>
-      <mach:forminput formControlName="passwordConfirm" type="password"  name="passwordConfirm" [required]="true" label="Potvrdit heslo"/>
+      <mach:forminput formControlName="passwordConfirm" type="password"  name="passwordConfirm" [required]="true" label="Potvrdit heslo" [error]="getErrorMessage(userFormular.get('passwordConfirm'), 'passwordConfirm')!"/>
 
       <div class="flex justify-between items-center m-3">
         <a routerLink="/login" class=" ">Už máte účet? Příhlašte se!</a>
