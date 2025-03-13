@@ -16,7 +16,7 @@
         }
 
         <div class="selected-chips">
-          @for (option of selectedOptions(); track option.value) {
+          @for (option of selectedOptions(); track option.id) {
           <div [ngClass]="{
                 'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200': 'primary' === 'primary'
               }" class="chip chip-normal">
@@ -88,7 +88,7 @@
       </div>
       }
       <div class="options-list">
-        @for (option of options(); track option.value) {
+        @for (option of options(); track option.id) {
         <button (click)="toggleOption(option)" class="option-item" [class.disabled]="option.disabled"
           [class.selected]="isSelected(option)">
           <div>
