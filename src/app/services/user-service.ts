@@ -18,6 +18,10 @@ export class UserService {
     }));
   }
 
+  public sendUserInvitation(email: string): Observable<undefined> {
+    return this.httpClient.post<undefined>(`${this.baseUrl}/send-password-create`, null,  {params: {email : email}}).pipe();
+  }
+
   public deleteUser(id: string): Observable<void> {
     return this.httpClient.delete<void>(`${this.baseUrl}/${id}`).pipe();
   }

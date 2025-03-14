@@ -145,11 +145,15 @@ export class UserDetailPageComponent implements OnInit {
     console.log(data);
     this.userService.createUser(data).subscribe({
       next: (id) => {
+        this.userService.sendUserInvitation(data.email).subscribe({
+          next: () => {
+            this.router.navigate(['/users', id]);
+          }
+        });
         this.alertStateService.openAlert(
           'Uživatel byl úspěšně vytvořen',
           'success'
         );
-        this.router.navigate(['/users', id]);
       },
       error: (errors) => {
         if (errors.error.errors) {
