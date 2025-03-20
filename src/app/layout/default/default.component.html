@@ -5,7 +5,6 @@
         <img src="mach-logo-transparent.png" class="max-h-8" alt="Mach logo" />
       </a>
       <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse h-14 text-[#FFDB99]">
-        @let user = user$ | async;
         <!-- Dropdown menu -->
         @if (isLoggedIn) {
         <button type="button"
@@ -20,17 +19,31 @@
           </svg>
         </button>
         <div
-          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600"
+          class="z-50 hidden my-4 text-base p-3 list-none bg-white rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600"
           id="user-dropdown">
-          <div class="px-4 py-3">
-            <span class="block text-sm text-gray-900 dark:text-white">{{user?.firstName}} {{user?.lastName}}</span>
-            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{user?.email}}</span>
+          <div class="border-b-2">
+            @for (user of users; track $index) {
+              @if(user.isActive) {
+              <div class=" border-b-2">
+                <span class="block text-lg font-bold text-start text-black">{{user?.name}}</span>
+                <span class="block font-semibold text-start text-black">{{user?.email}}</span>
+                <span class="block hover:bg-gray-100 py-2"><a href="#" class="text-start text-black">Profil</a></span>
+              </div>
+              @if(!$last) {
+              <h2 class="font-semibold text-start text-black">Přepnout účet:</h2>
+              }
+              }
+              @else {
+              <div class="py-1">
+                <span (click)="switchUser(user)" class="account-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{user.email}}</span>
+              </div>
+              }
+              }
           </div>
-          <ul class="py-2" aria-labelledby="user-menu-button">
-            <li>
-              <a href="#" (click)="logout()"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
-                out</a>
+
+          <ul class="" aria-labelledby="user-menu-button">
+            <li class="block py-2 hover:bg-gray-100 text-start">
+              <a href="#" (click)="logout()" class="text-start text-gray-700 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Odhlásit se</a>
             </li>
           </ul>
         </div>

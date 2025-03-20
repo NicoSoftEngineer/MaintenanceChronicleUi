@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, lastValueFrom, Observable, ReplaySubject, tap } from 'rxjs';
 import { LoggedInUserInfoDto } from '../models/account/logged-in-user-info-dto';
 import { LoginDto } from '../models/account/login-dto';
 import { RegisterUserTenantDto } from '../models/account/register-user-tenant-dto';
 import { UserPasswordDto } from '../models/account/user-password-dto';
+import { UserTokenList } from '../models/account/user-token-list';
+import { TokenHelperService } from '../utils/token-helper.service';
+import { CookieHelperService } from '../utils/cookie-helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +16,15 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {
     this.checkLoginStatus();
   }
+  protected tokenService = inject(TokenHelperService);
+  protected cookieService = inject(CookieHelperService);
   protected readonly baseUrl = '/api/v1/auth';
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
   private rolesSubject = new BehaviorSubject<string[]>([]);
   roles$ = this.rolesSubject.asObservable();
+  private usersSubject = new BehaviorSubject<UserTokenList[]>([]);
+  users$ = this.usersSubject.asObservable();
 
   async loadUserRoles(): Promise<void> {
     const url = this.baseUrl + '/current-user-roles';
@@ -29,11 +36,27 @@ export class AuthService {
     }
   }
 
+  async loadPossibleUsers(): Promise<void> {
+    try {
+      const users = this.tokenService.getPossibleUsers();
+      this.usersSubject.next(users);
+    } catch (error) {
+      this.usersSubject.next([]);
+    }
+  }
+
+  async switchUser(user: UserTokenList): Promise<void> {
+    this.cookieService.setCookie('ActiveToken', user.tokenName, 14);
+    await this.loadPossibleUsers();
+    await this.loadUserRoles();
+  }
+
   hasRole(role: string): boolean {
     return this.rolesSubject.getValue().includes(role);
   }
 
   async checkLoginStatus() : Promise<void> {
+    await this.loadPossibleUsers();
     await this.loadUserRoles();
     this.userinfo().subscribe({
       next: () => {
@@ -54,11 +77,29 @@ export class AuthService {
     }));
   }
 
-  login(data: LoginDto): Observable<undefined> {
-    const url = this.baseUrl + '/login';
-    return this.httpClient.post<undefined>(url, data).pipe(tap(() => this.isLoggedInSubject.next(true)));
+  refreshToken(): Observable<any> {
+    const url = this.baseUrl + '/refresh-token';
+    return this.httpClient.post<any>(url, null).pipe(
+      tap((response) => {
+        const token = response.token;
+        const name = response.name;
+        localStorage.setItem(name, token);
+        this.isLoggedInSubject.next(true);
+      }));
   }
 
+
+  login(data: LoginDto): Observable<any> {
+    const url = this.baseUrl + '/login';
+    return this.httpClient.post<any>(url, data).pipe(
+      tap((response) => {
+        const token = response.token;
+        const name = response.name;
+        localStorage.setItem(name, token);
+        this.isLoggedInSubject.next(true);
+      }));
+  }
+  //TODO
   logout(): Observable<undefined> {
     const url = this.baseUrl + '/logout';
     return this.httpClient.get<undefined>(url).pipe(tap(() => this.isLoggedInSubject.next(false)));
