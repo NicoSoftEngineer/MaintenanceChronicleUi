@@ -40,6 +40,7 @@ export class CustomerDetailPageComponent implements OnInit {
   protected readonly getErrorMessage = getErrorMessage;
   protected locations: LocationListDto[] = [];
   private customerDeatil: { [key: string]: any } = {};
+  protected isNew = true;
 
   protected customerFormular = this.fb.group({
     name: new FormControl('', {
@@ -77,6 +78,7 @@ export class CustomerDetailPageComponent implements OnInit {
       }
 
       if (id) {
+        this.isNew = false;
         this.customerService.getCustomerById(id).subscribe({
           next: (customer) => {
             this.customerDeatil = customer;

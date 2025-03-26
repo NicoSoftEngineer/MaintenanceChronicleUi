@@ -1,6 +1,12 @@
 import { RecordTypeDto } from './../../../models/bussiness/records/record-type-dto';
 import { LocationService } from './../../../services/location-service';
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -23,17 +29,17 @@ import { MultiSelect } from '../../../components/multi-select/multi-select.compo
 @Component({
   selector: 'app-record-detail-page',
   imports: [
-      AlertComponent,
-      RouterLink,
-      FormInputComponent,
-      FormsModule,
-      ReactiveFormsModule,
-      MultiSelect
-    ],
+    AlertComponent,
+    RouterLink,
+    FormInputComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    MultiSelect,
+  ],
   templateUrl: './record-detail-page.component.html',
-  styleUrl: './record-detail-page.component.scss'
+  styleUrl: './record-detail-page.component.scss',
 })
-export class RecordDetailPageComponent implements OnInit{
+export class RecordDetailPageComponent implements OnInit {
   protected readonly route = inject(ActivatedRoute);
   protected readonly router = inject(Router);
   protected readonly fb = inject(FormBuilder);
@@ -57,7 +63,7 @@ export class RecordDetailPageComponent implements OnInit{
       nonNullable: true,
       validators: [Validators.required],
     }),
-    machineId:'',
+    machineId: '',
   });
 
   ngOnInit(): void {
@@ -72,11 +78,22 @@ export class RecordDetailPageComponent implements OnInit{
         );
       },
     });
+
+    const justCreated = this.route.snapshot.queryParamMap.get('justCreated');
+    if (justCreated) {
+      this.alertStateService.openAlert(
+        'Záznam byl úspěšně vytvořen',
+        'success'
+      );
+    }
+
     const id = this.route.snapshot.paramMap.get('id')!;
-    if(id){
+    if (id) {
       this.recordService.getRecordById(id).subscribe((record) => {
         record.date = new Date(record.date).toISOString().split('T')[0];
-        this.selectedType = this.typeOptions.filter(o => o.name == record.type);
+        this.selectedType = this.typeOptions.filter(
+          (o) => o.name == record.type
+        );
         this.recordDetail = record;
         console.log(record);
         this.recordFormular.patchValue(record);
@@ -84,9 +101,10 @@ export class RecordDetailPageComponent implements OnInit{
       this.recordService.getMachineForRecord(id).subscribe({
         next: (machine) => {
           this.machineDetail = machine;
-        }
+        },
       });
     }
+
     const machineId = this.route.snapshot.queryParamMap.get('machineId')!;
     if (machineId) {
       this.recordFormular.controls['machineId'].setValue(machineId);
@@ -119,15 +137,12 @@ export class RecordDetailPageComponent implements OnInit{
   }
 
   updateRecord() {
-    let patchValue = this.getJsonPatch(
-      this.recordFormular,
-      this.recordDetail
-    );
-    if(this.checkIfTypeChanged()){
+    let patchValue = this.getJsonPatch(this.recordFormular, this.recordDetail);
+    if (this.checkIfTypeChanged()) {
       patchValue.push({
         op: 'replace',
         path: '/type',
-        value: this.selectedType[0]
+        value: this.selectedType[0],
       });
     }
     patchValue = patchValue.filter((p) => p.path !== 'machineId');
@@ -162,11 +177,9 @@ export class RecordDetailPageComponent implements OnInit{
     console.log(data);
     this.recordService.createRecord(data).subscribe({
       next: (id) => {
-        this.alertStateService.openAlert(
-          'Záznam byl úspěšně vytvořen',
-          'success'
-        );
-        this.router.navigate(['/records', id]);
+        this.router.navigate(['/records', id], {
+          queryParams: { justCreated: true },
+        });
       },
       error: (error) => {
         this.alertStateService.openAlert(
@@ -177,8 +190,8 @@ export class RecordDetailPageComponent implements OnInit{
     });
   }
 
-  checkIfTypeChanged() : boolean{
-    if(this.recordDetail['type'] && this.selectedType.length > 0){
+  checkIfTypeChanged(): boolean {
+    if (this.recordDetail['type'] && this.selectedType.length > 0) {
       return this.recordDetail['type'] !== this.selectedType[0];
     }
     return false;

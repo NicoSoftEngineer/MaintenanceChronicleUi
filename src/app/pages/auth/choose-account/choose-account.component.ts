@@ -23,7 +23,6 @@ protected readonly authService = inject(AuthService);
     });
     this.authService.users$.subscribe((res) => {
       this.users = res;
-      console.log(res);
       if(res.length == 0) {
         this.router.navigate(['/login']);
       }

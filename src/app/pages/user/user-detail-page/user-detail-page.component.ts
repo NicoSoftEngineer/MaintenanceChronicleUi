@@ -50,6 +50,7 @@ export class UserDetailPageComponent implements OnInit {
   protected selectedRoles: RoleDetail[] = [];
   protected multiSelectTouched: Boolean = false;
   private userDetail: { [key: string]: any } = {};
+  protected isNew = true;
 
   protected userFormular = this.fb.group({
     email: new FormControl('', {
@@ -67,9 +68,17 @@ export class UserDetailPageComponent implements OnInit {
   });
 
   ngOnInit() {
-    console.log("init in user-detail-page");
+    const justCreated = this.route.snapshot.queryParamMap.get('justCreated');
+    if (justCreated) {
+      this.alertStateService.openAlert(
+        'Uživatel byl úspěšně vytvořen',
+        'success'
+      );
+    }
+
     const id = this.route.snapshot.paramMap.get('id')!;
     if (id) {
+      this.isNew = false;
       this.userService.getUserById(id).subscribe({
         next: (user) => {
           this.selectedRoles = user.roles;
@@ -147,13 +156,9 @@ export class UserDetailPageComponent implements OnInit {
       next: (id) => {
         this.userService.sendUserInvitation(data.email).subscribe({
           next: () => {
-            this.router.navigate(['/users', id]);
+            this.router.navigate(['/users', id], {queryParams:{  justCreated: true}});
           }
         });
-        this.alertStateService.openAlert(
-          'Uživatel byl úspěšně vytvořen',
-          'success'
-        );
       },
       error: (errors) => {
         if (errors.error.errors) {

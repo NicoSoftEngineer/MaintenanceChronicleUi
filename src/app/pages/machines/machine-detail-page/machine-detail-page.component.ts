@@ -49,6 +49,7 @@ export class MachineDetailPageComponent {
   private machineDetail: { [key: string]: any } = {};
   protected sideText = '';
   protected viewRecordSection = true;
+  protected isNew = true;
 
   protected machineFormular = this.fb.group({
     model: new FormControl('', {
@@ -100,6 +101,7 @@ export class MachineDetailPageComponent {
       }
 
       if (id && id !== 'new') {
+        this.isNew = false;
         // Get machine details.
         this.machineService.getMachineById(id).subscribe({
           next: (machine) => {
