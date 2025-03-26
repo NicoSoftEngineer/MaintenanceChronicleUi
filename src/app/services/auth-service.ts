@@ -142,4 +142,11 @@ export class AuthService {
       })
       .pipe();
   }
+
+  forgotPassword(email: string): Observable<undefined> {
+    const url = this.baseUrl + '/send-password-reset';
+    return this.httpClient
+      .post<undefined>(url, null, { params: { email: email } })
+      .pipe();
+  }
 }
