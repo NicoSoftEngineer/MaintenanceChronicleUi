@@ -10,7 +10,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const cookieService = inject(CookieHelperService);
   const tokenService = inject(TokenHelperService);
 
-  if (req.url.includes('/login')) {
+  if (req.url.includes('/login') || req.url.includes('/register') || req.url.includes('/send')|| req.url.includes('/validate')) {
     return next(req);
   }
 

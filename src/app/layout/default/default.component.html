@@ -35,15 +35,18 @@
               }
               @else {
               <div class="py-1">
-                <span (click)="switchUser(user)" class="account-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{user.email}}</span>
+                <span (click)="switchUser(user)" class="cursor-pointer account-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{user.email}}</span>
               </div>
               }
               }
+              <span class="my-2 ms-2">
+                <span (click)="manageAccounts()" class="text-start text-gray-700 underline hover:no-underline cursor-pointer">Spravovat účty</span>
+              </span>
           </div>
 
           <ul class="" aria-labelledby="user-menu-button">
             <li class="block py-2 hover:bg-gray-100 text-start">
-              <a href="#" (click)="logout()" class="text-start text-gray-700 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Odhlásit se</a>
+              <span (click)="logout()" class="text-start text-gray-700 underline hover:no-underline cursor-pointer">Odhlásit se</span>
             </li>
           </ul>
         </div>

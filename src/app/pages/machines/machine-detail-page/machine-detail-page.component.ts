@@ -19,6 +19,7 @@ import QRCodeStyling from 'qr-code-styling';
 import { QrCodeComponent } from '../../../components/qr-code/qr-code.component';
 import { AuthService } from '../../../services/auth-service';
 import { MachineRecordInListDto } from '../../../models/bussiness/records/record-list-dto';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-machine-detail-page',
@@ -73,63 +74,78 @@ export class MachineDetailPageComponent {
     locationId: '',
   });
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
+    // Await the initial login status check before proceeding.
     await this.authService.checkLoginStatus();
+
+    // Subscribe to login status changes.
     this.authService.isLoggedIn$.subscribe((status) => {
       if (!status) {
-        this.router.navigate(['machines-unauthorized',  this.route.snapshot.paramMap.get('id') ]);
+        // Use the current route parameter (id) for the unauthorized redirect.
+        const id = this.route.snapshot.paramMap.get('id');
+        this.router.navigate(['machines-unauthorized', id]);
       }
     });
-    const id = this.route.snapshot.paramMap.get('id')!;
-    if (id && id !== 'new') {
-      this.machineService.getMachineById(id).subscribe({
-        next: (machine) => {
-          machine.inUseSince = new Date(machine.inUseSince).toISOString().split('T')[0];
-          this.sideText = machine['model'] + ' - ' + machine['serialNumber'];
-          this.machineDetail = machine;
-          this.machineFormular.patchValue(machine);
-        },
-        error: (error) => {
-          this.alertStateService.openAlert(
-            'Něco se pokazilo, zkuste to prosím znovu',
-            'error'
-          );
-        },
-      });
-      this.machineService.getLocationForMachine(id).subscribe({
-        next: (location) => {
-          this.locationDetail = location;
-        },
-      });
-      this.machineService.getRecordsForMachine(id).subscribe({
-        next: (records) => {
-          this.records = records;
-        },
-        error: (error) => {
-          this.alertStateService.openAlert(
-            'Nedokázalo se získat záznamy pro tento stroj!',
-            'error'
-          );
-        }
-      });
-      return;
-    }
 
-    const locationId = this.route.snapshot.queryParamMap.get('locationId')!;
-    if (locationId) {
-      this.machineFormular.controls['locationId'].setValue(locationId);
-      this.locationService.getLocationById(locationId).subscribe({
-        next: (location) => {
-          this.locationDetail = location;
-        },
-        error: (error) => {
-          this.alertStateService.openAlert(
-            'Něco se pokazilo, zkuste to prosím znovu',
-            'error'
-          );
-        },
-      });
-    }
+    // Subscribe to changes in both route parameters and query parameters.
+    combineLatest([this.route.paramMap, this.route.queryParams]).subscribe(([params, queryParams]) => {
+      const id = params.get('id');
+      // Optionally, if you have a "justCreated" query parameter to display an alert, add it here.
+      const justCreated = queryParams['justCreated'];
+      if (justCreated) {
+        this.alertStateService.openAlert(
+          'Zařízení bylo úspěšně vytvořeno',
+          'success'
+        );
+      }
+
+      if (id && id !== 'new') {
+        // Get machine details.
+        this.machineService.getMachineById(id).subscribe({
+          next: (machine) => {
+            // Format the inUseSince date.
+            machine.inUseSince = new Date(machine.inUseSince).toISOString().split('T')[0];
+            this.sideText = machine['model'] + ' - ' + machine['serialNumber'];
+            this.machineDetail = machine;
+            this.machineFormular.patchValue(machine);
+          },
+          error: (error) => {
+            this.alertStateService.openAlert('Něco se pokazilo, zkuste to prosím znovu', 'error');
+          },
+        });
+        // Get location for the machine.
+        this.machineService.getLocationForMachine(id).subscribe({
+          next: (location) => {
+            this.locationDetail = location;
+          },
+        });
+        // Get records for the machine.
+        this.machineService.getRecordsForMachine(id).subscribe({
+          next: (records) => {
+            this.records = records;
+          },
+          error: (error) => {
+            this.alertStateService.openAlert('Nedokázalo se získat záznamy pro tento stroj!', 'error');
+          }
+        });
+      } else {
+        // If the machine id is 'new' or missing, try getting the locationId from query parameters.
+        const locationId = queryParams['locationId'];
+        if (locationId) {
+          // Set the locationId value on the machine form.
+          this.machineFormular.controls['locationId'].setValue(locationId);
+          // Get location details.
+          this.locationService.getLocationById(locationId).subscribe({
+            next: (location) => {
+              this.locationDetail = location;
+            },
+            error: (error) => {
+              this.alertStateService.openAlert('Něco se pokazilo, zkuste to prosím znovu', 'error');
+            },
+          });
+        }
+      }
+    });
   }
 
   onSubmit(): void {
@@ -178,11 +194,7 @@ export class MachineDetailPageComponent {
     console.log(data);
     this.machineService.createMachine(data).subscribe({
       next: (id) => {
-        this.alertStateService.openAlert(
-          'Pobočka byla úspěšně vytvořena',
-          'success'
-        );
-        this.router.navigate(['/machines', id]);
+        this.router.navigate(['/machines', id], {queryParams:{  justCreated: true}});
       },
       error: (error) => {
         this.alertStateService.openAlert(

@@ -13,6 +13,7 @@ import { UserListDto } from '../../../models/bussiness/user/user-list-dto';
 import { UserContactList } from '../../../models/bussiness/contact/user-contact-list';
 import { MachineListDto } from '../../../models/bussiness/machine/machine-dto';
 import * as QRCodeStyling from "qr-code-styling";
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-location-detail',
@@ -56,26 +57,36 @@ export class LocationDetailComponent {
   });
 
   ngOnInit(): void {
-    this.getAllContacts();
-    const id = this.route.snapshot.paramMap.get('id')!;
-    if (id && id !== 'new') {
-      this.locationService.getLocationById(id).subscribe({
-        next: (location) => {
-          this.locationDetail = location;
-          this.locationFormular.patchValue(location);
-        },
-        error: (error) => {
-          this.alertStateService.openAlert(
-            'Něco se pokazilo, zkuste to prosím znovu',
-            'error'
-          );
-        },
-      });
-      this.getCustomerDetail();
-      this.getContactsForLocation();
-      this.getMachinesForLocation();
-      return;
-    }
+    combineLatest([this.route.paramMap, this.route.queryParams]).subscribe(([params, queryParams]) => {
+      // Check if the "justCreated" query parameter is present and show the alert
+      const justCreated = queryParams['justCreated'];
+      if (justCreated) {
+        this.alertStateService.openAlert(
+          'Pobočka byla úspěšně vytvořena',
+          'success'
+        );
+      }
+
+      // Always update the contacts first
+      this.getAllContacts();
+
+      const id = params.get('id');
+      if (id && id !== 'new') {
+        // Load the location details
+        this.locationService.getLocationById(id).subscribe({
+          next: (location) => {
+            this.locationDetail = location;
+            this.locationFormular.patchValue(location);
+          },
+          error: (error) => {
+            this.alertStateService.openAlert('Něco se pokazilo, zkuste to prosím znovu', 'error');
+          },
+        });
+        this.getCustomerDetail(id);
+        this.getContactsForLocation(id);
+        this.getMachinesForLocation(id);
+      }
+    });
 
     const custId = this.route.snapshot.queryParamMap.get('customerId')!;
     if(custId){
@@ -90,9 +101,7 @@ export class LocationDetailComponent {
 
   }
 
-  getCustomerDetail(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
-
+  getCustomerDetail(id: string): void {
     this.locationService.getCustomerForLocation(id).subscribe({
       next: (customer) => {
         this.customerDetail = customer;
@@ -100,8 +109,7 @@ export class LocationDetailComponent {
     });
   }
 
-  getContactsForLocation(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
+  getContactsForLocation(id:string): void {
     this.locationService.getContactsForLocation(id).subscribe({
       next: (contacts) => {
         this.selectedContacts = contacts;
@@ -119,8 +127,7 @@ export class LocationDetailComponent {
     });
   }
 
-  getMachinesForLocation(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
+  getMachinesForLocation(id: string): void {
     this.locationService.getMachinesForLocation(id).subscribe({
       next: (machines) => {
         this.machines = machines;
@@ -171,12 +178,8 @@ export class LocationDetailComponent {
     console.log(data);
     this.locationService.createLocation(data).subscribe({
       next: (id) => {
-        this.alertStateService.openAlert(
-          'Pobočka byla úspěšně vytvořena',
-          'success'
-        );
         this.manageContactsForLocation(id as unknown as string);
-        this.router.navigate(['/locations', id]);
+        this.router.navigate(['/locations', id],{queryParams:{  justCreated: true}});
       },
       error: (error) => {
         this.alertStateService.openAlert(

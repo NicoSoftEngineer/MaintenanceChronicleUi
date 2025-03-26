@@ -18,6 +18,7 @@ import { MachineDetailUnauthorizedPageComponent } from './pages/machines/machine
 import { RecordListPageComponent } from './pages/record/record-list-page/record-list-page.component';
 import { RecordDetailPageComponent } from './pages/record/record-detail-page/record-detail-page.component';
 import { CreatePasswordPageComponent } from './pages/auth/create-password-page/create-password-page.component';
+import { ChooseAccountComponent } from './pages/auth/choose-account/choose-account.component';
 
 export const routes: Routes = [
     {
@@ -27,6 +28,7 @@ export const routes: Routes = [
         { path: '', component: UnauthorizedHomePageComponent, title: 'Home' },
         { path: 'login', component: LoginPageComponent, title: 'Login' },
         { path: 'register', component: RegisterPageComponent, title: 'Register' },
+        { path: 'choose-account', component: ChooseAccountComponent, title: 'Choose account' },
         { path: 'auth/email-confirm/:email/:confirmToken', component: EmailConfirmPageComponent, title: 'Email confirmation' },
         { path: 'auth/create-password/:email/:confirmToken/:passwordToken', component: CreatePasswordPageComponent, title: 'Email confirmation & password creation' },
         { path: 'customers', component: CustomerListPageComponent, title: 'Customer list' },

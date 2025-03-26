@@ -16,6 +16,7 @@ import { getErrorMessage } from '../../../utils/form-control-error-helper.servic
 import { getJsonPatch } from '../../../utils/patch-form-helper.service';
 import { LocationListDto } from '../../../models/bussiness/location/location-list-dto';
 import { CustomerService } from '../../../services/customer-service';
+import { combineLatest } from 'rxjs';
 @Component({
   selector: 'app-customer-detail-page',
   imports: [
@@ -60,22 +61,37 @@ export class CustomerDetailPageComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
-    if (id) {
-      this.customerService.getCustomerById(id).subscribe({
-        next: (customer) => {
-          this.customerDeatil = customer;
-          this.customerFormular.patchValue(customer);
-        },
-        error: (error) => {
-          this.alertStateService.openAlert(
-            'Něco se pokazilo, zkuste to prosím znovu',
-            'error'
-          );
-        },
-      });
-      this.getLocationsForCustomer();
-    }
+    // Combine both paramMap and queryParams observables
+    combineLatest([
+      this.route.paramMap,
+      this.route.queryParams
+    ]).subscribe(([params, queryParams]) => {
+      const id = params.get('id');
+      const justCreated = queryParams["justCreated"];
+
+      if (justCreated) {
+        this.alertStateService.openAlert(
+          'Zákazník byl úspěšně vytvořen',
+          'success'
+        );
+      }
+
+      if (id) {
+        this.customerService.getCustomerById(id).subscribe({
+          next: (customer) => {
+            this.customerDeatil = customer;
+            this.customerFormular.patchValue(customer);
+          },
+          error: (error) => {
+            this.alertStateService.openAlert(
+              'Něco se pokazilo, zkuste to prosím znovu',
+              'error'
+            );
+          },
+        });
+        this.getLocationsForCustomer();
+      }
+    });
   }
 
   getLocationsForCustomer():void{
@@ -130,11 +146,8 @@ export class CustomerDetailPageComponent implements OnInit {
     const data = JSON.parse(JSON.stringify(dataRaw));
 
     this.customerService.createCustomer(data).subscribe({
-      next: () => {
-        this.alertStateService.openAlert(
-          'Zákazník byl úspěšně vytvořen',
-          'success'
-        );
+      next: (data) => {
+        this.router.navigate(['/customers', data],{queryParams:{  justCreated: true}});
       },
       error: (error) => {
         this.alertStateService.openAlert(

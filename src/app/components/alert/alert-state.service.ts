@@ -17,9 +17,6 @@ export class AlertStateService implements OnInit {
       }
     });
   }
-  /**
-   *
-   */
   ngOnInit(): void {
     this.closeAlert();
   }

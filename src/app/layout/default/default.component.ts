@@ -4,6 +4,7 @@ import { AsyncPipe } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Dropdown, initFlowbite, Collapse, InstanceOptions } from 'flowbite';
 import { AuthService } from '../../services/auth-service';
+import { CookieHelperService } from '../../utils/cookie-helper.service';
 
 @Component({
   selector: 'app-default',
@@ -14,6 +15,7 @@ import { AuthService } from '../../services/auth-service';
 })
 export class DefaultComponent implements OnInit{
   protected readonly authService = inject(AuthService);
+    protected cookieService = inject(CookieHelperService);
   protected readonly router = inject(Router);
   isLoggedIn = false;
   users: UserTokenList[] = [];
@@ -35,6 +37,7 @@ export class DefaultComponent implements OnInit{
   };
 
   async ngOnInit() {
+    (async () => {
     await this.authService.checkLoginStatus();
     // Subscribe to the isLoggedIn$ observable to update UI reactively
     this.authService.isLoggedIn$.subscribe((status) => {
@@ -44,13 +47,20 @@ export class DefaultComponent implements OnInit{
     this.authService.users$.subscribe((res) => {
       this.users = res;
       this.reinitializeDropdown();
-    });
+    });}
+  )();
   }
 
   logout() {
     this.authService.logout().subscribe({
       next: async () => {
-        await this.router.navigate(['/login']);
+        const activeToken = this.cookieService.getCookie('ActiveToken');
+        if (activeToken) {
+          console.log('Removing active token');
+          localStorage.removeItem(activeToken);
+          this.cookieService.setCookie('ActiveToken', '', -1);
+        }
+        await this.router.navigate(['/choose-account']);
       },
     });
   }
@@ -62,6 +72,17 @@ export class DefaultComponent implements OnInit{
     this.authService.switchUser(user);
     collapse.collapse();
     this.router.navigate(['/']);
+  }
+
+  manageAccounts() {
+    this.$targetEl = document.getElementById('user-dropdown');
+    this.$triggerEl = document.getElementById('user-menu-button');
+    const collapse = new Collapse(this.$targetEl, this.$triggerEl, this.options, this.instanceOptions);
+    setTimeout(() => {
+      collapse.collapse();
+      this.router.navigate(['/choose-account']);
+    }, 100); // Delay to ensure the DOM updates
+
   }
 
   reinitializeDropdown() {
