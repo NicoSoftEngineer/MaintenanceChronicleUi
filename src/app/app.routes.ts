@@ -20,6 +20,7 @@ import { RecordDetailPageComponent } from './pages/record/record-detail-page/rec
 import { CreatePasswordPageComponent } from './pages/auth/create-password-page/create-password-page.component';
 import { ChooseAccountComponent } from './pages/auth/choose-account/choose-account.component';
 import { ForgotPasswordPageComponent } from './pages/auth/forgot-password-page/forgot-password-page.component';
+import { ResetPasswordPageComponent } from './pages/auth/reset-password-page/reset-password-page.component';
 
 export const routes: Routes = [
     {
@@ -32,6 +33,7 @@ export const routes: Routes = [
         { path: 'choose-account', component: ChooseAccountComponent, title: 'Choose account' },
         { path: 'forgot-password', component: ForgotPasswordPageComponent, title: 'Forgot password' },
         { path: 'auth/email-confirm/:email/:confirmToken', component: EmailConfirmPageComponent, title: 'Email confirmation' },
+        { path: 'auth/password-reset/:email/:passwordToken', component: ResetPasswordPageComponent, title: 'Reset password' },
         { path: 'auth/create-password/:email/:confirmToken/:passwordToken', component: CreatePasswordPageComponent, title: 'Email confirmation & password creation' },
         { path: 'customers', component: CustomerListPageComponent, title: 'Customer list' },
         { path: 'customers/:id', component: CustomerDetailPageComponent, title: 'Customer detail' },
