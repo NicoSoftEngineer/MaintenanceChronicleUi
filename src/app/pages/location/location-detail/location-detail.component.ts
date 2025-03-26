@@ -35,6 +35,7 @@ export class LocationDetailComponent {
   protected machines: MachineListDto[] = [];
   protected selectedContacts: UserContactList[] = [];
   private locationDetail: { [key: string]: any } = {};
+  protected isNew = true;
 
   protected locationFormular = this.fb.group({
     name: new FormControl('', {
@@ -72,6 +73,7 @@ export class LocationDetailComponent {
 
       const id = params.get('id');
       if (id && id !== 'new') {
+        this.isNew = false;
         // Load the location details
         this.locationService.getLocationById(id).subscribe({
           next: (location) => {
