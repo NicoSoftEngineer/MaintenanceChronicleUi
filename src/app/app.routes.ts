@@ -22,6 +22,7 @@ import { ChooseAccountComponent } from './pages/auth/choose-account/choose-accou
 import { ForgotPasswordPageComponent } from './pages/auth/forgot-password-page/forgot-password-page.component';
 import { ResetPasswordPageComponent } from './pages/auth/reset-password-page/reset-password-page.component';
 import { ForbiddenPageComponent } from './pages/error/forbidden-page/forbidden-page.component';
+import { ServerErrorPageComponent } from './pages/error/server-error-page/server-error-page.component';
 
 export const routes: Routes = [
     {
@@ -48,8 +49,7 @@ export const routes: Routes = [
         { path: 'records', component: RecordListPageComponent, title: 'Record list' },
         { path: 'records/:id', component: RecordDetailPageComponent, title: 'Record detail' },
         { path: 'forbidden', component: ForbiddenPageComponent, title: 'Unauthorized' },
-
-
+        { path: 'server-error', component: ServerErrorPageComponent, title: 'Server error' },
       ]
     }
   ];
