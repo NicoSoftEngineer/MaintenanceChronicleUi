@@ -21,6 +21,7 @@ import { CreatePasswordPageComponent } from './pages/auth/create-password-page/c
 import { ChooseAccountComponent } from './pages/auth/choose-account/choose-account.component';
 import { ForgotPasswordPageComponent } from './pages/auth/forgot-password-page/forgot-password-page.component';
 import { ResetPasswordPageComponent } from './pages/auth/reset-password-page/reset-password-page.component';
+import { ForbiddenPageComponent } from './pages/error/forbidden-page/forbidden-page.component';
 
 export const routes: Routes = [
     {
@@ -46,6 +47,8 @@ export const routes: Routes = [
         { path: 'machines-unauthorized/:id', component: MachineDetailUnauthorizedPageComponent, title: 'Machine Detail' },
         { path: 'records', component: RecordListPageComponent, title: 'Record list' },
         { path: 'records/:id', component: RecordDetailPageComponent, title: 'Record detail' },
+        { path: 'forbidden', component: ForbiddenPageComponent, title: 'Unauthorized' },
+
 
       ]
     }
