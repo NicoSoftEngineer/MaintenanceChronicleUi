@@ -5,5 +5,6 @@ export interface UserDetail {
   firstName: string;
   lastName: string;
   email: string;
+  phoneNumber: string;
   roles: RoleDetail[];
 }

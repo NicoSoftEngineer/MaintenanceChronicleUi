@@ -8,6 +8,8 @@
       <mach:forminput formControlName="lastName" type="text" name="lastName" [required]="true" label="Příjmení" />
       <mach:forminput formControlName="email" type="text" name="email" [required]="true" label="Email"
         [error]="getErrorMessage(userFormular.get('email'), 'email')!" />
+      <mach:forminput formControlName="phoneNumber" type="text" name="phoneNumber" [required]="false" label="Telefonní číslo" />
+
       <mach:multiSelect [options]="roleOptions" [selectedOptionsInput]="selectedRoles" [(ngModel)]="selectedRoles"
         [ngModelOptions]="{standalone: true}" [required]="true" [touchSign]="multiSelectTouched" label="Vyberte role"
         placeholder="Vybrat role..." />

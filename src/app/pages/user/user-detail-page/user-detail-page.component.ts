@@ -65,6 +65,10 @@ export class UserDetailPageComponent implements OnInit {
       nonNullable: true,
       validators: [Validators.required],
     }),
+    phoneNumber: new FormControl('', {
+      nonNullable: false,
+      validators: [],
+    }),
   });
 
   ngOnInit() {
@@ -82,8 +86,6 @@ export class UserDetailPageComponent implements OnInit {
       this.userService.getUserById(id).subscribe({
         next: (user) => {
           this.selectedRoles = user.roles;
-          console.log('selected roles loaded in user-detail')
-          console.log(this.selectedRoles);
           this.userDetail = user;
           this.userFormular.patchValue(user);
         },
