@@ -13,6 +13,10 @@ export const exceptionInterceptor: HttpInterceptorFn = (req, next) => {
         // Navigate to the unauthorized page
         router.navigate(['/forbidden']);
       }
+      if (error.status >= 500) {
+        // Navigate to the unauthorized page
+        router.navigate(['/server-error']);
+      }
       // Optionally, add more error handling here
       return throwError(() => error);
     })
