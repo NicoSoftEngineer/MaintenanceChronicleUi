@@ -1,0 +1,42 @@
+name: Deploy Compodoc to GitHub Pages
+
+on:
+  push:
+    branches:
+      - dev
+
+permissions:
+  actions: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+    
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      - name: Install dependencies
+        run: |
+          cd ./MaintenanceChronicleUi
+          npm install 
+      - name: Generate documentation
+        run: |
+          cd ./MaintenanceChronicleUi
+           npx compodoc -p tsconfig.doc.json -d ../docs --disableCoverage --customLogo ./src/assets/mach-full-logo-small.png --customFavicon ./src/assets/mach-full-logo-small.png --silent
+          
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+        # Upload entire repository
+          path: './docs'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
