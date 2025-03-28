@@ -27,6 +27,11 @@ jobs:
         run: |
           cd ./MaintenanceChronicleUi
           npm install
+
+      - name: Install campodoc
+        run: |
+          npm install -g @compodoc/compodoc
+
       - name: Generate documentation
         run: |
           cd ./MaintenanceChronicleUi
