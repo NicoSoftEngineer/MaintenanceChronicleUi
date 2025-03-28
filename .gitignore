@@ -7,7 +7,8 @@
 /bazel-out
 
 # Node
-src/node_modules
+MaintenanceChronicleUi/node_modules
+docs
 npm-debug.log
 yarn-error.log
 
