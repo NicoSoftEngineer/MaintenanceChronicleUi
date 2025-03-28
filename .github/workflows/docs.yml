@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-    
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -26,12 +26,12 @@ jobs:
       - name: Install dependencies
         run: |
           cd ./MaintenanceChronicleUi
-          npm install 
+          npm install
       - name: Generate documentation
         run: |
           cd ./MaintenanceChronicleUi
            npx compodoc -p tsconfig.doc.json -d ../docs --disableCoverage --customLogo ./src/assets/mach-full-logo-small.png --customFavicon ./src/assets/mach-full-logo-small.png --silent
-          
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
