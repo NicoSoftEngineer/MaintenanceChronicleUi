@@ -35,19 +35,24 @@
   <div class="w-10 h-full relative flex flex-col items-start justify-start max-md:h-5">
     <div class="absolute left-4 max-md:left-4 md:rotate-90 top-5 max-md:top-0 transform flex origin-left items-center">
       <!-- Rotated Button 1 -->
-      <button (click)="viewRecordSection = true" [class]="viewRecordSection ? 'bg-gray-200' : 'bg-gray-100'" class="w-24 text-black pt-2 px-2 mr-2 rounded-md rounded-b-none shadow-md">
+      <button (click)="changeView('records')" [class]="viewRecordSection == 'records' ? 'bg-gray-200' : 'bg-gray-100'" class="w-24 text-black pt-2 px-2 mr-2 rounded-md rounded-b-none shadow-md">
         Záznamy
       </button>
 
       <!-- Rotated Button 2 -->
-      <button (click)="viewRecordSection = false" [class]="!viewRecordSection ? 'bg-gray-200' : 'bg-gray-100'" class="w-24 text-black pt-2 px-2 rounded-md rounded-b-none shadow-md">
+      <button (click)="changeView('qr-code')" [class]="viewRecordSection == 'qr-code' ? 'bg-gray-200' : 'bg-gray-100'" class="w-24 text-black pt-2 px-2 rounded-md rounded-b-none shadow-md">
         QR-kód
+      </button>
+
+      <!-- Rotated Button 3 -->
+      <button (click)="changeView('reminders')" [class]="viewRecordSection == 'reminders'? 'bg-gray-200' : 'bg-gray-100'" class="w-24 text-black pt-2 px-2 rounded-md rounded-b-none shadow-md">
+        Připomínky
       </button>
     </div>
   </div>
   <!-- Service record list section -->
   <section class="flex justify-between md:w-1/2 w-full md:flex-row flex-col p-2">
-    @if(viewRecordSection){
+    @if(viewRecordSection === 'records'){
     <div class="flex flex-col w-full">
       <div class="flex justify-between">
         <h2 class="pt-6 text-lg font-bold text-start text-black">Záznamy</h2>
@@ -69,11 +74,39 @@
           }
       </div>
     </div>
-    }@else{
+    }@else if(viewRecordSection === 'qr-code'){
     <div>
       <mach:qrCode [sideText]="sideText" />
     </div>
     }
+    @else if(viewRecordSection === 'reminders'){
+      <div class="flex flex-col w-full">
+        <div class="flex justify-between">
+          <h2 class="pt-6 text-lg font-bold text-start text-black">Připomínky</h2>
+          <button (click)="openReminderDrawer(null)" class="btn btn-primary mt-4">Přidat připomínku</button>
+        </div>
+        <div class="custom-scrollbar overflow-y-auto h-3/5">
+          @for (reminder of reminders; track reminder.id) {
+            <div class="mt-6 p-4 bg-gray-100 border-l-4 border-[#093d82] rounded-lg w-full flex justify-between items-center">
+              <p class="text-xl font-extrabold text-black">{{reminder.sendAt}}</p>
+              <p class="line-clamp-2 overflow-hidden w-1/2 whitespace-pre-wrap">{{reminder.description}}</p>
+              <button (click)="openReminderDrawer(reminder.id)">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                </svg>
+              </button>
+            </div>
+            }
+        </div>
+      </div>
+    }
   </section>
    }
 </div>
+<mach:offCanvas [title]="'Připomínka'" [confirmLabel]="'Uložit'" [(isOpen)]="reminderDrawerOpen" (saved)="saveReminder()">
+  <form [formGroup]="reminderFromular">
+    <mach:forminput formControlName="sendAt" type="date" name="sendAt" [required]="true" label="Datum" />
+    <mach:forminput formControlName="description" type="multiline" name="description" [required]="true" label="Popis" />
+  </form>
+
+</mach:offCanvas>
