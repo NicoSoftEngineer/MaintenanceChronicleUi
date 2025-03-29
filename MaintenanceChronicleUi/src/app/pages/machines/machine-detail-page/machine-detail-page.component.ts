@@ -286,7 +286,7 @@ export class MachineDetailPageComponent {
     this.machineService.getRemindersForMachine(this.machineId!).subscribe({
       next: (reminders) => {
         this.reminders = reminders.map((reminder) => {
-          reminder.sendAt = new Date(reminder.sendAt).toISOString().split('T')[0];
+          reminder.date = new Date(reminder.date).toISOString().split('T')[0];
           return reminder;
         });
       }

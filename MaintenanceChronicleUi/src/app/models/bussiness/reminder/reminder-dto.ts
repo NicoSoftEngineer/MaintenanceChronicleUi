@@ -1,7 +1,7 @@
 export interface ReminderDto {
   id: string;
   description: string;
-  sendAt:string;
+  date:string;
   machineId: string;
 }
 
