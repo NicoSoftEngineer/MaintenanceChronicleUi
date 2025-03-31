@@ -24,8 +24,8 @@
       <mach:forminput formControlName="serialNumber" type="text" name="serialNumber" [required]="true"
         label="Sériové číslo" />
       <mach:forminput formControlName="color" type="text" name="color" [required]="true" label="Barva" />
-      <mach:forminput formControlName="inUseSince" type="date" name="inUseSince" [required]="true"
-        label="V provozu od:" />
+      <mach:date-picker  [(date)]="machineFormular.controls.inUseSince.value" label="V provozu od" (required)="true" />
+
       <div class="flex justify-end">
         <button type="submit" class="btn btn-primary">Uložit</button>
       </div>

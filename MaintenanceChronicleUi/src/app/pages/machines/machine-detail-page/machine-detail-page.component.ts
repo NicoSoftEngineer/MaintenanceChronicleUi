@@ -23,6 +23,8 @@ import { combineLatest } from 'rxjs';
 import { OffCanvasComponent } from '../../../components/off-canvas/off-canvas.component';
 import { CreateReminderDto, ReminderDto } from '../../../models/bussiness/reminder/reminder-dto';
 import { ReminderService } from '../../../services/reminder-service';
+import { DatePipe } from '@angular/common';
+import { DatePickerComponent } from '../../../components/date-picker/date-picker.component';
 
 @Component({
   selector: 'app-machine-detail-page',
@@ -33,7 +35,8 @@ import { ReminderService } from '../../../services/reminder-service';
     FormsModule,
     ReactiveFormsModule,
     QrCodeComponent,
-    OffCanvasComponent
+    OffCanvasComponent,
+    DatePickerComponent
   ],
   templateUrl: './machine-detail-page.component.html',
   styleUrl: './machine-detail-page.component.scss',
@@ -58,6 +61,7 @@ export class MachineDetailPageComponent {
   protected isNew = true;
   protected reminderDrawerOpen = false;
   protected machineId: string | null = "";
+  someDate: string = "2025-01-01T00:00:00.000Z";
 
   protected machineFormular = this.fb.group({
     model: new FormControl('', {
@@ -76,7 +80,7 @@ export class MachineDetailPageComponent {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    inUseSince: new FormControl('', {
+    inUseSince: new FormControl(new Date().toISOString(), {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -121,7 +125,9 @@ export class MachineDetailPageComponent {
         this.machineService.getMachineById(this.machineId).subscribe({
           next: (machine) => {
             // Format the inUseSince date.
-            machine.inUseSince = new Date(machine.inUseSince).toISOString().split('T')[0];
+            // machine.inUseSince = new Date(machine.inUseSince).toLocaleString().replace(/ \d{2}:\d{2}:\d{2}$/, '');
+            console.log(machine.inUseSince);
+            console.log( );
             this.sideText = machine['model'] + ' - ' + machine['serialNumber'];
             this.machineDetail = machine;
             this.machineFormular.patchValue(machine);
@@ -168,6 +174,9 @@ export class MachineDetailPageComponent {
   }
 
   onSubmit(): void {
+    console.log(this.machineFormular.controls.inUseSince.value);
+    return
+
     this.machineFormular.markAllAsTouched();
     if (this.machineFormular.invalid) {
       return;
