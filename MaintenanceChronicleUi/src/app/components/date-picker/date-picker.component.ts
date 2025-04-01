@@ -47,6 +47,9 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
       return this.datePipe.transform(this.datepickerInstance.selectedDates[0].toISOString(), "dd.MM. yyyy") || '';
     }
     else {
+      const today = new Date();
+      this.date = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())).toISOString();
+      this.onChange(this.date);
       return '';
     }
   }

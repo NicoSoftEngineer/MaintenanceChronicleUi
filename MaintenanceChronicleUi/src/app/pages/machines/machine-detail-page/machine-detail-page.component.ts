@@ -164,7 +164,7 @@ export class MachineDetailPageComponent {
             },
           });
         }
-        this.machineFormular.controls['inUseSince'].setValue(new Date().toISOString());
+        // this.machineFormular.controls['inUseSince'].setValue(new Date().toISOString());
       }
     });
   }
