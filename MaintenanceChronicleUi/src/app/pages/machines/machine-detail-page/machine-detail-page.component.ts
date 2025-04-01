@@ -61,7 +61,6 @@ export class MachineDetailPageComponent {
   protected isNew = true;
   protected reminderDrawerOpen = false;
   protected machineId: string | null = "";
-  someDate: string = "2025-01-01T00:00:00.000Z";
 
   protected machineFormular = this.fb.group({
     model: new FormControl('', {
@@ -80,7 +79,7 @@ export class MachineDetailPageComponent {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    inUseSince: new FormControl(new Date().toISOString(), {
+    inUseSince: new FormControl("", {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -124,10 +123,6 @@ export class MachineDetailPageComponent {
         // Get machine details.
         this.machineService.getMachineById(this.machineId).subscribe({
           next: (machine) => {
-            // Format the inUseSince date.
-            // machine.inUseSince = new Date(machine.inUseSince).toLocaleString().replace(/ \d{2}:\d{2}:\d{2}$/, '');
-            console.log(machine.inUseSince);
-            console.log( );
             this.sideText = machine['model'] + ' - ' + machine['serialNumber'];
             this.machineDetail = machine;
             this.machineFormular.patchValue(machine);
@@ -169,16 +164,16 @@ export class MachineDetailPageComponent {
             },
           });
         }
+        this.machineFormular.controls['inUseSince'].setValue(new Date().toISOString());
       }
     });
   }
 
   onSubmit(): void {
-    console.log(this.machineFormular.controls.inUseSince.value);
-    return
-
     this.machineFormular.markAllAsTouched();
     if (this.machineFormular.invalid) {
+      console.log(this.machineFormular);
+      this.alertStateService.openAlert('Vyplňte prosím všechny povinné údaje', 'error');
       return;
     }
 
