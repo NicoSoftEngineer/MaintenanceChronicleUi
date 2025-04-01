@@ -1,4 +1,4 @@
 {
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../README.md"],
   "exclude": ["src/test.ts", "src/**/*.spec.ts", "src/app/file-to-exclude.ts"]
 }
