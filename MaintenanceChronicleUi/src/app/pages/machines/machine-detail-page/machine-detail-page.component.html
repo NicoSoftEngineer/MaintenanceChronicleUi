@@ -103,10 +103,11 @@
   </section>
    }
 </div>
-<mach:offCanvas [title]="'Připomínka'" [confirmLabel]="'Uložit'" [(isOpen)]="reminderDrawerOpen" (saved)="saveReminder()">
+<mach:offCanvas [title]="'Připomínka'" [confirmLabel]="'Uložit'" [(isOpen)]="reminderDrawerOpen" (saved)="submitReminder()">
   <form [formGroup]="reminderFromular">
-    <mach:forminput formControlName="sendAt" type="date" name="sendAt" [required]="true" label="Datum" />
+    <mach:date-picker formControlName="date" [required]="true" label="Datum" />
     <mach:forminput formControlName="description" type="multiline" name="description" [required]="true" label="Popis" />
   </form>
 
 </mach:offCanvas>
+

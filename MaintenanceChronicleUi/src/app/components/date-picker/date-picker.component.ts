@@ -29,7 +29,7 @@ import { DatePipe } from '@angular/common';
   ],
 })
 export class DatePickerComponent implements OnInit, ControlValueAccessor {
-  id: string = 'datepicker-default';
+  id: string = `date-picker-${Math.random().toString(36).slice(2, 11)}`;
   @Input() label: string = 'Select date';
   @Input() format: string = 'd.m. Y';
   @Input() disabled: boolean = false;
@@ -105,7 +105,7 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
   writeValue(date: string): void {
     this.date = date;
     if (this.datepickerInstance) {
-      this.datepickerInstance.setDate(date, true, this.format);
+      this.datepickerInstance.setDate(date, false); // Update the datepicker instance
     }
   }
 }

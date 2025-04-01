@@ -89,7 +89,7 @@ export class MachineDetailPageComponent {
   protected reminderFromular = this.fb.group({
     id: '',
     machineId: '',
-    sendAt: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    date: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     description: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
   });
 
@@ -245,7 +245,7 @@ export class MachineDetailPageComponent {
     this.reminderDrawerOpen = true;
   }
 
-  saveReminder() {
+  submitReminder() {
     this.reminderFromular.markAllAsTouched();
     if (this.reminderFromular.invalid) {
       return;
@@ -253,9 +253,11 @@ export class MachineDetailPageComponent {
 
     if (this.reminderFromular.value.id) {
       this.updateReminder();
-      return;
     }
-    this.addReminder();
+    else{
+      this.addReminder();
+    }
+    this.reminderFromular.reset();
   }
 
   updateReminder() {
@@ -274,6 +276,7 @@ export class MachineDetailPageComponent {
 
   addReminder() {
     const data = this.reminderFromular.getRawValue();
+    console.log(data);
     this.reminderService.createReminder(data as unknown as CreateReminderDto).subscribe({
       next: (reminder) => {
         this.loadReminders();
@@ -290,7 +293,6 @@ export class MachineDetailPageComponent {
     this.machineService.getRemindersForMachine(this.machineId!).subscribe({
       next: (reminders) => {
         this.reminders = reminders.map((reminder) => {
-          reminder.date = new Date(reminder.date).toISOString().split('T')[0];
           return reminder;
         });
       }
