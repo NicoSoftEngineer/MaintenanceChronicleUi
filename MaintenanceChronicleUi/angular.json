@@ -27,13 +27,11 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/assets"],
             "styles": [
-              "node_modules/flowbite/dist/flowbite.min.css",
+              "@angular/material/prebuilt-themes/rose-red.css",
               "node_modules/flatpickr/dist/flatpickr.min.css",
               "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/flowbite/dist/flowbite.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -88,13 +86,11 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/assets"],
             "styles": [
-              "node_modules/flowbite/dist/flowbite.min.css",
+              "@angular/material/prebuilt-themes/rose-red.css",
               "node_modules/flatpickr/dist/flatpickr.min.css",
               "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/flowbite/dist/flowbite.min.js"
-            ]
+            "scripts": []
           }
         }
       }
