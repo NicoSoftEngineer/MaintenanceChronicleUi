@@ -8,6 +8,7 @@
 
 # Node
 MaintenanceChronicleUi/node_modules
+MaintenanceChronicleUi/dist
 docs
 npm-debug.log
 yarn-error.log
