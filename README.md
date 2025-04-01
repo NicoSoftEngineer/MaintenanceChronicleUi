@@ -14,6 +14,15 @@
 
 ---
 
+## 📚 Documentation
+
+Frontend architecture and usage documentation:
+
+- Angular Docs: [MaintenanceChronicleUI Compodoc](https://nicosoftengineer.github.io/MaintenanceChronicleUi/)
+- Backend Docs: [MaintenanceChronicleApi DocFX](https://nicosoftengineer.github.io/MaintenanceChronicleApi/index.html)
+
+---
+
 ## 🚀 Getting Started
 
 ### 1. Clone the Repository
@@ -83,11 +92,3 @@ Run unit tests with:
 ng test
 ```
 
----
-
-## 📚 Documentation
-
-Frontend architecture and usage documentation coming soon. For now, refer to:
-
-- Angular Docs: [MaintenanceChronicleUI Compodoc](https://nicosoftengineer.github.io/MaintenanceChronicleUi/)
-- Backend Docs: [MaintenanceChronicleApi DocFX](https://nicosoftengineer.github.io/MaintenanceChronicleApi/index.html)
