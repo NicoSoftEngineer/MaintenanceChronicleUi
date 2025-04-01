@@ -144,33 +144,12 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
   }
 
   private openDropdown() {
-
     if (this.overlayRef) return;
 
     const triggerElement = this.trigger?.nativeElement;
 
     if (!triggerElement || !this.dropdownTemplate) return;
-    if (!this.dropdownTemplate) {
-      console.error('dropdownTemplate is undefined');
-      return;
-    }
-    if (!this.overlayRef) {
-      this.overlayRef = this.overlay.create({
-        hasBackdrop: true,
-        positionStrategy: this.overlay
-          .position()
-          .flexibleConnectedTo(triggerElement) // Ensure `triggerElement` is defined
-          .withPositions([
-            {
-              originX: 'start',
-              originY: 'bottom',
-              overlayX: 'start',
-              overlayY: 'top',
-            },
-          ]),
-        scrollStrategy: this.overlay.scrollStrategies.reposition(),
-      });
-    }
+
     // Create position strategy
     const positionStrategy = this.overlay
       .position()
@@ -181,15 +160,15 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
           originY: 'bottom',
           overlayX: 'start',
           overlayY: 'top',
-          offsetY: 4,
+          offsetY: 4
         },
         {
           originX: 'start',
           originY: 'top',
           overlayX: 'start',
           overlayY: 'bottom',
-          offsetY: -4,
-        },
+          offsetY: -4
+        }
       ]);
 
     // Create overlay
@@ -198,21 +177,21 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
       width: triggerElement.offsetWidth,
       hasBackdrop: true,
-      backdropClass: 'cdk-overlay-transparent-backdrop',
+      backdropClass: 'cdk-overlay-transparent-backdrop'
     });
 
     // Handle backdrop clicks
     this.overlayRef.backdropClick().subscribe(() => this.closeDropdown());
 
     // Create and attach portal with proper ViewContainerRef
-    this.portal = new TemplatePortal(
-      this.dropdownTemplate,
-      this.viewContainerRef
-    );
+    this.portal = new TemplatePortal(this.dropdownTemplate, this.viewContainerRef);
     this.overlayRef.attach(this.portal);
     this.isOpen.set(true);
     this.open.emit();
   }
+
+
+
   private closeDropdown() {
     if (this.overlayRef) {
       this.overlayRef.dispose();
@@ -235,7 +214,7 @@ export class MultiSelect implements ControlValueAccessor, Validator, OnDestroy {
           this.onChange(this.selectedOptions().map((o) => o));
         } else if(maxSel === 1) {
           this.selectedOptions.set([option]);
-          this.onChange([option.id]);
+          this.onChange([option]);
         }
       } else {
         if (!minSel || this.selectedOptions().length > minSel) {

@@ -26,6 +26,7 @@ import { AuthService } from '../../../services/auth-service';
 import { RecordService } from '../../../services/record-service';
 import { MachineDetailDto } from '../../../models/bussiness/machine/machine-dto';
 import { MultiSelect } from '../../../components/multi-select/multi-select.component';
+import { DatePickerComponent } from '../../../components/date-picker/date-picker.component';
 @Component({
   selector: 'app-record-detail-page',
   imports: [
@@ -35,6 +36,7 @@ import { MultiSelect } from '../../../components/multi-select/multi-select.compo
     FormsModule,
     ReactiveFormsModule,
     MultiSelect,
+    DatePickerComponent
   ],
   templateUrl: './record-detail-page.component.html',
   styleUrl: './record-detail-page.component.scss',
@@ -90,7 +92,6 @@ export class RecordDetailPageComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id')!;
     if (id) {
       this.recordService.getRecordById(id).subscribe((record) => {
-        record.date = new Date(record.date).toISOString().split('T')[0];
         this.selectedType = this.typeOptions.filter(
           (o) => o.name == record.type
         );
@@ -123,7 +124,6 @@ export class RecordDetailPageComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.selectedType[0]);
     this.recordFormular.markAllAsTouched();
     if (this.recordFormular.invalid) {
       return;
@@ -142,18 +142,14 @@ export class RecordDetailPageComponent implements OnInit {
       patchValue.push({
         op: 'replace',
         path: '/type',
-        value: this.selectedType[0],
+        value: this.selectedType[0].id,
       });
     }
     patchValue = patchValue.filter((p) => p.path !== 'machineId');
-    console.log(patchValue);
     this.recordService
       .updateRecord(this.recordDetail['id'], patchValue)
       .subscribe({
         next: (rec) => {
-          console.log(rec);
-          rec.date = rec.date.split('T')[0];
-          rec.date = new Date(rec.date).toISOString().split('T')[0];
           this.recordDetail = rec;
           this.recordFormular.patchValue(rec);
           this.alertStateService.openAlert(
