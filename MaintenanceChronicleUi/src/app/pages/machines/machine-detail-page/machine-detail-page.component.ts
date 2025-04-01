@@ -36,7 +36,8 @@ import { DatePickerComponent } from '../../../components/date-picker/date-picker
     ReactiveFormsModule,
     QrCodeComponent,
     OffCanvasComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    DatePipe,
   ],
   templateUrl: './machine-detail-page.component.html',
   styleUrl: './machine-detail-page.component.scss',
