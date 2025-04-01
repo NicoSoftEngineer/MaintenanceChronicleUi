@@ -24,8 +24,8 @@
       <mach:forminput formControlName="serialNumber" type="text" name="serialNumber" [required]="true"
         label="Sériové číslo" />
       <mach:forminput formControlName="color" type="text" name="color" [required]="true" label="Barva" />
-      <mach:forminput formControlName="inUseSince" type="date" name="inUseSince" [required]="true"
-        label="V provozu od:" />
+      <mach:date-picker  formControlName="inUseSince" label="V provozu od" [required]="true" />
+
       <div class="flex justify-end">
         <button type="submit" class="btn btn-primary">Uložit</button>
       </div>
@@ -61,7 +61,7 @@
       <div class="custom-scrollbar overflow-y-auto h-3/5">
         @for (record of records; track record.id) {
           <div class="mt-6 p-4 bg-gray-100 border-l-4 border-[#093d82] rounded-lg w-full flex justify-between items-center">
-            <p class="text-xl font-extrabold text-black">{{record.date}}</p>
+            <p class="text-xl font-extrabold text-black">{{record.date | date:'dd.MM. yyyy'}}</p>
             <p class="text-xl font-light text-black">{{record.type}}</p>
             <a [routerLink]="['/records', record.id]" class="no-underline">
               <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@
         <div class="custom-scrollbar overflow-y-auto h-3/5">
           @for (reminder of reminders; track reminder.id) {
             <div class="mt-6 p-4 bg-gray-100 border-l-4 border-[#093d82] rounded-lg w-full flex justify-between items-center">
-              <p class="text-xl font-extrabold text-black">{{reminder.date}}</p>
+              <p class="text-xl font-extrabold text-black">{{reminder.date | date:'dd.MM. yyyy'}}</p>
               <p class="line-clamp-2 overflow-hidden w-1/2 whitespace-pre-wrap">{{reminder.description}}</p>
               <button (click)="openReminderDrawer(reminder.id)">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -103,10 +103,11 @@
   </section>
    }
 </div>
-<mach:offCanvas [title]="'Připomínka'" [confirmLabel]="'Uložit'" [(isOpen)]="reminderDrawerOpen" (saved)="saveReminder()">
+<mach:offCanvas [title]="'Připomínka'" [confirmLabel]="'Uložit'" [(isOpen)]="reminderDrawerOpen" (saved)="submitReminder()">
   <form [formGroup]="reminderFromular">
-    <mach:forminput formControlName="sendAt" type="date" name="sendAt" [required]="true" label="Datum" />
+    <mach:date-picker formControlName="date" [required]="true" label="Datum" />
     <mach:forminput formControlName="description" type="multiline" name="description" [required]="true" label="Popis" />
   </form>
 
 </mach:offCanvas>
+

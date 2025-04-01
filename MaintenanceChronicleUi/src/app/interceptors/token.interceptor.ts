@@ -33,7 +33,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   });
   return next(req).pipe(
     catchError((error) => {
-      if (error.status === 401 && !req.url.includes('/Auth/Refresh')) {
+      if (error.status === 401 && !req.url.includes('/refresh-token')) {
         return authService.refreshToken().pipe(
           switchMap((newAccessToken) => {
             if (!newAccessToken) {

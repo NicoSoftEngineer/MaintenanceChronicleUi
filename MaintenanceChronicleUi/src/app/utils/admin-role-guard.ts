@@ -12,7 +12,7 @@ export class AdminRoleGuard {
     if (this.authService.hasRole('Admin')) {
       return true;
     }
-    this.router.navigate(['/access-denied']); // Redirect if unauthorized
+    this.router.navigate(['/forbidden']); // Redirect if unauthorized
     return false;
   }
 }

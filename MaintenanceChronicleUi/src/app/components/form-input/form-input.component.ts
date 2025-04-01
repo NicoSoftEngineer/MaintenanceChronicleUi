@@ -98,12 +98,6 @@ export class FormInputComponent
     return this.focused() || this.value() !== '';
   });
 
-  constructor() {
-    effect(() => {
-      this.updateInputVariables();
-    });
-  }
-
   ngDoCheck() {
     if (this.control) {
       // Sync control states
@@ -119,14 +113,6 @@ export class FormInputComponent
       this.control.updateValueAndValidity();
     }
   }
-
-  private updateInputVariables() {
-    // Update CSS variables on the host element
-    const el = this.elementRef.nativeElement;
-    el.style.setProperty('--input-focus-ring', `40040`);
-    el.style.setProperty('--input-label', '500');
-  }
-
   // ControlValueAccessor Implementation
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};

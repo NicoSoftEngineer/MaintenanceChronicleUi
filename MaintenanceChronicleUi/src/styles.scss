@@ -6,6 +6,11 @@
 forminput {
   border-width: 0 !important;
 }
+date-picker {
+  border-width: 0 !important;
+  @apply mx-3;
+}
+
 form forminput {
   border: 0;
 }

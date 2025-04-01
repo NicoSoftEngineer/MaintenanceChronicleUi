@@ -16,6 +16,7 @@ import { MultiSelect } from '../../../components/multi-select/multi-select.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import { OffCanvasComponent } from '../../../components/off-canvas/off-canvas.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-record-list-page',
@@ -26,7 +27,8 @@ import { OffCanvasComponent } from '../../../components/off-canvas/off-canvas.co
       FormInputComponent,
       MultiSelect,
       FormsModule,
-      ReactiveFormsModule,],
+      ReactiveFormsModule,
+      DatePipe],
   templateUrl: './record-list-page.component.html',
   styleUrl: './record-list-page.component.scss',
 })

@@ -23,6 +23,7 @@ import { ForgotPasswordPageComponent } from './pages/auth/forgot-password-page/f
 import { ResetPasswordPageComponent } from './pages/auth/reset-password-page/reset-password-page.component';
 import { ForbiddenPageComponent } from './pages/error/forbidden-page/forbidden-page.component';
 import { ServerErrorPageComponent } from './pages/error/server-error-page/server-error-page.component';
+import { UnauthorizedPageComponent } from './pages/error/unauthorized-page/unauthorized-page.component';
 
 export const routes: Routes = [
     {
@@ -41,15 +42,16 @@ export const routes: Routes = [
         { path: 'customers/:id', component: CustomerDetailPageComponent, title: 'Customer detail' },
         { path: 'locations', component: LocationListPageComponent, title: 'Location list' },
         { path: 'locations/:id', component: LocationDetailComponent, title: 'Location detail' },
-        { path: 'users', component: UserListPageComponent, title: 'User list'/*, canActivate: [AdminRoleGuard]*/ },
-        { path: 'users/:id', component: UserDetailPageComponent, title: 'User detail'/*, canActivate: [AdminRoleGuard]*/},
+        { path: 'users', component: UserListPageComponent, title: 'User list', canActivate: [AdminRoleGuard] },
+        { path: 'users/:id', component: UserDetailPageComponent, title: 'User detail', canActivate: [AdminRoleGuard]},
         { path: 'machines', component: MachineListPageComponent, title: 'Machine list' },
         { path: 'machines/:id', component: MachineDetailPageComponent, title: 'Machine Detail' },
         { path: 'machines-unauthorized/:id', component: MachineDetailUnauthorizedPageComponent, title: 'Machine Detail' },
         { path: 'records', component: RecordListPageComponent, title: 'Record list' },
         { path: 'records/:id', component: RecordDetailPageComponent, title: 'Record detail' },
-        { path: 'forbidden', component: ForbiddenPageComponent, title: 'Unauthorized' },
+        { path: 'forbidden', component: ForbiddenPageComponent, title: 'Forbidden' },
         { path: 'server-error', component: ServerErrorPageComponent, title: 'Server error' },
+        { path: 'unauthorized', component: UnauthorizedPageComponent, title: 'Unauthorized' },
       ]
     }
   ];

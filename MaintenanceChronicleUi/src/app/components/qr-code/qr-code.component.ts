@@ -69,7 +69,7 @@ export class QrCodeComponent implements AfterContentChecked {
           height: 256,
           margin: 25,
           data: window.location.href,
-          image: 'mach-wrech.png', // Optional logo
+          image: 'assets/mach-wrech.png', // Optional logo
           dotsOptions: { color: '#1F0F53', type: 'square' },
           backgroundOptions: { color: '#fff' },
           imageOptions: { crossOrigin: 'anonymous', margin: 5 },
