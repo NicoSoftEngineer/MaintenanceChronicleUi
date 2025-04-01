@@ -1,27 +1,93 @@
-# ServiceTrackUi
+# 🖥️ MaintenanceChronicleUi
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.11.
+**MaintenanceChronicleUi** is the frontend application for the Maintenance Chronicle platform. Built with **Angular 19**, it interfaces with the [`MaintenanceChronicleApi`](https://github.com/your-username/maintenanceChronicleApi) to provide a clean and modern UI for maintenance tracking, task workflows, user management, and more.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🧰 Tech Stack
 
-## Code scaffolding
+- **Angular 19**
+- **RxJS** & **Angular Router**
+- **SCSS Modules**
+- **HTTP Interceptors & JWT Authentication**
+- **Form Handling with Reactive Forms**
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## 🚀 Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 1. Clone the Repository
 
-## Running unit tests
+```bash
+git clone https://github.com/NicoSoftEngineer/MaintenanceChronicleUi.git
+cd MaintenanceChronicleUi
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 2. Install Dependencies
 
-## Running end-to-end tests
+```bash
+npm install
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+---
 
-## Further help
+## 3. Run the App Locally🏃‍♂️
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+ng serve
+```
+
+Navigate to `http://localhost:4200/` in your browser.
+
+The app is configured to work with the backend API at `https://localhost:5209/api` by default.
+
+---
+
+## 🔐 Authentication
+
+This frontend app uses JWT-based authentication:
+
+- Tokens are stored in `localStorage`
+- Authenticated requests automatically attach the token using an HTTP interceptor
+- Guards are used to protect routes
+
+---
+
+## ✉️ Email Flow Integration
+
+The frontend supports the following routes, used in email-based flows triggered by the backend:
+
+- **Email Confirmation:** `/auth/email-confirm/:email/:token`
+- **Password Reset:** `/auth/password-reset/:email/:token`
+- **Create Password:** `/auth/create-password/:email/:confirmationToken/:passwordToken`
+
+Make sure these match the API-side `EnvironmentOptions` settings.
+
+---
+
+## 📦 Production Build
+
+```bash
+ng build
+```
+
+Output will be in the `dist/` folder, ready to be hosted or served behind a web server or CDN.
+
+---
+
+## 🧪 Testing
+
+Run unit tests with:
+
+```bash
+ng test
+```
+
+---
+
+## 📚 Documentation
+
+Frontend architecture and usage documentation coming soon. For now, refer to:
+
+- Angular Docs: [MaintenanceChronicleUI Compodoc](https://nicosoftengineer.github.io/MaintenanceChronicleUi/)
+- Backend Docs: [MaintenanceChronicleApi DocFX](https://nicosoftengineer.github.io/MaintenanceChronicleApi/index.html)
