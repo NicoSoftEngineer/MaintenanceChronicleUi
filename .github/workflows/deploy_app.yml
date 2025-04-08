@@ -2,7 +2,7 @@ name: Deploy Angular UI
 
 on:
   push:
-    branches: [main]
+    branches: [feature/prodPipeline]
 
 jobs:
   deploy:
