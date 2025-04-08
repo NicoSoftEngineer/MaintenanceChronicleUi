@@ -35,4 +35,4 @@ jobs:
         script: |
           echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin
           docker pull ghcr.io/nicosoftengineer/machui:latest
-          docker-compose up --build
+          docker-compose up -d
