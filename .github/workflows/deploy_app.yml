@@ -34,5 +34,6 @@ jobs:
         key: ${{ secrets.REMOTE_SSH_KEY }}
         script: |
           echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin
+          docker-compose down
           docker pull ghcr.io/nicosoftengineer/machui:latest
           docker-compose up -d
