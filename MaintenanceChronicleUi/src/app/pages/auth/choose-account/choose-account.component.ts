@@ -23,17 +23,17 @@ protected readonly authService = inject(AuthService);
     });
     this.authService.users$.subscribe((res) => {
       this.users = res;
-      if(res.length == 0) {
-        this.router.navigate(['/login']);
-      }
-      if(res.length === 1) {
-        this.authService.switchUser(res[0]);
-      }
     });
+    if(this.users.length == 0) {
+      this.router.navigate(['/login']);
+    }
+    if(this.users.length === 1) {
+      await this.authService.switchUser(this.users[0]);
+      this.router.navigate(['/']);
+    }
   }
   async switchUser(user: UserTokenList) {
     this.authService.switchUser(user);
     await this.authService.checkLoginStatus();
-    this.router.navigate(['/']);
   }
 }

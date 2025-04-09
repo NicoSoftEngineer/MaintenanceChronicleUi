@@ -1,99 +1,121 @@
 <div class="flex flex-col min-h-screen">
-  <nav class="bg-[#1F0F53] border-gray-200 dark:bg-gray-900 h-14  w-full">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
-      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="assets/mach-logo-transparent-low-res.png" class="max-h-8" alt="Mach logo" />
-      </a>
-      <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse h-14 text-[#FFDB99]">
-        <!-- Dropdown menu -->
-        @if (isLoggedIn) {
-        <button type="button"
-          class="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-          id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-          data-dropdown-placement="bottom">
-          <span class="sr-only">Open user menu</span>
-          <svg class="w-6 h-6 text-[#FFDB99] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-          </svg>
-        </button>
-        <div
-          class="z-50 hidden my-4 text-base p-3 list-none bg-white rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600"
-          id="user-dropdown">
-          <div class="border-b-2">
-            @for (user of users; track $index) {
-              @if(user.isActive) {
-              <div class=" border-b-2">
-                <span class="block text-lg font-bold text-start text-black">{{user?.name}}</span>
-                <span class="block font-semibold text-start text-black">{{user?.email}}</span>
-                <span class="block hover:bg-gray-100 py-2"><a href="#" class="text-start text-black">Profil</a></span>
+  <div>
+    <nav class="navbar">
+      <div class="navbar-content">
+        <a [routerLink]="['/']" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="assets/mach-logo-transparent-low-res.png" class="max-h-8" alt="Mach logo" />
+          </a>
+        </a>
+        <div class="user-menu">
+          <button type="button" class="user-menu-toggle"
+            id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+            data-dropdown-placement="bottom">
+            <span class="sr-only">Open user menu</span>
+            <svg class="" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18
+              9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948
+               8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+            </svg>
+          </button>
+          <!-- Dropdown menu -->
+          <div class="user-menu-dropdown hidden" id="user-dropdown">
+            <div class="top-0">
+              <div class="active-user">
+                <div class="text-xl mb-3">{{activeUser?.name}}</div>
+                <div class="text-sm mb-3">{{activeUser?.email}}</div>
+
+                <button class="profile-button">
+                  Profil
+                </button>
               </div>
-              @if(!$last) {
-              <h2 class="font-semibold text-start text-black">Přepnout účet:</h2>
-              }
-              }
-              @else {
-              <div class="py-1">
-                <span (click)="switchUser(user)" class="cursor-pointer account-option block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">{{user.email}}</span>
+              @if(users.length > 0){
+              <div class="other-user-list">
+                <div class="toggle" (click)="toggleAccountsList()">
+                  <span>Skrýt další účty</span>
+                  @if(showAccountsList) {
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 15 7-7 7 7"/>
+                    </svg>
+
+                  }@else {
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                    </svg>
+
+                  }
+                </div>
+                @if(showAccountsList) {
+                  <div  class="py-2">
+                    @for (user of users; track user.name) {
+                      <!-- Account items -->
+                    <div class="flex items-center p-2 hover:bg-gray-700 border-b-2 border-t-2 border-[#11082d] cursor-pointer " (click)="switchUser(user)">
+                      <div class="flex-grow">
+                        <div>{{user.name}}</div>
+                        <div class="text-xs text-gray-400">{{user.email}}</div>
+                      </div>
+                    </div>
+                    }
+                    <div (click)="manageAccounts()" class="flex items-center p-2 hover:bg-gray-700 rounded-sm cursor-pointer">
+                      <div class="flex-grow">Spravovat účty</div>
+                      <svg class="" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M7 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h1m4-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm7.441 1.559a1.907 1.907 0 0 1 0 2.698l-6.069 6.069L10 19l.674-3.372 6.07-6.07a1.907 1.907 0 0 1 2.697 0Z"/>
+                      </svg>
+                    </div>
+                  </div>
+                }
               </div>
               }
-              }
-              <span class="my-2 ms-2">
-                <span (click)="manageAccounts()" class="text-start text-gray-700 underline hover:no-underline cursor-pointer">Spravovat účty</span>
-              </span>
+              <div (click)="addAccount()" class="user-menu-button">
+                <h1>Přidat další účet</h1>
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12h4m-2 2v-4M4 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                </svg>
+              </div>
+              <div (click)="logout()" class="user-menu-button">
+                <h1>Odhlásit se</h1>
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 18V6h-5v12h5Zm0 0h2M4 18h2.5m3.5-5.5V12M6 6l7-2v16l-7-2V6Z"/>
+                </svg>
+              </div>
+            </div>
           </div>
 
-          <ul class="" aria-labelledby="user-menu-button">
-            <li class="block py-2 hover:bg-gray-100 text-start">
-              <span (click)="logout()" class="text-start text-gray-700 underline hover:no-underline cursor-pointer">Odhlásit se</span>
-            </li>
-          </ul>
+          <!-- end -->
+          <button data-collapse-toggle="navbar-user" type="button"
+            class="routes-dropdown-toggle"
+            aria-controls="navbar-user" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+            </svg>
+          </button>
         </div>
-        }
-        @else {
-        <a routerLink="/login" class="router-button m-5">Přihlásit se</a>
-        }
-      </div>
-      @if (isLoggedIn) {
-      <button data-collapse-toggle="navbar-user" type="button"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-        aria-controls="navbar-user" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M1 1h15M1 7h15M1 13h15" />
-        </svg>
-      </button>
-
-
-      <div class="items-center justify-between hidden w-full md:flex md:w-1/4 md:order-1" id="navbar-user">
-        <div class="flex items-end justify-end w-full">
-          <ul
-            class="flex flex-col items-baseline font-medium p-4 border border-[#1F0F53] rounded-lg bg-[#1F0F53] rtl:space-x-reverse md:p-0 md:space-x-8 w-max md:flex-row md:border-0 md:bg-[#1F0F53] dark:bg-[#1F0F53] md:dark:bg-[#1F0F53] dark:border-[#1F0F53]">
+        <div class="hidden" id="navbar-user">
+          <ul>
             <li>
-              <a [routerLink]="['/customers']" class="text-[#FFDB99] no-underline">Zákazníci</a>
+              <a [routerLink]="['/customers']">Zákazníci</a>
             </li>
             <li>
-              <a [routerLink]="['/locations']" class="text-[#FFDB99] no-underline">Pobočky</a>
+              <a [routerLink]="['/locations']">Pobočky</a>
             </li>
             <li>
-              <a [routerLink]="['/machines']" class="text-[#FFDB99] no-underline">Stroje</a>
+              <a [routerLink]="['/machines']">Stroje</a>
             </li>
             <li>
-              <a [routerLink]="['/records']" class="text-[#FFDB99] no-underline">Záznamy</a>
+              <a [routerLink]="['/records']">Záznamy</a>
             </li>
             @if (authService.hasRole('Admin')) {
             <li>
-              <a [routerLink]="['/users']" class="text-[#FFDB99] no-underline">Uživatelé</a>
+              <a [routerLink]="['/users']">Uživatelé</a>
             </li>
             }
           </ul>
         </div>
       </div>
-      }
-    </div>
-  </nav>
+    </nav>
+
+  </div>
   <div class="flex-grow content">
     <router-outlet />
   </div>

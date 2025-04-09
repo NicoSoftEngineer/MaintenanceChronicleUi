@@ -9,7 +9,7 @@ import { CookieHelperService } from './cookie-helper.service';
 export class TokenHelperService {
   protected cookieService = inject(CookieHelperService);
 
-  getPossibleUsers(): UserTokenList[] {
+  getPossibleOtherUsers(): UserTokenList[] {
     const activeTokenName = this.cookieService.getCookie('ActiveToken');
     const tokens = localStorage;
     const possibleUsers: UserTokenList[] = [];
@@ -18,19 +18,17 @@ export class TokenHelperService {
       if (key && key.startsWith('Auth')) {
         const token = tokens.getItem(key);
         const decoded = jwtDecode<any>(token!);
-        const user: UserTokenList = {
-          email: decoded.email,
-          name: decoded.name,
-          tokenName: key,
-          isActive: key === activeTokenName,
-        };
-        possibleUsers.push(user);
+        if(key != activeTokenName){
+          const user: UserTokenList = {
+            email: decoded.email,
+            name: decoded.name,
+            tokenName: key,
+          };
+          possibleUsers.push(user);
+        }
       }
     }
-    possibleUsers.sort((a, b) => {
-      if (a.isActive === b.isActive) return 0;
-      return a.isActive ? -1 : 1;
-    });
+
     return possibleUsers;
   }
 
@@ -45,7 +43,6 @@ export class TokenHelperService {
       email: decoded.email,
       name: decoded.name,
       tokenName: activeTokenName!,
-      isActive: true,
     };
     return user;
   }
