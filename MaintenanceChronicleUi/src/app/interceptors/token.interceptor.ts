@@ -31,27 +31,32 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
       Authorization: `Bearer ${token}`,
     },
   });
+  console.log("Original equest with token header", req.headers.get('Authorization'));
   return next(req).pipe(
     catchError((error) => {
       if (error.status === 401 && !req.url.includes('/refresh-token')) {
         return authService.refreshToken().pipe(
           switchMap((newAccessToken) => {
+            console.log("Got access token from refresh token", newAccessToken);
             if (!newAccessToken) {
               return throwError(() => error);
             }
             const clonedRequest = req.clone({
               setHeaders: {
-                Authorization: `Bearer ${newAccessToken}`
+                Authorization: `Bearer ${newAccessToken.token}`,
               }
             });
+            console.log("Cloned request with token header", clonedRequest.headers.get('Authorization'));
+
             return next(clonedRequest);
           }),
           catchError((err) => {
+            console.log("Error while refreshing token", err);
             return throwError(() => err);
           })
         );
       }
-
+      console.log("Error while sending request", error);
       return throwError(() => error);
     })
   )

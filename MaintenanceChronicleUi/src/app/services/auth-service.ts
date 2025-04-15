@@ -93,6 +93,7 @@ export class AuthService {
         const name = response.name;
         localStorage.setItem(name, token);
         this.isLoggedInSubject.next(true);
+        console.log("assigned access token", this.tokenService.getActiveUser());
       })
     );
   }
