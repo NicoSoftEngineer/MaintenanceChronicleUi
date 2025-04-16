@@ -33,10 +33,12 @@ export class AuthService {
   roles$ = this.rolesSubject.asObservable();
   private usersSubject = new BehaviorSubject<UserTokenList[]>([]);
   users$ = this.usersSubject.asObservable();
+  private userSubject = new BehaviorSubject<UserTokenList | null>(null);
+  user$ = this.userSubject.asObservable();
 
   async switchUser(user: UserTokenList): Promise<void> {
     this.cookieService.setCookie('ActiveToken', user.tokenName, 14);
-    await this.loadPossibleUsers();
+    await this.loadPossibleOtherUsers();
     await this.loadUserRoles();
   }
 
@@ -47,21 +49,23 @@ export class AuthService {
   }
 
   async checkLoginStatus(): Promise<void> {
-    await this.loadPossibleUsers();
+    await this.loadPossibleOtherUsers();
     await this.loadUserRoles();
-    const user = this.tokenService.getActiveUser();
-    if (user) {
+    this.userSubject.next(this.tokenService.getActiveUser());
+    if (this.userSubject) {
       this.isLoggedInSubject.next(true);
     }
   }
-  async loadPossibleUsers(): Promise<void> {
+
+  async loadPossibleOtherUsers(): Promise<void> {
     try {
-      const users = this.tokenService.getPossibleUsers();
+      const users = this.tokenService.getPossibleOtherUsers();
       this.usersSubject.next(users);
     } catch (error) {
       this.usersSubject.next([]);
     }
   }
+
   async loadUserRoles(): Promise<void> {
     try {
       const roles = this.tokenService.getActiveUserRoles();
@@ -89,6 +93,7 @@ export class AuthService {
         const name = response.name;
         localStorage.setItem(name, token);
         this.isLoggedInSubject.next(true);
+        console.log("assigned access token", this.tokenService.getActiveUser());
       })
     );
   }

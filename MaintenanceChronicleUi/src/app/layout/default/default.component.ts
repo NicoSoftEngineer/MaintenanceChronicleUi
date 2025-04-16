@@ -2,7 +2,13 @@ import { UserTokenList } from './../../models/account/user-token-list';
 import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { Dropdown, initFlowbite, Collapse, InstanceOptions } from 'flowbite';
+import {
+  Dropdown,
+  initFlowbite,
+  Collapse,
+  InstanceOptions,
+  CollapseOptions,
+} from 'flowbite';
 import { AuthService } from '../../services/auth-service';
 import { CookieHelperService } from '../../utils/cookie-helper.service';
 
@@ -13,45 +19,53 @@ import { CookieHelperService } from '../../utils/cookie-helper.service';
   templateUrl: './default.component.html',
   styleUrl: './default.component.scss',
 })
-export class DefaultComponent implements OnInit{
+export class DefaultComponent implements OnInit {
   protected readonly authService = inject(AuthService);
-    protected cookieService = inject(CookieHelperService);
+  protected cookieService = inject(CookieHelperService);
   protected readonly router = inject(Router);
   isLoggedIn = false;
   users: UserTokenList[] = [];
+  activeUser: UserTokenList | null = null;
   private dropdownInstance: Dropdown | null = null;
 
-  // set the target element that will be collapsed or expanded (eg. navbar menu)
-  $targetEl = document.getElementById('user-dropdown');
+  showAccountMenu = false;
+  showAccountsList = true;
 
-  // optionally set a trigger element (eg. a button, hamburger icon)
-  $triggerEl = document.getElementById('user-menu-button');
+  toggleAccountMenu() {
+    this.showAccountMenu = !this.showAccountMenu;
+  }
+
+  toggleAccountsList() {
+    this.showAccountsList = !this.showAccountsList;
+  }
 
   // optional options with default values and callback functions
-  options = {
-  };
+  options = {};
 
-  instanceOptions : InstanceOptions = {
+  instanceOptions: InstanceOptions = {
     id: 'user-dropdown',
-    override: true,
+    override: false,
   };
+  collapseOptions: CollapseOptions = {};
 
   async ngOnInit() {
     (async () => {
-    await this.authService.checkLoginStatus();
-    // Subscribe to the isLoggedIn$ observable to update UI reactively
-    this.authService.isLoggedIn$.subscribe((status) => {
-      this.isLoggedIn = status;
-      this.reinitializeDropdown();
-    });
-    this.authService.users$.subscribe((res) => {
-      this.users = res;
-      this.reinitializeDropdown();
-    });}
-  )();
+      await this.authService.checkLoginStatus();
+      // Subscribe to the isLoggedIn$ observable to update UI reactively
+      this.getuserInfo();
+    })();
   }
 
   logout() {
+    let $targetEl = document.getElementById('user-dropdown');
+    let $triggerEl = document.getElementById('user-menu-button');
+    const collapse = new Collapse(
+      $targetEl,
+      $triggerEl,
+      this.options,
+      this.instanceOptions
+    );
+
     this.authService.logout().subscribe({
       next: async () => {
         const activeToken = this.cookieService.getCookie('ActiveToken');
@@ -60,34 +74,97 @@ export class DefaultComponent implements OnInit{
           localStorage.removeItem(activeToken);
           this.cookieService.setCookie('ActiveToken', '', -1);
         }
-        await this.router.navigate(['/choose-account']);
       },
     });
+    setTimeout(async () => {
+      collapse.collapse();
+      this.reinitializeDropdown();
+      this.router.navigate(['/choose-account']);
+
+    }, 50); // Delay to ensure the DOM updates
   }
 
-  switchUser(user: UserTokenList) {
-    this.$targetEl = document.getElementById('user-dropdown');
-    this.$triggerEl = document.getElementById('user-menu-button');
-    const collapse = new Collapse(this.$targetEl, this.$triggerEl, this.options, this.instanceOptions);
-    this.authService.switchUser(user);
-    collapse.collapse();
-    this.router.navigate(['/']);
+  async switchUser(user: UserTokenList) {
+    let $targetEl = document.getElementById('user-dropdown');
+    let $triggerEl = document.getElementById('user-menu-button');
+    const collapse = new Collapse(
+      $targetEl,
+      $triggerEl,
+      this.options,
+      this.instanceOptions
+    );
+
+    await this.authService.switchUser(user);
+
+    setTimeout(async () => {
+      collapse.collapse();
+      this.reinitializeDropdown();
+      await this.authService.checkLoginStatus();
+      this.router.navigate(['/']);
+
+    }, 50); // Delay to ensure the DOM updates
   }
 
   manageAccounts() {
-    this.$targetEl = document.getElementById('user-dropdown');
-    this.$triggerEl = document.getElementById('user-menu-button');
-    const collapse = new Collapse(this.$targetEl, this.$triggerEl, this.options, this.instanceOptions);
+    let $targetEl = document.getElementById('user-dropdown');
+    let $triggerEl = document.getElementById('user-menu-button');
+    const collapse = new Collapse(
+      $targetEl,
+      $triggerEl,
+      this.options,
+      this.instanceOptions
+    );
     setTimeout(() => {
       collapse.collapse();
       this.router.navigate(['/choose-account']);
     }, 100); // Delay to ensure the DOM updates
+  }
 
+  addAccount() {
+    let $targetEl = document.getElementById('user-dropdown');
+    let $triggerEl = document.getElementById('user-menu-button');
+    const collapse = new Collapse(
+      $targetEl,
+      $triggerEl,
+      this.options,
+      this.instanceOptions
+    );
+    setTimeout(() => {
+      collapse.collapse();
+      this.router.navigate(['/login']);
+    }, 100); // Delay to ensure the DOM updates
+  }
+
+  toggleDropdown() {
+    let $targetEl = document.getElementById('user-dropdown');
+    let $triggerEl = document.getElementById('user-menu-button');
+    const collapse = new Collapse(
+      $targetEl,
+      $triggerEl,
+      this.options,
+      this.instanceOptions
+    );
+    setTimeout(() => {
+      collapse.toggle();
+      this.reinitializeDropdown();
+    }, 10); // Delay to ensure the DOM updates
   }
 
   reinitializeDropdown() {
     setTimeout(() => {
       initFlowbite();
     }, 100); // Delay to ensure the DOM updates
+  }
+
+  getuserInfo() {
+    this.authService.isLoggedIn$.subscribe((status) => {
+      this.isLoggedIn = status;
+    });
+    this.authService.users$.subscribe((res) => {
+      this.users = res;
+    });
+    this.authService.user$.subscribe((res) => {
+      this.activeUser = res;
+    });
   }
 }

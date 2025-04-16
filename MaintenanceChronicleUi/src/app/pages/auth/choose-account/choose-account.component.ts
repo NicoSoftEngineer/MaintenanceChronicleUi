@@ -7,13 +7,14 @@ import { UserTokenList } from '../../../models/account/user-token-list';
   selector: 'app-choose-account',
   imports: [RouterLink],
   templateUrl: './choose-account.component.html',
-  styleUrl: './choose-account.component.scss'
+  styleUrl: './choose-account.component.scss',
 })
 export class ChooseAccountComponent {
-protected readonly authService = inject(AuthService);
+  protected readonly authService = inject(AuthService);
   protected readonly router = inject(Router);
   isLoggedIn = false;
   users: UserTokenList[] = [];
+  user: UserTokenList | null = null;
 
   async ngOnInit() {
     await this.authService.checkLoginStatus();
@@ -23,17 +24,20 @@ protected readonly authService = inject(AuthService);
     });
     this.authService.users$.subscribe((res) => {
       this.users = res;
-      if(res.length == 0) {
-        this.router.navigate(['/login']);
-      }
-      if(res.length === 1) {
-        this.authService.switchUser(res[0]);
-      }
     });
+    this.authService.user$.subscribe((res) => {
+      this.user = res;
+    });
+
+    if(!this.user && this.users.length == 1) {
+      this.switchUser(this.users[0]);
+    }
   }
+
   async switchUser(user: UserTokenList) {
     this.authService.switchUser(user);
     await this.authService.checkLoginStatus();
+
     this.router.navigate(['/']);
   }
 }
