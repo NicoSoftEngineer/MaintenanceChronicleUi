@@ -57,6 +57,15 @@ export class DefaultComponent implements OnInit {
   }
 
   logout() {
+    let $targetEl = document.getElementById('user-dropdown');
+    let $triggerEl = document.getElementById('user-menu-button');
+    const collapse = new Collapse(
+      $targetEl,
+      $triggerEl,
+      this.options,
+      this.instanceOptions
+    );
+
     this.authService.logout().subscribe({
       next: async () => {
         const activeToken = this.cookieService.getCookie('ActiveToken');
@@ -65,9 +74,14 @@ export class DefaultComponent implements OnInit {
           localStorage.removeItem(activeToken);
           this.cookieService.setCookie('ActiveToken', '', -1);
         }
-        await this.router.navigate(['/choose-account']);
       },
     });
+    setTimeout(async () => {
+      collapse.collapse();
+      this.reinitializeDropdown();
+      this.router.navigate(['/choose-account']);
+
+    }, 50); // Delay to ensure the DOM updates
   }
 
   async switchUser(user: UserTokenList) {

@@ -38,7 +38,7 @@
 }
 
 .user-menu-dropdown{
-  @apply z-50 p-2 text-base text-[#FFDB99] list-none bg-[#11082d] divide-y divide-gray-100 rounded-lg shadow-sm  dark:divide-gray-600;
+  @apply z-50 md:w-1/6 p-2 text-base text-[#FFDB99] list-none bg-[#11082d] divide-y divide-gray-100 rounded-lg shadow-sm  dark:divide-gray-600;
 
   .active-user{
     @apply flex flex-col items-center mb-4 relative;
