@@ -1,6 +1,7 @@
+
 import { CustomerListDto } from './../../../models/bussiness/customer/customer-list-dto';
 import { PopUpStateService } from './../../../components/pop-up-modal/pop-up-state.service';
-import { Component, inject, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
+import { Component, inject, NO_ERRORS_SCHEMA, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AlertComponent } from '../../../components/alert/alert.component';
 import { PopUpModalComponent } from '../../../components/pop-up-modal/pop-up-modal.component';
@@ -10,20 +11,22 @@ import { CustomerService } from '../../../services/customer-service';
 import { OffCanvasComponent } from '../../../components/off-canvas/off-canvas.component';
 import { CustomerFilterDto } from '../../../models/bussiness/customer/customer-filter-dto';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
+import { ClickOutsideDirective } from '../../../utils/click-outside.directive';
 
 @Component({
   selector: 'app-customer-list-page',
-  imports: [RouterLink, AlertComponent, PopUpModalComponent, OffCanvasComponent, FormInputComponent],
+  imports: [RouterLink, AlertComponent, PopUpModalComponent, OffCanvasComponent, FormInputComponent, ClickOutsideDirective],
   templateUrl: './customer-list-page.component.html',
   styleUrl: './customer-list-page.component.scss',
   schemas: [NO_ERRORS_SCHEMA]
 })
-export class CustomerListPageComponent implements OnInit {
+export class CustomerListPageComponent implements OnInit, AfterViewInit {
   protected readonly customerService = inject(CustomerService);
   protected readonly popUpStateService = inject(PopUpStateService);
   protected readonly alertStateService = inject(AlertStateService);
   protected customers: CustomerListDto[] = [];
   protected filteredCustomers: CustomerListDto[] = [];
+  dropdownOpenFor: string | null = null;
   protected filter: CustomerFilterDto = {
     searchText: ''
   };
@@ -31,8 +34,12 @@ export class CustomerListPageComponent implements OnInit {
   constructor() {
     this.loadCustomers();
   }
+  ngAfterViewInit(): void {
+    console.log('ngAfterViewChecked called');
+    this.reinitializeDropdown();
+  }
   ngOnInit(): void {
-    initFlowbite();
+    this.reinitializeDropdown();
   }
   deleteCustomer = (id: string) => {
     this.customerService.deleteCustomer(id).subscribe(() => {
@@ -49,6 +56,7 @@ export class CustomerListPageComponent implements OnInit {
       this.customers = customers
       this.filteredCustomers = customers
     });
+    this.reinitializeDropdown();
   };
 
   drawerOpen = false;
@@ -76,5 +84,23 @@ export class CustomerListPageComponent implements OnInit {
     }
     this.filteredCustomers = this.customers;
     return;
+  }
+
+  reinitializeDropdown() {
+    // setTimeout(() => {
+      initFlowbite();
+    // }, 100); // Delay to ensure the DOM updates
+  }
+
+  toggleDropdown(id: string): void {
+    if (this.dropdownOpenFor === id) {
+      this.dropdownOpenFor = null;
+    } else {
+      this.dropdownOpenFor = id;
+    }
+  }
+
+  closeDropdown(): void {
+    this.dropdownOpenFor = null;
   }
 }
