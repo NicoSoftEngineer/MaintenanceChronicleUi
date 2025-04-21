@@ -47,10 +47,8 @@
           </div>
 
           <div class="md:hidden relative">
-
-
             @if (dropdownOpenFor === customer.id) {
-              <div class="absolute right-0 w-48 bg-white rounded-md shadow-lg z-50 border max-w-28"
+              <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border max-w-28"
                    (clickOutside)="closeDropdown()">
                 <div class="py-1 flex flex-col m-2 gap-1 ">
                   <a [routerLink]="['/customers', customer.id]" class="btn btn-primary w-full m-0">Detail</a>
