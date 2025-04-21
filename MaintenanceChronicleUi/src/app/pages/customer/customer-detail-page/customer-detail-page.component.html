@@ -1,6 +1,6 @@
-<div class="flex">
+<div class="flex md:flex-row flex-col">
   <!-- Customer detail section -->
-  <section class="w-1/2 flex flex-col items-start justify-stretch p-4">
+  <section class="md:w-1/2 w-full flex flex-col items-start justify-stretch p-4">
     <mach:alert class="w-full m-2"/>
     <h2 class="p-2 text-lg font-bold text-center text-black">Zákazník</h2>
     <form [formGroup]="customerFormular" (ngSubmit)="onSubmit()" class="space-y-4 w-full">
@@ -17,7 +17,7 @@
   </section>
   @if(!isNew){
   <!-- Locations list section -->
-  <section class="p-4 w-1/2">
+  <section class="p-4 md:w-1/2 w-full">
     <div class="flex justify-between">
       <h2 class="pt-6 text-lg font-bold text-start text-black">Pobočky</h2>
       <button (click)="newLocation()" class="btn btn-primary mt-4">Přidat pobočku</button>
