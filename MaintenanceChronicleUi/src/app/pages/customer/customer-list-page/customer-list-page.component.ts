@@ -103,4 +103,14 @@ export class CustomerListPageComponent implements OnInit, AfterViewInit {
   closeDropdown(): void {
     this.dropdownOpenFor = null;
   }
+
+  clearFilter = () => {
+    this.filter = { searchText: ''};
+    this.filterItems();
+  };
+
+  isFilterClear(): boolean {
+    return this.filter.searchText == '';
+  }
+
 }
