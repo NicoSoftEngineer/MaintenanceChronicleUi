@@ -5,7 +5,23 @@
     <div class="flex justify-between items-baseline">
       <h1 class="p-2 text-2xl font-bold text-center text-black">Stroje</h1>
       <div class="flex items-stretch">
-        <h2>Pro vytvoření nového stroje běžte na detail pobočky</h2>
+        <h2 class="hidden pt-2 me-2 lg:flex space-x-2 self-stretch">Pro vytvoření nového stroje běžte na detail pobočky
+        </h2>
+        <div class="lg:hidden relative">
+          <button data-tooltip-target="tooltip-hover" data-tooltip-trigger="hover" type="button" class="pt-2 me-2">
+            <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9.529 9.988a2.502 2.502 0 1 1 5 .191A2.441 2.441 0 0 1 12 12.582V14m-.01 3.008H12M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+          </button>
+
+          <div id="tooltip-hover" role="tooltip"
+            class="absolute z-10 invisible inline-block w-40 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+            Pro vytvoření nového stroje běžte na detail pobočky
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+        </div>
         <button (click)="drawerOpen = true" class="btn btn-primary ms-1 self-stretch">
           <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18.796 4H5.204a1 1 0 0 0-.753 1.659l5.302 6.058a1 1 0 0 1 .247.659v4.874a.5.5 0 0 0 .2.4l3 2.25a.5.5 0 0 0 .8-.4v-7.124a1 1 0 0 1 .247-.659l5.302-6.059c.566-.646.106-1.658-.753-1.658Z"/>
@@ -22,28 +38,56 @@
       </div>
     </div>
   </div>
-  @for(machine of filteredMachines;track machine.id){
-  <div
-    class="list-item">
-    <div class="flex justify-stretch  p-2 ">
-      <div class="flex flex-col w-1/4  self-start">
-        <span class="text-lg font-bold">{{machine.model}}</span>
-      </div>
-      <div class="flex justify-normal pt-2 w-1/2">
-        <div class="flex flex-col justify-start w-1/6">
-          <span class="font-bold  ">Pobočka:</span>
+  <div class="grid grid-cols-1 gap-4 mt-4 lg:w-2/3 w-5/6">
+    @for (machine of filteredMachines; track machine.id) {
+    <div class="bg-white shadow-lg rounded-lg">
+      <div class="p-4 flex  justify-between items-start md:items-center gap-3">
+        <div class="flex flex-col lg:flex-row w-full ">
+          <div class="flex md:w-1/2 w-full justify-between self-start">
+            <span class="text-xl font-bold">{{machine.model}}</span>
+            <button (click)="toggleDropdown(machine.id)" class="routes-dropdown-toggle md:hidden">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z">
+                </path>
+              </svg>
+            </button>
+          </div>
+          <div class="flex justify-evenly pt-2 xl:w-2/3 w-full">
+            <div class="flex flex-col">
+              <span class="font-bold ">Pobočka:</span>
+            </div>
+            <div class="flex flex-col ms-1">
+              <p>{{machine.locationName}}</p>
+            </div>
+          </div>
         </div>
-        <div class="flex justify-start">
-          <p>{{machine.locationName}}</p>
+
+        <div class="hidden md:flex space-x-2">
+          <a [routerLink]="['/machines', machine.id]" class="btn btn-primary">Detail</a>
+          <button (click)="openPopUp(machine)" class="btn btn-danger">Smazat</button>
         </div>
-      </div>
-      <div class="flex justify-end items-center h-1/4 w-1/4">
-        <a [routerLink]="['/machines', machine.id]" class="btn btn-primary">Detail</a>
-        <button (click)="openPopUp(machine)" class="btn btn-danger">Smazat</button>
+
+        <div class="md:hidden relative">
+
+
+          @if (dropdownOpenFor === machine.id) {
+          <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border max-w-28"
+            (clickOutside)="closeDropdown()">
+            <div class="py-1 flex flex-col m-2 gap-1 ">
+              <a [routerLink]="['/machines', machine.id]" class="btn btn-primary w-full ms-0">Detail</a>
+              <button (click)="openPopUp(machine)" class="btn btn-danger">Smazat</button>
+            </div>
+          </div>
+          }
+        </div>
       </div>
     </div>
+    } @empty {
+    <div class="bg-white shadow rounded-lg p-6 text-center text-gray-500">
+      Žádné pobočky nenalezeny
+    </div>
+    }
   </div>
-  }
   <mach:offCanvas
   [title]="'Filtrovat'"
   [confirmLabel]="'Filtrovat'"
