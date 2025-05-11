@@ -96,7 +96,6 @@ export class RecordDetailPageComponent implements OnInit {
           (o) => o.name == record.type
         );
         this.recordDetail = record;
-        console.log(record);
         this.recordFormular.patchValue(record);
       });
       this.recordService.getMachineForRecord(id).subscribe({
@@ -170,7 +169,6 @@ export class RecordDetailPageComponent implements OnInit {
     const dataRaw = this.recordFormular.getRawValue();
     const data = JSON.parse(JSON.stringify(dataRaw));
     data.recordType = this.selectedType[0].id;
-    console.log(data);
     this.recordService.createRecord(data).subscribe({
       next: (id) => {
         this.router.navigate(['/records', id], {

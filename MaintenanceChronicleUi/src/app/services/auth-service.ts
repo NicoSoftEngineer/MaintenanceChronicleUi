@@ -52,7 +52,8 @@ export class AuthService {
     await this.loadPossibleOtherUsers();
     await this.loadUserRoles();
     this.userSubject.next(this.tokenService.getActiveUser());
-    if (this.userSubject) {
+
+    if (this.tokenService.getActiveUser()) {
       this.isLoggedInSubject.next(true);
     }
   }
@@ -93,7 +94,6 @@ export class AuthService {
         const name = response.name;
         localStorage.setItem(name, token);
         this.isLoggedInSubject.next(true);
-        console.log("assigned access token", this.tokenService.getActiveUser());
       })
     );
   }

@@ -20,10 +20,8 @@ export class EmailConfirmPageComponent {
       .validateEmailConfirmation(userEmail, confirmToken)
       .subscribe({
         next: async () => {
-          console.log('Email confirmed');
         },
         error: (error) => {
-          console.log(error);
         },
       });
   }

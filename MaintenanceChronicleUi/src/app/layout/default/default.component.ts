@@ -70,7 +70,6 @@ export class DefaultComponent implements OnInit {
       next: async () => {
         const activeToken = this.cookieService.getCookie('ActiveToken');
         if (activeToken) {
-          console.log('Removing active token');
           localStorage.removeItem(activeToken);
           this.cookieService.setCookie('ActiveToken', '', -1);
         }

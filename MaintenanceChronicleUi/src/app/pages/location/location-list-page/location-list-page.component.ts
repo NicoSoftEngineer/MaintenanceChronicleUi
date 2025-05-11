@@ -66,7 +66,6 @@ export class LocationListPageComponent implements OnInit {
     });
   }
   filterLocations = () => {
-    console.log(this.filter);
     if(this.filter.searchText !== ''){
       this.filteredLocations = this.locations.filter((location) => location.name.toLowerCase().includes(this.filter.searchText.toLowerCase())
       || location.city.toLowerCase().includes(this.filter.searchText.toLowerCase())

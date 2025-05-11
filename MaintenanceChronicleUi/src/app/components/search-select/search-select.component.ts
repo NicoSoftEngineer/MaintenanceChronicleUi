@@ -124,7 +124,6 @@ export class SearchSelectComponent {
     if (!triggerElement || !this.dropdownTemplate) return;
 
     if (!this.dropdownTemplate) {
-      console.error('dropdownTemplate is undefined');
       return;
     }
     if (!this.overlayRef) {

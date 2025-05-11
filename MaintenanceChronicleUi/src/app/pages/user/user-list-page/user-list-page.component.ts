@@ -75,7 +75,6 @@ protected readonly popUpStateService = inject(PopUpStateService);
       this.popUpStateService.openPopUp(`Jste si jistí, že chcete vymazat uživatele "${user.firstName} ${user.lastName}"`, this.delete, user.id);
     };
     filterMachines = () => {
-      console.log(this.filter);
       if (this.filter.searchText !== '') {
         this.filteredUsers = this.users.filter(
           (user) =>

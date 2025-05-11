@@ -94,7 +94,6 @@ export class MachineListPageComponent {
     });
   };
   filterMachines = () => {
-    console.log(this.filter);
     if (this.filter.searchText !== '') {
       this.filteredMachines = this.machines.filter(
         (machine) =>

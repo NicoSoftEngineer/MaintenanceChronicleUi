@@ -35,7 +35,6 @@ export class CustomerListPageComponent implements OnInit, AfterViewInit {
     this.loadCustomers();
   }
   ngAfterViewInit(): void {
-    console.log('ngAfterViewChecked called');
     this.reinitializeDropdown();
   }
   ngOnInit(): void {
@@ -61,18 +60,12 @@ export class CustomerListPageComponent implements OnInit, AfterViewInit {
 
   drawerOpen = false;
 
-  onSave() {
-    // Handle save logic here.
-    console.log('Save clicked!');
-  }
-
   onClose() {
     // Handle additional close logic if needed.
     console.log('Drawer closed');
   }
 
   filterItems(){
-    console.log(this.filter.searchText);
     if(this.filter.searchText){
       this.filteredCustomers = this.customers.filter((customer) =>
         customer.name.toLowerCase().includes(this.filter.searchText.toLowerCase()) ||

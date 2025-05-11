@@ -15,7 +15,6 @@ export class UnauthorizedPageComponent {
   constructor() {
     const activeToken = this.tokenHelper.getActiveUser();
     if (activeToken) {
-      console.log("redirecting back to login")
       this.router.navigate(['/login'], { queryParams: { email: activeToken.email, message: 'Vypršela Vám relace, prosím přihlašte se znovu' } });
     }
   }

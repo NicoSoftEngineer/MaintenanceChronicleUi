@@ -95,7 +95,6 @@ export class LocationDetailComponent {
       this.locationFormular.controls['customerId'].setValue(custId);
       this.customerService.getCustomerById(custId).subscribe({
         next: (customer) => {
-          console.log(customer);
           this.customerDetail = customer as CustomerDetailForLocation;
         }
       });
@@ -115,7 +114,6 @@ export class LocationDetailComponent {
     this.locationService.getContactsForLocation(id).subscribe({
       next: (contacts) => {
         this.selectedContacts = contacts;
-        console.log(contacts);
       }
     });
   }
@@ -124,7 +122,6 @@ export class LocationDetailComponent {
     this.locationService.getAllContacts().subscribe({
       next: (contacts) => {
         this.contactList = contacts;
-        console.log(contacts);
       }
     });
   }
@@ -138,8 +135,6 @@ export class LocationDetailComponent {
   }
 
   onSubmit(): void {
-    console.log(this.selectedContacts);
-
     this.locationFormular.markAllAsTouched();
     if (this.locationFormular.invalid) {
       return;
@@ -177,7 +172,7 @@ export class LocationDetailComponent {
   addLocation(){
     const dataRaw = this.locationFormular.getRawValue();
     const data = JSON.parse(JSON.stringify(dataRaw));
-    console.log(data);
+
     this.locationService.createLocation(data).subscribe({
       next: (id) => {
         this.manageContactsForLocation(id as unknown as string);

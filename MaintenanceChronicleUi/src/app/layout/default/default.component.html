@@ -7,6 +7,7 @@
             <img src="assets/mach-logo-transparent-low-res.png" class="max-h-8" alt="Mach logo" />
           </a>
         </a>
+        @if(isLoggedIn){
         <div class="user-menu">
           <button type="button" class="user-menu-toggle"
             id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
@@ -47,7 +48,7 @@
                 </div>
                 @if(showAccountsList) {
                   <div  class="py-2">
-                    @for (user of users; track user.name) {
+                    @for (user of users; track user) {
                       <!-- Account items -->
                     <div class="flex items-center p-2 hover:bg-gray-700 border-b-2 border-t-2 border-[#11082d] cursor-pointer " (click)="switchUser(user)">
                       <div class="flex-grow">
@@ -112,7 +113,9 @@
             }
           </ul>
         </div>
+      }
       </div>
+
     </nav>
 
   </div>

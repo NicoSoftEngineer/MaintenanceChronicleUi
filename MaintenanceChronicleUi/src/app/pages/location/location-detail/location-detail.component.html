@@ -3,8 +3,8 @@
   <section class="md:w-1/2 w-full flex flex-col items-start pb-4">
     <mach:alert class="w-full m-2" />
     <div class="p-4 bg-gray-100 border-l-4 border-[#093d82] rounded-lg w-full flex justify-between items-center">
-      <p class="text-xl font-extrabold text-black">{{customerDetail.name}}</p>
-      <a [routerLink]="['/customers', customerDetail.id]" class="no-underline">
+      <p class="text-xl font-extrabold text-black">{{customerDetail ? customerDetail.name : null}}</p>
+      <a [routerLink]="['/customers', customerDetail ? customerDetail.id : null]" class="no-underline">
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
           width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
