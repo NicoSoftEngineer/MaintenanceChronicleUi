@@ -28,9 +28,13 @@ export class ChooseAccountComponent {
     this.authService.user$.subscribe((res) => {
       this.user = res;
     });
-
+    console.log(this.users.length);
     if(!this.user && this.users.length == 1) {
+      console.log('Swithing users.');
       this.switchUser(this.users[0]);
+    }else if(this.users.length == 0) {
+      console.log('No users found, redirecting to login page.', this.users.length);
+      this.router.navigate(['/login']);
     }
   }
 
