@@ -17,6 +17,7 @@ import { LocationService } from '../../../services/location-service';
 import { CustomerService } from '../../../services/customer-service';
 import { LocationListDto } from '../../../models/bussiness/location/location-list-dto';
 import { CustomerInFilter } from '../../../models/bussiness/customer/customer-in-filter-dto';
+import { ClickOutsideDirective } from '../../../utils/click-outside.directive';
 
 @Component({
   selector: 'app-machine-list-page',
@@ -29,6 +30,7 @@ import { CustomerInFilter } from '../../../models/bussiness/customer/customer-in
     MultiSelect,
     FormsModule,
     ReactiveFormsModule,
+    ClickOutsideDirective,
   ],
 
   templateUrl: './machine-list-page.component.html',
@@ -50,6 +52,8 @@ export class MachineListPageComponent {
   protected drawerOpen = false;
   protected machines: MachineListDto[] = [];
   protected filteredMachines: MachineListDto[] = [];
+  dropdownOpenFor: string | null = null;
+
 
   constructor() {
     this.loadMachines();
@@ -90,7 +94,6 @@ export class MachineListPageComponent {
     });
   };
   filterMachines = () => {
-    console.log(this.filter);
     if (this.filter.searchText !== '') {
       this.filteredMachines = this.machines.filter(
         (machine) =>
@@ -131,5 +134,17 @@ export class MachineListPageComponent {
       this.filter.customer.length === 0 &&
       this.filter.location.length === 0
     );
+  }
+
+  toggleDropdown(id: string): void {
+    if (this.dropdownOpenFor === id) {
+      this.dropdownOpenFor = null;
+    } else {
+      this.dropdownOpenFor = id;
+    }
+  }
+
+  closeDropdown(): void {
+    this.dropdownOpenFor = null;
   }
 }

@@ -86,6 +86,7 @@ export class MachineDetailPageComponent {
     }),
     locationId: '',
   });
+  loggedIn: boolean = false;
 
   protected reminderFromular = this.fb.group({
     id: '',
@@ -96,21 +97,21 @@ export class MachineDetailPageComponent {
 
   async ngOnInit(): Promise<void> {
     // Await the initial login status check before proceeding.
-    await this.authService.checkLoginStatus();
+    (async () => {
+      await this.authService.checkLoginStatus();
+      // Subscribe to the isLoggedIn$ observable to update UI reactively
+      this.authService.isLoggedIn$.subscribe((status) => {
+        if(!status) {
+        this.router.navigate(['/machines-unauthorized', this.machineId]);
 
-    // Subscribe to login status changes.
-    this.authService.isLoggedIn$.subscribe((status) => {
-      if (!status) {
-        // Use the current route parameter (id) for the unauthorized redirect.
-        const id = this.route.snapshot.paramMap.get('id');
-        this.router.navigate(['machines-unauthorized', id]);
-      }
-    });
+        }
+      });
+    })();
 
     // Subscribe to changes in both route parameters and query parameters.
     combineLatest([this.route.paramMap, this.route.queryParams]).subscribe(([params, queryParams]) => {
       this.machineId = params.get('id');
-      // Optionally, if you have a "justCreated" query parameter to display an alert, add it here.
+
       const justCreated = queryParams['justCreated'];
       if (justCreated) {
         this.alertStateService.openAlert(
@@ -173,7 +174,6 @@ export class MachineDetailPageComponent {
   onSubmit(): void {
     this.machineFormular.markAllAsTouched();
     if (this.machineFormular.invalid) {
-      console.log(this.machineFormular);
       this.alertStateService.openAlert('Vyplňte prosím všechny povinné údaje', 'error');
       return;
     }
@@ -191,7 +191,6 @@ export class MachineDetailPageComponent {
       this.machineDetail
     );
     patchValue = patchValue.filter((p) => p.path !== 'locationId');
-    console.log(patchValue);
     this.machineService
       .updateMachine(this.machineDetail['id'], patchValue)
       .subscribe({
@@ -215,7 +214,6 @@ export class MachineDetailPageComponent {
   addMachine() {
     const dataRaw = this.machineFormular.getRawValue();
     const data = JSON.parse(JSON.stringify(dataRaw));
-    console.log(data);
     this.machineService.createMachine(data).subscribe({
       next: (id) => {
         this.router.navigate(['/machines', id], {queryParams:{  justCreated: true}});
@@ -234,7 +232,6 @@ export class MachineDetailPageComponent {
   }
 
   changeView(view: string){
-    console.log(view);
     this.viewRecordSection = view;
   }
 
@@ -277,7 +274,6 @@ export class MachineDetailPageComponent {
 
   addReminder() {
     const data = this.reminderFromular.getRawValue();
-    console.log(data);
     this.reminderService.createReminder(data as unknown as CreateReminderDto).subscribe({
       next: (reminder) => {
         this.loadReminders();

@@ -1,6 +1,6 @@
 # 🖥️ MaintenanceChronicleUi
 
-**MaintenanceChronicleUi** is the frontend application for the Maintenance Chronicle platform. Built with **Angular 19**, it interfaces with the [`MaintenanceChronicleApi`](https://github.com/your-username/maintenanceChronicleApi) to provide a clean and modern UI for maintenance tracking, task workflows, user management, and more.
+**MaintenanceChronicleUi** is the frontend application for the Maintenance Chronicle platform. Built with **Angular 19**, it interfaces with the [`MaintenanceChronicleApi`](https://github.com/NicoSoftEngineer/MaintenanceChronicleApi) to provide a clean and modern UI for maintenance tracking, task workflows, user management, and more.
 
 ---
 

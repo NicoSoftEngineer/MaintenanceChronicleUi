@@ -15,10 +15,11 @@ import { FormInputComponent } from '../../../components/form-input/form-input.co
 import { LocationFilter } from '../../../models/bussiness/location/location-filter';
 import { MultiSelect } from '../../../components/multi-select/multi-select.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClickOutsideDirective } from '../../../utils/click-outside.directive';
 
 @Component({
   selector: 'app-location-list-page',
-  imports: [AlertComponent, PopUpModalComponent, RouterLink, OffCanvasComponent, FormInputComponent, MultiSelect, FormsModule, ReactiveFormsModule,],
+  imports: [AlertComponent, PopUpModalComponent, RouterLink, ClickOutsideDirective, OffCanvasComponent, FormInputComponent, MultiSelect, FormsModule, ReactiveFormsModule,],
   templateUrl: './location-list-page.component.html',
   styleUrl: './location-list-page.component.scss',
 })
@@ -32,6 +33,8 @@ export class LocationListPageComponent implements OnInit {
   protected customersInFilterList: CustomerInFilter[] = [];
   protected filter: LocationFilter = { searchText: '', customer: [] };
   protected drawerOpen = false;
+  dropdownOpenFor: string | null = null;
+
 
   constructor() {
     this.loadLocations();
@@ -63,7 +66,6 @@ export class LocationListPageComponent implements OnInit {
     });
   }
   filterLocations = () => {
-    console.log(this.filter);
     if(this.filter.searchText !== ''){
       this.filteredLocations = this.locations.filter((location) => location.name.toLowerCase().includes(this.filter.searchText.toLowerCase())
       || location.city.toLowerCase().includes(this.filter.searchText.toLowerCase())
@@ -85,5 +87,17 @@ export class LocationListPageComponent implements OnInit {
 
   isFilterClear(): boolean {
     return this.filter.searchText == '' && this.filter.customer.length === 0;
+  }
+
+  toggleDropdown(id: string): void {
+    if (this.dropdownOpenFor === id) {
+      this.dropdownOpenFor = null;
+    } else {
+      this.dropdownOpenFor = id;
+    }
+  }
+
+  closeDropdown(): void {
+    this.dropdownOpenFor = null;
   }
 }

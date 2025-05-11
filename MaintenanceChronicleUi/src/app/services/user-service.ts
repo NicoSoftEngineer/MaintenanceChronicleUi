@@ -13,9 +13,7 @@ export class UserService {
   protected readonly baseUrl = '/api/v1/users';
 
   public getUsers() : Observable<UserListDto[]> {
-    return this.httpClient.get<UserListDto[]>(this.baseUrl).pipe(tap((users) => {
-      console.log(users);
-    }));
+    return this.httpClient.get<UserListDto[]>(this.baseUrl).pipe();
   }
 
   public sendUserInvitation(email: string): Observable<undefined> {

@@ -82,7 +82,6 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
     const input = event.target as HTMLInputElement;
     const selectedDate = new Date(Date.UTC(this.datepickerInstance.selectedDates[0].getFullYear(), this.datepickerInstance.selectedDates[0].getMonth(), this.datepickerInstance.selectedDates[0].getDate()));
     this.date = selectedDate.toISOString();
-    console.log(`Input value changed: ${this.date}`);
     this.onChange(this.date);
   }
 

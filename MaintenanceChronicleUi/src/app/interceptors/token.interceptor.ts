@@ -15,7 +15,8 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   if (
     req.url.includes('/login') ||
     req.url.includes('/register') ||
-    req.url.includes('/send') ||
+    (req.url.includes('/send') &&
+    !req.url.includes('/send-password-create')) ||
     req.url.includes('/validate')
   ) {
     return next(req);
@@ -38,16 +39,12 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(
-    'Original equest with token header',
-    req.headers.get('Authorization')
-  );
+
   return next(req).pipe(
     catchError((error) => {
       if (error.status === 401 && !req.url.includes('/refresh-token')) {
         return authService.refreshToken().pipe(
           switchMap((newAccessToken) => {
-            console.log('Got access token from refresh token', newAccessToken);
             if (!newAccessToken) {
               return throwError(() => error);
             }
@@ -65,7 +62,6 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
               router.navigate(['/forbidden']);
             }
             if (error.status === 401) {
-              console.log('redirecting to unauthorized page');
               // Navigate to the unauthorized page
               router.navigate(['/unauthorized']);
             }

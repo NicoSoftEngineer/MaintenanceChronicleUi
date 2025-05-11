@@ -27,7 +27,7 @@
       <mach:date-picker  formControlName="inUseSince" label="V provozu od" [required]="true" />
 
       <div class="flex justify-end">
-        <button type="submit" class="btn btn-primary">Uložit</button>
+        <button type="submit" class="btn btn-primary me-2">Uložit</button>
       </div>
     </form>
   </section>
@@ -35,17 +35,17 @@
   <div class="w-10 h-full relative flex flex-col items-start justify-start max-md:h-5">
     <div class="absolute left-4 max-md:left-4 md:rotate-90 top-5 max-md:top-0 transform flex origin-left items-center">
       <!-- Rotated Button 1 -->
-      <button (click)="changeView('records')" [class]="viewRecordSection == 'records' ? 'bg-gray-200' : 'bg-gray-100'" class="w-24 text-black pt-2 px-2 mr-2 rounded-md rounded-b-none shadow-md">
+      <button (click)="changeView('records')" [class]="viewRecordSection == 'records' ? 'bg-gray-300' : 'bg-gray-200'" class="w-28 text-black pt-2 px-2 mr-2 rounded-md md:rounded-b-none max-md:rounded-t-none shadow-md">
         Záznamy
       </button>
 
       <!-- Rotated Button 2 -->
-      <button (click)="changeView('qr-code')" [class]="viewRecordSection == 'qr-code' ? 'bg-gray-200' : 'bg-gray-100'" class="w-24 text-black pt-2 px-2 rounded-md rounded-b-none shadow-md">
+      <button (click)="changeView('qr-code')" [class]="viewRecordSection == 'qr-code' ? 'bg-gray-300' : 'bg-gray-200'" class="w-28 text-black pt-2 px-2 mr-2 rounded-md md:rounded-b-none max-md:rounded-t-none shadow-md">
         QR-kód
       </button>
 
       <!-- Rotated Button 3 -->
-      <button (click)="changeView('reminders')" [class]="viewRecordSection == 'reminders'? 'bg-gray-200' : 'bg-gray-100'" class="w-24 text-black pt-2 px-2 rounded-md rounded-b-none shadow-md">
+      <button (click)="changeView('reminders')" [class]="viewRecordSection == 'reminders'? 'bg-gray-300' : 'bg-gray-200'" class="w-28 text-black pt-2 px-2 rounded-md md:rounded-b-none max-md:rounded-t-none shadow-md">
         Připomínky
       </button>
     </div>
@@ -75,7 +75,7 @@
       </div>
     </div>
     }@else if(viewRecordSection === 'qr-code'){
-    <div>
+    <div class="flex max-md:items-center justify-center w-full">
       <mach:qrCode [sideText]="sideText" />
     </div>
     }

@@ -55,8 +55,6 @@ body {
   @apply px-5;
   @apply py-2.5;
   @apply text-center;
-  @apply me-2;
-  @apply mb-2;
 }
 
 .btn-primary {
@@ -120,7 +118,7 @@ a {
 }
 
 .list-item{
-  @apply list-none w-2/3 p-2 m-2  text-[#1F0F53] rounded-xl bg-white shadow-md;
+  @apply list-none md:w-2/3 p-2 m-2 w-full text-[#1F0F53] rounded-xl shadow-lg ;
 }
 
 /* Customize scrollbar for Chrome, Edge, Safari */

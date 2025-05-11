@@ -15,6 +15,9 @@
         placeholder="Vybrat role..." />
 
       <div class="flex justify-end">
+        @if(!isNew){
+        <button type="button" (click)="sendEmail(userFormular.controls.email.value)" class="btn btn-secondary">Odeslat email s pozvánkou</button>
+        }
         <button type="submit" class="btn btn-primary">Uložit</button>
       </div>
     </form>

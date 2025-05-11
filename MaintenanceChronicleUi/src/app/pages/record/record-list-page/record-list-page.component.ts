@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import { OffCanvasComponent } from '../../../components/off-canvas/off-canvas.component';
 import { DatePipe } from '@angular/common';
+import { ClickOutsideDirective } from '../../../utils/click-outside.directive';
 
 @Component({
   selector: 'app-record-list-page',
@@ -28,7 +29,8 @@ import { DatePipe } from '@angular/common';
       MultiSelect,
       FormsModule,
       ReactiveFormsModule,
-      DatePipe],
+      DatePipe,
+    ClickOutsideDirective],
   templateUrl: './record-list-page.component.html',
   styleUrl: './record-list-page.component.scss',
 })
@@ -51,6 +53,8 @@ export class RecordListPageComponent {
     location: [],
     machine: [],
   };
+  dropdownOpenFor: string | null = null;
+
 
   constructor() {
     this.loadRecords();
@@ -87,7 +91,6 @@ export class RecordListPageComponent {
   };
   loadRecords = () => {
     this.recordService.getRecords().subscribe((records) => {
-      console.log(records);
       this.records = records;
       this.filteredRecords = records;
     });
@@ -149,5 +152,17 @@ export class RecordListPageComponent {
       this.filter.location.length === 0 &&
       this.filter.machine.length === 0
     );
+  }
+
+  toggleDropdown(id: string): void {
+    if (this.dropdownOpenFor === id) {
+      this.dropdownOpenFor = null;
+    } else {
+      this.dropdownOpenFor = id;
+    }
+  }
+
+  closeDropdown(): void {
+    this.dropdownOpenFor = null;
   }
 }

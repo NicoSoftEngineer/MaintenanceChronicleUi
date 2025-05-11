@@ -33,7 +33,6 @@ export class LoginPageComponent implements OnInit {
   protected showInvalidInfoAlert = false;
 
   shouldShowError = computed(() => {
-    console.log("the value of visible should be "+this.showInvalidInfoAlert)
     return this.showInvalidInfoAlert;
   });
 

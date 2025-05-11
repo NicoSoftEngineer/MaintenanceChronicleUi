@@ -99,7 +99,6 @@ export class UserDetailPageComponent implements OnInit {
     }
     this.userService.getRoles().subscribe((r) => {
       this.roleOptions = r;
-      console.log('roles loaded in user-detail')
     });
   }
 
@@ -153,14 +152,11 @@ export class UserDetailPageComponent implements OnInit {
     const dataRaw = this.userFormular.getRawValue();
     const data = JSON.parse(JSON.stringify(dataRaw));
     data.roles = this.selectedRoles.map((r) => r.id);
-    console.log(data);
+
     this.userService.createUser(data).subscribe({
       next: (id) => {
-        this.userService.sendUserInvitation(data.email).subscribe({
-          next: () => {
-            this.router.navigate(['/users', id], {queryParams:{  justCreated: true}});
-          }
-        });
+        this.sendEmail(data.email);
+        this.router.navigate(['/users', id], {queryParams:{  justCreated: true}});
       },
       error: (errors) => {
         if (errors.error.errors) {
@@ -172,6 +168,24 @@ export class UserDetailPageComponent implements OnInit {
           );
         }
       },
+    });
+  }
+
+  sendEmail(email : string) {
+    this.userService.sendUserInvitation(email).subscribe({
+      next: () => {
+        this.alertStateService.openAlert(
+          'Email byl úspěšně odeslán',
+          'success'
+        );
+      },
+      error: (error) => {
+        this.alertStateService.openAlert(
+          'Nastal problém při odesílání emailu s pozvánkou',
+          'error'
+        );
+      },
+
     });
   }
 }

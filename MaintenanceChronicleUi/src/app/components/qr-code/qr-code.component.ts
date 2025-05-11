@@ -31,7 +31,6 @@ export class QrCodeComponent implements AfterContentChecked {
   ngAfterContentChecked() {
     if (this.sideText() !== '') {
       if (!this.qrCode) {
-        console.log(this.sideText());
         let extensionOptions = {
           round: 0,
           thickness: 25,
@@ -78,8 +77,6 @@ export class QrCodeComponent implements AfterContentChecked {
         this.qrCode.applyExtension(
           QRBorderPlugin(extensionOptions as unknown as ExtensionOptions)
         );
-
-        console.log(this.qrCode);
         // Append the QR code to the container element
         this.qrCode.append(this.qrContainer.nativeElement);
       }
