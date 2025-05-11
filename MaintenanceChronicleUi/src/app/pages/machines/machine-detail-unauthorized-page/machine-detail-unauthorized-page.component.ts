@@ -31,12 +31,15 @@ export class MachineDetailUnauthorizedPageComponent {
   }
 
   copiedText: string | null = null;
+  copiedTextId: string | null = null;
 
-  copyToClipboard(text: string) {
+  copyToClipboard(text: string, id: string) {
+    this.copiedTextId = id;
     navigator.clipboard.writeText(text).then(() => {
       this.copiedText = text;
       setTimeout(() => {
         this.copiedText = null;
+        this.copiedTextId = null;
       }, 2000); // Message disappears after 2 seconds
     });
   }
