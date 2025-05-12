@@ -53,7 +53,7 @@ export class LoginPageComponent implements OnInit {
       this.formular.get('email')?.setValue(params['email']);
     }
     if (params['message']) {
-      this.alertStateService.openAlert(params['message'], 'error');
+      this.alertStateService.openAlert(params['message'], params['messageType'] || 'error');
     }
   }
 

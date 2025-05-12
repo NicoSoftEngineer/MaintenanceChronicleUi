@@ -63,6 +63,8 @@ header .cta {
 .cta {
   padding: 50px 20px;
   text-align: center;
+  @apply text-lg;
+  @apply gap-4
 }
 
 .features h2,
@@ -76,5 +78,6 @@ header .cta {
   display: inline-block;
   margin: 20px;
   max-width: 300px;
+  @apply gap-4
 }
 

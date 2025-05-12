@@ -27,6 +27,7 @@ import { RecordService } from '../../../services/record-service';
 import { MachineDetailDto } from '../../../models/bussiness/machine/machine-dto';
 import { MultiSelect } from '../../../components/multi-select/multi-select.component';
 import { DatePickerComponent } from '../../../components/date-picker/date-picker.component';
+import { combineLatest } from 'rxjs';
 @Component({
   selector: 'app-record-detail-page',
   imports: [
@@ -81,7 +82,9 @@ export class RecordDetailPageComponent implements OnInit {
       },
     });
 
-    const justCreated = this.route.snapshot.queryParamMap.get('justCreated');
+    combineLatest([this.route.paramMap, this.route.queryParams]).subscribe(([params, queryParams]) => {
+    const justCreated = queryParams['justCreated'];
+    console.log('justCreated', justCreated);
     if (justCreated) {
       this.alertStateService.openAlert(
         'Záznam byl úspěšně vytvořen',
@@ -89,7 +92,7 @@ export class RecordDetailPageComponent implements OnInit {
       );
     }
 
-    const id = this.route.snapshot.paramMap.get('id')!;
+    const id = params.get('id')!;
     if (id) {
       this.recordService.getRecordById(id).subscribe((record) => {
         this.selectedType = this.typeOptions.filter(
@@ -105,7 +108,7 @@ export class RecordDetailPageComponent implements OnInit {
       });
     }
 
-    const machineId = this.route.snapshot.queryParamMap.get('machineId')!;
+    const machineId = queryParams['machineId']!;
     if (machineId) {
       this.recordFormular.controls['machineId'].setValue(machineId);
       this.machineService.getMachineById(machineId).subscribe({
@@ -120,6 +123,7 @@ export class RecordDetailPageComponent implements OnInit {
         },
       });
     }
+  });
   }
 
   onSubmit(): void {

@@ -1,12 +1,15 @@
-<div class="container ">
-  <div class="m-auto flex align-middle justify-center text-black p-4">
-      <h1>Potvrzení e-mailu</h1>
-  </div>
-  <div class="content">
-      <p>Děkujeme za registraci do MaintenanceChronicle! Vaše email adresa byla tímto potvrzena, prosím pokračujte na <a routerLink="/login" class=" ">přihlášeni</a></p>
-  </div>
-  <div class="footer">
-      <p>&copy; 2025 MaintenanceChronicle. Všechna práva vyhrazena.</p>
-      <p>Potřebujete pomoc? <a href="">Kontaktujte podporu</a></p>
-  </div>
-</div>
+@if(!sucessful){
+  <section class="flex justify-center items-center flex-col w-full min-h-80screen ">
+    <mach:alert class="md:w-1/4 m-2" type="error"/>
+    <div class="rounded-md h-fit shadow-lg shadow-slate-500 md:w-1/4 pt-1 p-4">
+      <form class="p-2 border-0" [formGroup]="formular" (ngSubmit)="formular.valid && formular.markAllAsTouched(); onSubmit()" novalidate>
+        <h2 class="text-lg font-bold text-center text-black">Znovu odeslat potvrzovací email </h2>
+        <mach:forminput formControlName="email" type="text" name="email" [required]="true" label="Email" [error]="getErrorMessage(formular.get('email'), 'email')!"/>
+
+        <div class="flex justify-between items-center m-3">
+          <button type="submit" class="btn btn-primary p-2">Odeslat</button>
+        </div>
+      </form>
+    </div>
+  </section>
+}

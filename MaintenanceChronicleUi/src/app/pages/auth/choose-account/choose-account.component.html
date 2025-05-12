@@ -1,14 +1,24 @@
 <div class="bg-white p-8 w-full flex items-center justify-center">
-  <div class="rounded-md h-fit shadow-lg shadow-slate-500 md:w-25p p-2">
+  <div class="rounded-md h-fit shadow-lg shadow-slate-500 p-2 w-1/4">
+    <div class="border-b mb-4">
+      <h2 class="text-xl font-semibold text-center mb-4">Přihlášený účet</h2>
+      <div (click)="switchUser(user!)" class="flex items-center cursor-pointer hover:bg-gray-200 p-2 rounded-lg">
+        <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="h-10 w-10 rounded-full" alt="Profile Image">
+        <div class="ml-3">
+          <p class="font-medium">{{user!.name}}</p>
+          <p class="text-sm text-gray-500">{{user!.email}}</p>
+        </div>
+      </div>
+    </div>
     <h2 class="text-xl font-semibold text-center mb-4">Další účty</h2>
     <ul class="space-y-4">
       @for (user of users; track $index) {
-        <li (click)="switchUser(user)" class="flex items-center cursor-pointer hover:bg-gray-200 p-2 rounded-lg">
-          <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="h-10 w-10 rounded-full" alt="Profile Image">
-          <div class="ml-3">
-              <p class="font-medium">{{user.name}}</p>
-              <p class="text-sm text-gray-500">{{user.email}}</p>
-          </div>
+      <li (click)="switchUser(user)" class="flex items-center cursor-pointer hover:bg-gray-200 p-2 rounded-lg">
+        <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="h-10 w-10 rounded-full" alt="Profile Image">
+        <div class="ml-3">
+          <p class="font-medium">{{user.name}}</p>
+          <p class="text-sm text-gray-500">{{user.email}}</p>
+        </div>
       </li>
       }
     </ul>
